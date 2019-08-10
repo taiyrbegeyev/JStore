@@ -29,6 +29,8 @@
     ]
   },
   "devDependencies": {
-    "firebase": "^6.3.5"
+    "firebase": "^6.3.5",
+    "snazzy": "^8.0.0",
+    "standard": "^13.1.0"
   }
 }
