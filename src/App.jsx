@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
+import Landing from 'pages/Landing/Landing'
 
 class App extends Component {
   render () {
     return (
-      <React.Fragment>
-        Hello World
-      </React.Fragment>
+      <Landing />
     )
   }
 }
