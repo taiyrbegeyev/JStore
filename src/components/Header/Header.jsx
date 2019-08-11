@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import {
   HeaderContainer, NavBar, Logo, LogoImage, LogoAnchor,
-  MainNavBar, MainNavBarElements, MainNavBarElementsLinks
+  MainNavBar, MainNavBarElements, MainNavBarElementsLinks,
+  LoginButton
 } from './styles'
-import logo from 'assets/jstore_logo.png'
+import logo from 'assets/jstore_logo.svg'
 
 class Header extends Component {
   render() {
@@ -17,7 +18,9 @@ class Header extends Component {
           </Logo>
           <MainNavBar>
             <MainNavBarElements>
-              <MainNavBarElementsLinks href="#">Home</MainNavBarElementsLinks>
+              <MainNavBarElementsLinks href="#">Sign up</MainNavBarElementsLinks>
+              <span style={{marginRight: '20px'}}>or</span>
+              <LoginButton variant="outlined">Log in</LoginButton>
             </MainNavBarElements>
           </MainNavBar>
         </NavBar>

@@ -1,15 +1,16 @@
 import styled from 'styled-components'
+import { Button } from '@material-ui/core'
 
 export const HeaderContainer = styled.div`
-  background-color: gray;
   height: 15vh;
   width: 100vw;
   display: flex;
+  padding: 0 8rem;
+  font-size: 1.4rem;
 `
 
 export const NavBar = styled.nav`
   width: 100%;
-  font-size: 1.8rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,8 +30,7 @@ export const LogoAnchor = styled.a`
 `
 
 export const LogoImage = styled.img`
-  width: 10rem;
-  height: 10rem;
+  width: 18rem;
 `
 
 export const MainNavBar = styled.ul`
@@ -56,7 +56,23 @@ export const MainNavBarElements = styled.li`
 `
 
 export const MainNavBarElementsLinks = styled(LogoAnchor)`
+  &&& {
+    color: #004180;
+    font-size: 1.6rem;
+    letter-spacing: 0.1rem;
+  }
+
   @media (min-width: 768px) {
     margin-left: 40px;
+  }
+`
+
+export const LoginButton = styled(Button)`
+  &&& {
+    color: #004180;
+    font-size: 1.6rem;
+    border: 0.2rem solid;
+    border-color: #004180;
+    text-transform: none;
   }
 `
