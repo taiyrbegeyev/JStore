@@ -5,8 +5,11 @@ export const HeaderContainer = styled.div`
   height: 15vh;
   width: 100vw;
   display: flex;
-  padding: 0 8rem;
   font-size: 1.4rem;
+
+  @media (min-width: 768px) {
+    padding: 0 8rem;
+  }
 `
 
 export const NavBar = styled.nav`
