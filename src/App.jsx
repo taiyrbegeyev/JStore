@@ -1,10 +1,21 @@
 import React, { Component } from 'react'
-import Landing from 'pages/Landing/Landing'
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
+import { routes } from 'routing/index'
 
 class App extends Component {
   render () {
+    const elements = routes.map((item, index) => {
+      const { path, exact, component } = item
+      const routeProps = { path, exact }
+      return (<Route key={index} {...routeProps} component={component} />)
+    })
+        
     return (
-      <Landing />
+      <Router>
+        <Switch>
+          {elements}
+        </Switch>
+      </Router>
     )
   }
 }
