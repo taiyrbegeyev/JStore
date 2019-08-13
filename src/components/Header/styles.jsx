@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { Button } from '@material-ui/core'
 
 export const HeaderContainer = styled.div`
@@ -58,11 +59,16 @@ export const MainNavBarElements = styled.li`
   }
 `
 
-export const MainNavBarElementsLinks = styled(LogoAnchor)`
+export const MainNavBarElementsLinks = styled(Link)`
   &&& {
     color: #004180;
     font-size: 1.6rem;
     letter-spacing: 0.1rem;
+
+    outline: none;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0 2rem;
   }
 
   @media (min-width: 768px) {

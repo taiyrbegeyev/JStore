@@ -7,6 +7,10 @@ import {
 import logo from 'assets/jstore_logo.svg'
 
 class Header extends Component {
+  state = {
+    goToSignUp: false
+  }
+  
   render() {
     return (
       <HeaderContainer>
@@ -18,7 +22,7 @@ class Header extends Component {
           </Logo>
           <MainNavBar>
             <MainNavBarElements>
-              <MainNavBarElementsLinks href="#">Sign up</MainNavBarElementsLinks>
+              <MainNavBarElementsLinks to={'/signup'}>Sign up</MainNavBarElementsLinks>
               <span style={{marginRight: '20px'}}>or</span>
               <LoginButton variant="outlined">Log in</LoginButton>
             </MainNavBarElements>
