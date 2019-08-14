@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import {
-  SignUpContainer, Heading, LogoImage,
-  SignUpForm, InputContainer, ButtonContainer,
-  LegalNoticeContainer, LegalNotice, LegalNoticeAnchors,
+  LoginContainer, Heading, LogoImage,
+  LoginForm, InputContainer, ButtonContainer,
+  ForgotPasswordContainer, ForgotPasswordAnchor,
   AlreadyHaveAccountContainer, AlreadyHaveAccount,
   LoginLinkContainer, LoginLink
 } from './styles'
@@ -10,7 +10,7 @@ import { Input } from 'components/Input/Input'
 import { Button } from 'components/Button/Button'
 import logo from 'assets/jstore_logo.svg'
 
-class SignUp extends Component {
+class Login extends Component {
   state = {
     name: '',
     email: '',
@@ -19,19 +19,11 @@ class SignUp extends Component {
   
   render () {
     return (
-      <SignUpContainer>
+      <LoginContainer>
         <Heading>
           <LogoImage src={logo} />
         </Heading>
-        <SignUpForm noValidate autoComplete="off">
-          <InputContainer>
-            <Input
-              type="text"
-              name="name"
-              maxlength="255"
-              placeholder="Name"
-            />
-          </InputContainer>
+        <LoginForm noValidate autoComplete="off">
           <InputContainer>
             <Input
               type="text"
@@ -50,23 +42,23 @@ class SignUp extends Component {
           <ButtonContainer>
             <Button 
               type="submit"
-              name="signup"
+              name="Login"
               value="Continue"
             />
           </ButtonContainer>
-          <LegalNoticeContainer>
-            <LegalNotice>By creating an account, you are agreeing to our <LegalNoticeAnchors>Terms of Service</LegalNoticeAnchors> and <LegalNoticeAnchors>Privacy Policy</LegalNoticeAnchors>.</LegalNotice>
-          </LegalNoticeContainer>
-        </SignUpForm>
+          <ForgotPasswordContainer>
+            <ForgotPasswordAnchor>Forgot password?</ForgotPasswordAnchor>
+          </ForgotPasswordContainer>
+        </LoginForm>
         <AlreadyHaveAccountContainer>
-          <AlreadyHaveAccount>Already have an account?</AlreadyHaveAccount>
+          <AlreadyHaveAccount>Don't have an account?</AlreadyHaveAccount>
         </AlreadyHaveAccountContainer>
         <LoginLinkContainer>
-          <LoginLink to={'/login'}>Sign In</LoginLink>
+          <LoginLink to={'/signup'}>Create account</LoginLink>
         </LoginLinkContainer>
-      </SignUpContainer>
+      </LoginContainer>
     )
   }
 }
 
-export default SignUp
+export default Login
