@@ -1,5 +1,4 @@
-import firebase from 'firebase'
-
+const firebase = require("firebase");
 // initialize database
 
 const firebaseConfig = {
@@ -13,7 +12,4 @@ const firebaseConfig = {
 }
 
 firebase.initializeApp(firebaseConfig)
-export default firebase
-export const storage = firebase.storage()
-export const auth = firebase.auth()
-export const db = firebase.database()
+// export default firebase
