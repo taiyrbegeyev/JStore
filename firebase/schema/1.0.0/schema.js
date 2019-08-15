@@ -1,9 +1,6 @@
 const user = {
   email: '',
-  name: {
-    full_name: '',
-    nickname: ''
-  },
+  name: '',
   user_created: 0,
   devices: {
     device_id: {
