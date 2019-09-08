@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
+import HomePageHeader from 'components/HomePageHeader/HomePageHeader'
 
-class HomePage extends Component {
+class Home extends Component {
   render() {
     return (
       <React.Fragment>
-        
+        <HomePageHeader />
       </React.Fragment>
     )
   }
 }
 
-export default HomePage
+export default Home

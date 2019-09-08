@@ -1,6 +1,7 @@
 import Landing from 'pages/Landing/LandingPage'
 import SignUp from 'pages/SignUp/SignUpPage'
 import Login from 'pages/Login/LoginPage'
+import Home from 'pages/Home/HomePage'
 
 export const routes = [
   {
@@ -17,5 +18,10 @@ export const routes = [
     path: '/login',
     exact: true,
     component: Login
+  },
+  {
+    path: '/home',
+    exact: true,
+    component: Home
   }
 ]
