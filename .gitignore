@@ -1,4 +1,9 @@
 .vscode
+
+# Build
+build/*
+!build/build.xml
+
 # Logs
 logs
 *.log
