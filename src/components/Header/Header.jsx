@@ -22,9 +22,11 @@ class Header extends Component {
           </Logo>
           <MainNavBar>
             <MainNavBarElements>
-              <MainNavBarElementsLinks to={'/signup'}>Sign up</MainNavBarElementsLinks>
+              <MainNavBarElementsLinks to={'/signup'}>Get Started</MainNavBarElementsLinks>
               <span style={{marginRight: '20px'}}>or</span>
-              <LoginButton variant="outlined">Log in</LoginButton>
+              <MainNavBarElementsLinks to={'/login'}>
+                <LoginButton variant="outlined">Demo</LoginButton>
+              </MainNavBarElementsLinks>
             </MainNavBarElements>
           </MainNavBar>
         </NavBar>

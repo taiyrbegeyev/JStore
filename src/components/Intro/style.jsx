@@ -9,7 +9,7 @@ export const IntroContainer = styled.div`
   justify-content: center;
   padding: 5rem 3rem;
 
-  @media (min-width: 768px) {
+  @media (min-width: 1000px) {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;

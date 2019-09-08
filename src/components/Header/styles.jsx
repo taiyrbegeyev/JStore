@@ -72,7 +72,6 @@ export const MainNavBarElementsLinks = styled(Link)`
   }
 
   @media (min-width: 768px) {
-    margin-left: 40px;
   }
 `
 
