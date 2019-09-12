@@ -89,3 +89,9 @@ export const LoginLink = styled(Link)`
     cursor: pointer;
   }
 `
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+`

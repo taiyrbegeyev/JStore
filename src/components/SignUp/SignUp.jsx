@@ -7,10 +7,11 @@ import {
   SignUpForm, InputContainer, ButtonContainer,
   LegalNoticeContainer, LegalNotice, LegalNoticeAnchors,
   AlreadyHaveAccountContainer, AlreadyHaveAccount,
-  LoginLinkContainer, LoginLink
+  LoginLinkContainer, LoginLink, LoadingContainer
 } from './styles'
 import { Input } from 'components/Input/Input'
 import { Button } from 'components/Button/Button'
+import { PacmanLoader } from 'react-spinners'
 import logo from 'assets/jstore_logo.svg'
 
 class SignUp extends Component {
@@ -35,7 +36,7 @@ class SignUp extends Component {
     this.setState({
       loading: true
     })
-    getStarted(this.state.email, actionCodeSettings, err => {
+    getStarted(this.state.email, actionCodeSettings, errHandler => {
       alert('Error, please make sure that everything is valid')
     }, () => {
       this.setState({
@@ -51,14 +52,6 @@ class SignUp extends Component {
           <LogoImage src={logo} />
         </Heading>
         <SignUpForm autoComplete="off">
-          {/* <InputContainer>
-            <Input
-              type="text"
-              name="name"
-              maxlength="255"
-              placeholder="Name"
-            />
-          </InputContainer> */}
           <InputContainer>
             <Input
               type="text"
@@ -87,6 +80,17 @@ class SignUp extends Component {
         <LoginLinkContainer>
           <LoginLink to={'/login'}>Sign In</LoginLink>
         </LoginLinkContainer>
+        {
+          this.state.loading &&
+          <LoadingContainer>
+            <PacmanLoader
+              sizeUnit={"px"}
+              size={20}
+              color={'#123abc'}
+              loading={this.state.loading}
+            />
+          </LoadingContainer>
+        }
       </SignUpContainer>
     )
   }
