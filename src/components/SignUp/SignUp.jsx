@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import firebase, { auth } from '../../firebase'
 import  { getStarted } from 'firebase/auth.js'
 import {
   SignUpContainer, Heading, LogoImage,
@@ -29,7 +28,7 @@ class SignUp extends Component {
 
   handleEmailLinkAuth = () => {
     const actionCodeSettings = {
-      'url': window.location.href, // Here we redirect back to this same page.
+      'url': `${process.env.REACT_APP_BASE_URL}/home`, // Here we redirect back to this same page.
       'handleCodeInApp': true
     }
 
@@ -75,10 +74,10 @@ class SignUp extends Component {
           </LegalNoticeContainer>
         </SignUpForm>
         <AlreadyHaveAccountContainer>
-          <AlreadyHaveAccount>Already have an account?</AlreadyHaveAccount>
+          <AlreadyHaveAccount>Just want to test JStore?</AlreadyHaveAccount>
         </AlreadyHaveAccountContainer>
         <LoginLinkContainer>
-          <LoginLink to={'/login'}>Sign In</LoginLink>
+          <LoginLink to={'/demo'}>Demo</LoginLink>
         </LoginLinkContainer>
         {
           this.state.loading &&

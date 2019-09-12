@@ -9,11 +9,22 @@ export const getStarted = (email, actionCodeSettings, errHandler, completionHand
     .catch((err) => {
       console.log(err)
       errHandler()
+      completionHandler()
     })
 }
 
-export const anonymousSignIn = () => {
+export const anonymousSignIn = (errHandler) => {
   auth.signInAnonymously().catch((err) => {
-
+    console.log(err)
+    errHandler()
   });
+}
+
+export const anonymousUserHandler = () => {
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      console.log(user)
+      return user
+    }
+  }) 
 }
