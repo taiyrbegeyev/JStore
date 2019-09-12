@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import firebase, { auth } from '../../firebase'
+import  { getStarted } from 'firebase/auth.js'
 import {
   SignUpContainer, Heading, LogoImage,
   SignUpForm, InputContainer, ButtonContainer,
@@ -17,7 +18,8 @@ class SignUp extends Component {
     name: '',
     email: '',
     password: '',
-    emailSubmitted: false
+    emailSubmitted: false,
+    loading: false
   }
 
   handleCheckBox = (e) => {
@@ -29,14 +31,17 @@ class SignUp extends Component {
       'url': window.location.href, // Here we redirect back to this same page.
       'handleCodeInApp': true
     }
-    
-    auth.sendSignInLinkToEmail(this.state.email, actionCodeSettings)
-      .then(() => {
-        window.localStorage.setItem('emailForSignIn', this.state.email)
+
+    this.setState({
+      loading: true
+    })
+    getStarted(this.state.email, actionCodeSettings, err => {
+      alert('Error, please make sure that everything is valid')
+    }, () => {
+      this.setState({
+        loading: false
       })
-      .catch((err) => {
-        console.log(err)
-      }) 
+    })
   }
   
   render () {

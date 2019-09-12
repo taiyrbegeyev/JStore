@@ -10,15 +10,15 @@ export const routes = [
     component: Landing
   },
   {
-    path: '/signup',
+    path: '/get-started',
     exact: true,
     component: SignUp
   },
-  {
-    path: '/login',
-    exact: true,
-    component: Login
-  },
+  // {
+  //   path: '/demo',
+  //   exact: true,
+  //   component: Login
+  // },
   {
     path: '/home',
     exact: true,
