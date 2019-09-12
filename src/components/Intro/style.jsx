@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const IntroContainer = styled.div`
-  height: auto;
+  height: 85vh;
   width: 100vw;
   background-image: url("${props => props.imageUrl}");
   display: flex;
@@ -9,7 +9,7 @@ export const IntroContainer = styled.div`
   justify-content: center;
   padding: 5rem 3rem;
 
-  @media (min-width: 1000px) {
+  @media (min-width: 768px) {
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;

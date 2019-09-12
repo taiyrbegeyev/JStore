@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
+import firebase, { auth } from '../../firebase'
 import {
   SignUpContainer, Heading, LogoImage,
   SignUpForm, InputContainer, ButtonContainer,
@@ -15,6 +17,26 @@ class SignUp extends Component {
     name: '',
     email: '',
     password: '',
+    emailSubmitted: false
+  }
+
+  handleCheckBox = (e) => {
+    this.setState({ email: e.target.value })
+  }
+
+  handleEmailLinkAuth = () => {
+    const actionCodeSettings = {
+      'url': window.location.href, // Here we redirect back to this same page.
+      'handleCodeInApp': true
+    }
+    
+    auth.sendSignInLinkToEmail(this.state.email, actionCodeSettings)
+      .then(() => {
+        window.localStorage.setItem('emailForSignIn', this.state.email)
+      })
+      .catch((err) => {
+        console.log(err)
+      }) 
   }
   
   render () {
@@ -23,35 +45,31 @@ class SignUp extends Component {
         <Heading>
           <LogoImage src={logo} />
         </Heading>
-        <SignUpForm noValidate autoComplete="off">
-          <InputContainer>
+        <SignUpForm autoComplete="off">
+          {/* <InputContainer>
             <Input
               type="text"
               name="name"
               maxlength="255"
               placeholder="Name"
             />
-          </InputContainer>
+          </InputContainer> */}
           <InputContainer>
             <Input
               type="text"
               name="email"
               maxlength="255"
               placeholder="Email (@jacobs-university.de)"
-            />
-          </InputContainer>
-          <InputContainer>
-            <Input
-              type="password"
-              name="password"
-              placeholder="Password"
+              value={this.state.email}
+              onChange={this.handleCheckBox}
             />
           </InputContainer>
           <ButtonContainer>
             <Button 
-              type="submit"
+              type="button"
               name="signup"
               value="Continue"
+              onClick={this.handleEmailLinkAuth}
             />
           </ButtonContainer>
           <LegalNoticeContainer>
