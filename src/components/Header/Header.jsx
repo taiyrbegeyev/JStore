@@ -25,7 +25,7 @@ class Header extends Component {
           </Logo>
           <MainNavBar>
             <MainNavBarElements>
-            <MainNavBarElementsLinks to={'/home'}>Demo</MainNavBarElementsLinks>
+            <MainNavBarElementsLinks to={'/home'}>Anonymous Log in</MainNavBarElementsLinks>
               <span style={{marginRight: '20px'}}>or</span>
               <MainNavBarElementsLinks to={'/get-started'}>
                 <LoginButton

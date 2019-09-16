@@ -8,6 +8,7 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore'
 import PublishIcon from '@material-ui/icons/Publish'
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import SettingsIcon from '@material-ui/icons/Settings'
 import logo from 'assets/jstore_logo.svg'
@@ -37,6 +38,9 @@ class HomePageHeader extends Component {
                 </MainNavBarElementsLinks>
                 <MainNavBarElementsLinks>
                   <PublishIcon />
+                </MainNavBarElementsLinks>
+                <MainNavBarElementsLinks>
+                  <NotificationsIcon />
                 </MainNavBarElementsLinks>
                 <MainNavBarElementsLinks>
                   <AccountCircleIcon />
