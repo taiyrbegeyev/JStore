@@ -7,12 +7,20 @@ export const routes = [
   {
     path: '/',
     exact: true,
+    isPrivate: false,
     component: Landing
   },
   {
     path: '/get-started',
     exact: true,
+    isPrivate: false,
     component: SignUp
+  },
+  {
+    path: '/register',
+    exact: true,
+    isPrivate: false,
+    component: Login
   },
   // {
   //   path: '/demo',
@@ -22,6 +30,7 @@ export const routes = [
   {
     path: '/home',
     exact: true,
+    isPrivate: true,
     component: Home
   }
 ]
