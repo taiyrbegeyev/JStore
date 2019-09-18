@@ -1,4 +1,4 @@
-import firebase, { auth } from '../firebase'
+import firebase, { auth, db } from '../firebase'
 
 export const getStarted = (email, actionCodeSettings, errHandler, completionHandler) => {
   auth.sendSignInLinkToEmail(email, actionCodeSettings)
@@ -10,6 +10,25 @@ export const getStarted = (email, actionCodeSettings, errHandler, completionHand
       console.log(err)
       errHandler()
       completionHandler()
+    })
+}
+
+export const registerNewUser = (name, email, college, actionCodeSettings, errHandler, completionHandler) => {
+  let data = {
+    name: name,
+    email: email,
+    college: college,
+    createdAt: new Date(),
+  }
+
+  auth.sendSignInLinkToEmail(email, actionCodeSettings)
+    .then(() => {
+      db.collection('users').doc(email).set(data)
+      completionHandler()
+    })
+    .catch((err) => {
+      console.log(err)
+      errHandler()
     })
 }
 
