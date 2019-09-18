@@ -58,7 +58,7 @@ class SignUp extends Component {
 
   handleEmailLinkAuth = () => {
     const actionCodeSettings = {
-      'url': `${process.env.REACT_APP_BASE_URL}`,
+      'url': `${process.env.REACT_APP_BASE_URL}/home`,
       'handleCodeInApp': true
     }
 
