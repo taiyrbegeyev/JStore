@@ -3,11 +3,11 @@ import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-d
 import { routes } from 'routing'
 import { auth } from 'firebase.js'
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const PrivateRoute = ({ auth: auth, component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props => (
-      auth.currentUser
+      auth
       ? <Component {...props} />
       : <Redirect to='get-started' />
     )
@@ -16,13 +16,27 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 )
 
 class App extends Component {
+  state = {
+    isAuth: false
+  }
+  
+  componentDidMount = () => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          isAuth: true
+        })
+      }
+    })
+  }
+  
   render () {
     const elements = routes.map((item, index) => {
       const { path, exact, isPrivate, component } = item
       const routeProps = { path, exact }
       if (isPrivate) {
         return (
-          <PrivateRoute key={index} {...routeProps} component={component} />
+          <PrivateRoute auth={auth} key={index} {...routeProps} component={component} />
         )
       } else {
         return (
