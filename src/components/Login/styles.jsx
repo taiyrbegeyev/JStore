@@ -39,48 +39,12 @@ export const InputContainer = styled.div`
 export const ButtonContainer = styled.div`
   margin: auto;
   width: 30rem;
-  margin-top: 0.7rem;
+  margin-top: 3rem;
   margin-bottom: 2.5rem;
 `
 
-export const ForgotPasswordContainer = styled.div`
-  text-align: center;
-  width: 280px;
-  margin: 0 auto;
-  font-size: 1.3rem;
-`
-
-export const ForgotPasswordAnchor = styled(Link)`
-  &&& {
-    color: #004180;
-    text-decoration: none;
-  }
-`
-
-export const AlreadyHaveAccountContainer = styled.div`
-  text-align: center;
-  margin-top: 3.4rem;
-`
-
-export const AlreadyHaveAccount = styled.p`
-  color: #737373;
-  font-size: 1.4rem;
-  line-height: 1.63;
-`
-
-export const LoginLinkContainer = styled.div`
-  text-align: center;
-  margin-top: 0.6rem;
-`
-
-export const LoginLink = styled(Link)`
-  &&& {
-    color: #004180;
-    font-size: 1.6rem;
-    letter-spacing: 0.1rem;
-
-    outline: none;
-    text-decoration: none;
-    cursor: pointer;
-  }
+export const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
 `
