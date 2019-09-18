@@ -12,13 +12,11 @@ export const routes = [
   },
   {
     path: '/get-started',
-    exact: true,
     isPrivate: false,
     component: SignUp
   },
   {
     path: '/register',
-    exact: true,
     isPrivate: false,
     component: Login
   },
@@ -29,7 +27,6 @@ export const routes = [
   // },
   {
     path: '/home',
-    exact: true,
     isPrivate: true,
     component: Home
   }
