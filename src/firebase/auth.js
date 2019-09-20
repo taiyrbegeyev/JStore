@@ -23,6 +23,7 @@ export const registerNewUser = (name, email, college, actionCodeSettings, errHan
 
   auth.sendSignInLinkToEmail(email, actionCodeSettings)
     .then(() => {
+      window.localStorage.setItem('emailForSignIn', email);
       db.collection('users').doc(email).set(data)
       completionHandler()
     })

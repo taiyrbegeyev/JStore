@@ -10,26 +10,12 @@ import WelcomeBack from 'components/WelcomeBack/WelcomeBack'
 import logo from 'assets/jstore_logo.svg'
 
 class Header extends Component {
-  state = {
-    loggedIn: true
-  }
-  
   handleDemo = () => {
     anonymousSignIn((err) => {
       alert('Something went wrong. Contact t.begeyev@jacobs-university.de')
     })
   }
 
-  componentWillMount = () => {
-    auth.onAuthStateChanged((user) => {
-      if (!user) {
-        this.setState({
-          loggedIn: false
-        })
-      }
-    })
-  }
-  
   render() {
     return (
       <HeaderContainer>
@@ -41,13 +27,13 @@ class Header extends Component {
           </Logo>
           <MainNavBar>
             {
-            this.state.loggedIn
+            this.props.isAuth
             ? <WelcomeBack />
             :
             <React.Fragment>
               <MainNavBarElements>
-                <MainNavBarElementsLinks onClick={this.handleDemo} to={'/home'}>Anonymous Log in</MainNavBarElementsLinks>
-                <span style={{marginRight: '20px'}}>or</span>
+                {/* <MainNavBarElementsLinks onClick={this.handleDemo} to={'/home'}>Anonymous Log in</MainNavBarElementsLinks> */}
+                {/* <span style={{marginRight: '20px'}}>or</span> */}
                 <MainNavBarElementsLinks to={'/get-started'}>
                   <LoginButton
                     variant="outlined"
