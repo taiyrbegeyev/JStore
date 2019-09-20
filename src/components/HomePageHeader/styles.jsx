@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import { Button } from '@material-ui/core'
 
 export const HeaderContainer = styled.div`
@@ -59,7 +58,7 @@ export const MainNavBarElements = styled.li`
   }
 `
 
-export const MainNavBarElementsLinks = styled(Link)`
+export const MainNavBarElementsLinks = styled(Button)`
   &&& {
     color: #004180;
     font-size: 1.6rem;

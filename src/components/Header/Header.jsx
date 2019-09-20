@@ -1,16 +1,32 @@
 import React, { Component } from 'react'
 import  { anonymousSignIn } from 'firebase/auth.js'
+import { auth } from 'firebase.js'
 import {
   HeaderContainer, NavBar, Logo, LogoImage, LogoAnchor,
   MainNavBar, MainNavBarElements, MainNavBarElementsLinks,
   LoginButton
 } from './styles'
+import WelcomeBack from 'components/WelcomeBack/WelcomeBack'
 import logo from 'assets/jstore_logo.svg'
 
 class Header extends Component {
+  state = {
+    loggedIn: true
+  }
+  
   handleDemo = () => {
     anonymousSignIn((err) => {
       alert('Something went wrong. Contact t.begeyev@jacobs-university.de')
+    })
+  }
+
+  componentWillMount = () => {
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        this.setState({
+          loggedIn: false
+        })
+      }
     })
   }
   
@@ -24,18 +40,24 @@ class Header extends Component {
             </LogoAnchor>
           </Logo>
           <MainNavBar>
-            <MainNavBarElements>
-            <MainNavBarElementsLinks to={'/home'}>Anonymous Log in</MainNavBarElementsLinks>
-              <span style={{marginRight: '20px'}}>or</span>
-              <MainNavBarElementsLinks to={'/get-started'}>
-                <LoginButton
-                  variant="outlined"
-                  onClick={this.handleDemo}
-                >
-                  Get Started
-                </LoginButton>
-              </MainNavBarElementsLinks>
-            </MainNavBarElements>
+            {
+            this.state.loggedIn
+            ? <WelcomeBack />
+            :
+            <React.Fragment>
+              <MainNavBarElements>
+                <MainNavBarElementsLinks onClick={this.handleDemo} to={'/home'}>Anonymous Log in</MainNavBarElementsLinks>
+                <span style={{marginRight: '20px'}}>or</span>
+                <MainNavBarElementsLinks to={'/get-started'}>
+                  <LoginButton
+                    variant="outlined"
+                  >
+                    Get Started
+                  </LoginButton>
+                </MainNavBarElementsLinks>
+              </MainNavBarElements>
+            </React.Fragment>
+            }
           </MainNavBar>
         </NavBar>
       </HeaderContainer>
