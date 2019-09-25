@@ -84,6 +84,7 @@ class HomePageHeader extends Component {
             impressum: true
           }
         }))
+        break
       case 'logout':
         this.logout()
         this.setState({
@@ -150,7 +151,7 @@ class HomePageHeader extends Component {
                 >
                   <MenuItem id="terms_and_condition" onClick={this.handleOpenItem}>Terms and Conditions</MenuItem>
                   <MenuItem id="privacy_policy" onClick={this.handleOpenItem}>Privacy Policy</MenuItem>
-                  <MenuItem id="imressum" onClick={this.handleOpenItem}>Impressum</MenuItem>
+                  <MenuItem id="impressum" onClick={this.handleOpenItem}>Impressum</MenuItem>
                   <MenuItem id="logout" onClick={this.handleOpenItem}>Log out</MenuItem>
                 </Menu>
                 <Dialog
@@ -159,7 +160,7 @@ class HomePageHeader extends Component {
                   scroll="paper"
                   aria-labelledby="scroll-dialog-title"
                 >
-                  <DialogTitle id="scroll-dialog-title">Subscribe</DialogTitle>
+                  <DialogTitle id="scroll-dialog-title">Terms and Conditions</DialogTitle>
                   <DialogContent dividers={true}>
                     <DialogContentText>
                       {[...new Array(100)]
@@ -171,10 +172,51 @@ class HomePageHeader extends Component {
                   </DialogContent>
                   <DialogActions>
                     <Button onClick={this.handleCloseModal} color="primary">
-                      Cancel
+                      Got it!
                     </Button>
+                  </DialogActions>
+                </Dialog>
+                <Dialog
+                  open={this.state.settings_dialog_items.privacy_policy}
+                  onClose={this.handleCloseModal}
+                  scroll="paper"
+                  aria-labelledby="scroll-dialog-title"
+                >
+                  <DialogTitle id="scroll-dialog-title">Privacy Policy</DialogTitle>
+                  <DialogContent dividers={true}>
+                    <DialogContentText>
+                      {[...new Array(100)]
+                        .map(
+                          () => `heyeyyeyeyeyeeeeeeey`,
+                        )
+                      .join('\n')}
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
                     <Button onClick={this.handleCloseModal} color="primary">
-                      Subscribe
+                      Got it!
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+                <Dialog
+                  open={this.state.settings_dialog_items.impressum}
+                  onClose={this.handleCloseModal}
+                  scroll="paper"
+                  aria-labelledby="scroll-dialog-title"
+                >
+                  <DialogTitle id="scroll-dialog-title">Impressum</DialogTitle>
+                  <DialogContent dividers={true}>
+                    <DialogContentText>
+                      {[...new Array(100)]
+                        .map(
+                          () => `heyeyyeyeyeyeeeeeeey`,
+                        )
+                      .join('\n')}
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={this.handleCloseModal} color="primary">
+                      Got it!
                     </Button>
                   </DialogActions>
                 </Dialog>
