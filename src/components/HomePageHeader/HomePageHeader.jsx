@@ -7,6 +7,12 @@ import {
 } from './styles'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore'
@@ -26,8 +32,12 @@ const theme = createMuiTheme({
 class HomePageHeader extends Component {
   state = {
     anchorEl: null,
-    selectedItem: null,
-    redirectToHome: false
+    redirectToHome: false,
+    settings_dialog_items: {
+      terms_and_condition: false,
+      privacy_policy: false,
+      impressum: false
+    }
   }
 
   logout = () => {
@@ -41,23 +51,56 @@ class HomePageHeader extends Component {
   }
   
   handleClick = (e) => {
-    this.setState({ anchorEl: e.currentTarget });
+    this.setState({
+      anchorEl: e.currentTarget
+    })
   }
 
-  handleClose = (e) => {
+  handleOpenItem = (e) => {
     this.setState({
       anchorEl: null
     })
     switch (e.target.id) {
+      case 'terms_and_condition':
+        this.setState(prevState => ({
+          settings_dialog_items: {
+            ...prevState.settings_dialog_items,
+            terms_and_condition: true
+          }
+        }))
+        break
+      case 'privacy_policy':
+        this.setState(prevState => ({
+          settings_dialog_items: {
+            ...prevState.settings_dialog_items,
+            privacy_policy: true
+          }
+        }))
+        break
+      case 'impressum':
+        this.setState(prevState => ({
+          settings_dialog_items: {
+            ...prevState.settings_dialog_items,
+            impressum: true
+          }
+        }))
       case 'logout':
         this.logout()
         this.setState({
           redirectToHome: true
         })
         break
-      default:
-        console.log('default')
     }
+  }
+
+  handleCloseModal = (e) => {
+    this.setState(prevState => ({
+      settings_dialog_items: {
+        terms_and_condition: false,
+        privacy_policy: false,
+        impressum: false
+      }
+    }))
   }
   
   render() {
@@ -103,13 +146,38 @@ class HomePageHeader extends Component {
                   anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                   transformOrigin={{ vertical: "top", horizontal: "center" }}
                   open={open}
-                  onClose={this.handleClose}
+                  onClose={this.handleOpenItem}
                 >
-                  <MenuItem id="terms_and_condition" onClick={this.handleClose}>Terms and Conditions</MenuItem>
-                  <MenuItem id="privacy_policy" onClick={this.handleClose}>Privacy Policy</MenuItem>
-                  <MenuItem id="imressum" onClick={this.handleClose}>Impressum</MenuItem>
-                  <MenuItem id="logout" onClick={this.handleClose}>Log out</MenuItem>
+                  <MenuItem id="terms_and_condition" onClick={this.handleOpenItem}>Terms and Conditions</MenuItem>
+                  <MenuItem id="privacy_policy" onClick={this.handleOpenItem}>Privacy Policy</MenuItem>
+                  <MenuItem id="imressum" onClick={this.handleOpenItem}>Impressum</MenuItem>
+                  <MenuItem id="logout" onClick={this.handleOpenItem}>Log out</MenuItem>
                 </Menu>
+                <Dialog
+                  open={this.state.settings_dialog_items.terms_and_condition}
+                  onClose={this.handleCloseModal}
+                  scroll="paper"
+                  aria-labelledby="scroll-dialog-title"
+                >
+                  <DialogTitle id="scroll-dialog-title">Subscribe</DialogTitle>
+                  <DialogContent dividers={true}>
+                    <DialogContentText>
+                      {[...new Array(100)]
+                        .map(
+                          () => `heyeyyeyeyeyeeeeeeey`,
+                        )
+                      .join('\n')}
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={this.handleCloseModal} color="primary">
+                      Cancel
+                    </Button>
+                    <Button onClick={this.handleCloseModal} color="primary">
+                      Subscribe
+                    </Button>
+                  </DialogActions>
+                </Dialog>
               </MainNavBarElements>
             </MainNavBar>
           </NavBar>
