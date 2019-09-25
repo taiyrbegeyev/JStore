@@ -1,6 +1,7 @@
 import { auth, db } from '../firebase'
 
 export const getStarted = (email, actionCodeSettings, errHandler, completionHandler) => {
+  auth.signOut()
   auth.sendSignInLinkToEmail(email, actionCodeSettings)
     .then(() => {
       window.localStorage.setItem('emailForSignIn', email)
@@ -21,6 +22,7 @@ export const registerNewUser = (name, email, college, actionCodeSettings, errHan
     createdAt: new Date(),
   }
 
+  auth.signOut()
   auth.sendSignInLinkToEmail(email, actionCodeSettings)
     .then(() => {
       window.localStorage.setItem('emailForSignIn', email);

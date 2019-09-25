@@ -8,7 +8,8 @@ import Intro from 'components/Intro/Intro'
 
 class Landing extends Component {
   state = {
-    isAuth: true
+    isAuth: true,
+    user: null
   }
   
   componentDidMount = async () => {
@@ -25,7 +26,7 @@ class Landing extends Component {
   render () {
     return (
       <LandingPageWrapper>
-        <Header isAuth={this.state.isAuth} />
+        <Header isAuth={this.state.isAuth} user={this.state.user} />
         <Intro />
       </LandingPageWrapper>
     )

@@ -29,7 +29,7 @@ class Login extends Component {
   handleRegisterNewUser = (e) => {
     e.preventDefault()
     const actionCodeSettings = {
-      'url': `${process.env.REACT_APP_BASE_URL}`,
+      'url': `${process.env.REACT_APP_BASE_URL}/home`,
       'handleCodeInApp': true
     }
 
