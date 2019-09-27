@@ -33,27 +33,29 @@ class SignUp extends Component {
 
   handleCheckEmail = (e) => {
     e.preventDefault()
-    db.collection('users').doc(this.state.email || "error").get()
-      .then(email => {
-        if (!email.exists) {
-          this.setState({
-            emailExists: false
-          }, () => {
-            console.log('Email doesnt exist')
-            localStorage.setItem("email", this.state.email);
-          })
-        } else {
-          this.setState({
-            emailExists: true
-          }, () => {
-            console.log('Email exists')
-          })
-          this.handleEmailLinkAuth()
-        }
-      })
-      .catch(err => {
-        console.log('Error getting document', err);
-      });
+    if (!this.state.emailSentSuccessfully) {
+      db.collection('users').doc(this.state.email || "error").get()
+        .then(email => {
+          if (!email.exists) {
+            this.setState({
+              emailExists: false
+            }, () => {
+              console.log('Email doesnt exist')
+              localStorage.setItem("email", this.state.email);
+            })
+          } else {
+            this.setState({
+              emailExists: true
+            }, () => {
+              console.log('Email exists')
+            })
+            this.handleEmailLinkAuth()
+          }
+        })
+        .catch(err => {
+          console.log('Error getting document', err);
+        })
+    }
   }
 
   handleEmailLinkAuth = () => {
@@ -68,6 +70,10 @@ class SignUp extends Component {
 
     getStarted(this.state.email, actionCodeSettings, errHandler => {
       alert('Error, please make sure that everything is valid')
+      this.setState({
+        loading: false,
+        emailSentSuccessfully: false
+      })
     }, () => {
       this.setState({
         loading: false,
@@ -91,7 +97,7 @@ class SignUp extends Component {
           ? <EmailSent />
           : 
           <React.Fragment>
-            <SignUpForm novalidate autoComplete="off">
+            <SignUpForm noValidate>
               <InputContainer>
                 <Input
                   type="text"
@@ -114,12 +120,12 @@ class SignUp extends Component {
                 <LegalNotice>By clicking Continue, you are agreeing to our <LegalNoticeAnchors>Terms of Service</LegalNoticeAnchors> and <LegalNoticeAnchors>Privacy Policy</LegalNoticeAnchors>.</LegalNotice>
               </LegalNoticeContainer>
             </SignUpForm>
-            <AlreadyHaveAccountContainer>
+            {/* <AlreadyHaveAccountContainer>
               <AlreadyHaveAccount>Just want to test JStore?</AlreadyHaveAccount>
             </AlreadyHaveAccountContainer>
             <LoginLinkContainer>
               <LoginLink to={'/demo'}>Demo</LoginLink>
-            </LoginLinkContainer>
+            </LoginLinkContainer> */}
             {
               this.state.loading &&
               <LoadingContainer>

@@ -10,7 +10,6 @@ export const getStarted = (email, actionCodeSettings, errHandler, completionHand
     .catch((err) => {
       console.log(err)
       errHandler()
-      completionHandler()
     })
 }
 
