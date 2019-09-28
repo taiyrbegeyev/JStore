@@ -10,7 +10,11 @@ class WelcomeBack extends Component {
       <Container>
         <WelcomeBackText>Welcome Back!</WelcomeBackText>
         <MainNavBarElementsLinks to={'/home'}>
-          <StartUp>Start Up</StartUp>
+          <StartUp
+            variant="outlined"
+          >
+            Start Up
+          </StartUp>
         </MainNavBarElementsLinks>
       </Container>
     )

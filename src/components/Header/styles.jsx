@@ -39,7 +39,8 @@ export const LogoImage = styled.img`
 
 export const MainNavBar = styled.ul`
   list-style-type: none;
-  display: none;
+  /* display: none; */
+  margin-right: 2rem;
 
   @media (min-width: 768px) {
     display: flex;
@@ -68,10 +69,12 @@ export const MainNavBarElementsLinks = styled(Link)`
     outline: none;
     text-decoration: none;
     cursor: pointer;
-    padding: 0 2rem;
   }
 
   @media (min-width: 768px) {
+    &&& {
+      padding: 0 2rem;
+    }
   }
 `
 
@@ -82,5 +85,13 @@ export const LoginButton = styled(Button)`
     border: 0.2rem solid;
     border-color: #004180;
     text-transform: none;
+    background-color: white;
+  }
+
+  @media (min-width: 768px) {
+    &&& {
+      font-size: 1.8rem;
+      padding: 0.5rem 3rem;
+    }
   }
 `

@@ -8,10 +8,25 @@ const PrivateRoute = ({ isAuth, user, component: Component, ...rest }) => {
     {...rest}
     render={props => (
       isAuth === true
-      ? <Component {...props} />
+      ? <Component
+          {...props}
+        />
       : <Redirect to='get-started' />
     )
     }
+  />
+}
+
+const NormalRoute = ({ windowWidth, windowHeight, component: Component, ...rest }) => {
+  return <Route
+    {...rest}
+    render={props => (
+      <Component
+        windowWidth={windowWidth}
+        windowHeight={windowHeight}
+        {...props}
+      />
+    )}
   />
 }
 
@@ -30,9 +45,7 @@ class App extends Component {
           user: user
         })
       } else {
-        console.log('1')
         if (auth.isSignInWithEmailLink(window.location.href)) {
-          console.log('2')
           let email = window.localStorage.getItem('emailForSignIn')
           if (!email) {
             email = window.prompt('Please provide your email for confirmation')
@@ -107,7 +120,7 @@ class App extends Component {
         )
       } else {
         return (
-          <Route
+          <NormalRoute
             key={index}
             {...routeProps}
             component={component}

@@ -23,11 +23,13 @@ export const routes = [
   },
   {
     path: '/home',
+    exact: true,
     isPrivate: true,
     component: Home
   },
   {
-    path: '/home/upload',
+    path: '/upload',
+    exact: true,
     isPrivate: true,
     component: UploadProduct
   }

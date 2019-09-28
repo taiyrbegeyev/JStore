@@ -5,9 +5,7 @@ import  { getStarted } from 'firebase/auth.js'
 import {
   SignUpContainer, Heading, LogoImage,
   SignUpForm, InputContainer, ButtonContainer,
-  LegalNoticeContainer, LegalNotice, LegalNoticeAnchors,
-  AlreadyHaveAccountContainer, AlreadyHaveAccount,
-  LoginLinkContainer, LoginLink, LoadingContainer
+  LegalNoticeContainer, LegalNotice, LegalNoticeAnchors, LoadingContainer
 } from './styles'
 import EmailSent from 'components/EmailSent/EmailSent'
 import { Input } from 'components/Input/Input'

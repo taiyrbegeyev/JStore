@@ -12,6 +12,11 @@ export const WelcomeBackText = styled.p`
   font-weight: 420;
   margin-right: 4rem;
   color: #004180;
+  display: none;
+
+  @media (min-width: 768px) {
+    display: block;
+  }
 `
 
 export const MainNavBarElementsLinks = styled(Link)`
@@ -23,18 +28,29 @@ export const MainNavBarElementsLinks = styled(Link)`
     outline: none;
     text-decoration: none;
     cursor: pointer;
-    padding: 0 2rem;
+  }
+
+  @media (min-width: 768px) {
+    &&& {
+      padding: 0 2rem;
+    }
   }
 `
 
 export const StartUp = styled(Button)`
   &&& {
     color: #004180;
-    font-size: 1.8rem;
-    padding: 0.5rem 3rem;
+    font-size: 1.6rem;
     border: 0.2rem solid;
     border-color: #004180;
     text-transform: none;
     background-color: white;
+  }
+
+  @media (min-width: 768px) {
+    &&& {
+      font-size: 1.8rem;
+      padding: 0.5rem 3rem;
+    }
   }
 `

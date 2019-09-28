@@ -1,11 +1,13 @@
 import styled from 'styled-components'
-import { Button } from '@material-ui/core'
+import { Button, ListItemIcon } from '@material-ui/core'
 
 export const HeaderContainer = styled.div`
   height: 15vh;
   width: 100vw;
   display: flex;
   font-size: 1.4rem;
+  align-items: center;
+  padding: 0 2rem;
 
   @media (min-width: 768px) {
     padding: 0 8rem;
@@ -33,17 +35,20 @@ export const LogoAnchor = styled.a`
 `
 
 export const LogoImage = styled.img`
-  width: 18rem;
+  width: 14rem;
+
+  @media (min-width: 768px) {
+    width: 18rem;
+  }
 `
 
 export const MainNavBar = styled.ul`
   list-style-type: none;
-  display: none;
 
-  @media (min-width: 768px) {
+  @media (min-width: 769px) {
     display: flex;
-    margin-right: 30px;
     flex-direction: row;
+    align-items: center;
     justify-content: flex-end;
     flex: 1;
   }
@@ -74,12 +79,17 @@ export const MainNavBarElementsLinks = styled(Button)`
   }
 `
 
-export const LoginButton = styled(Button)`
+export const ListContainer = styled.div`
+  width: auto;
+  box-sizing: border-box;
+  padding: 0 1rem;
+`
+
+export const DrawerItems = styled(ListItemIcon)`
   &&& {
     color: #004180;
-    font-size: 1.6rem;
-    border: 0.2rem solid;
-    border-color: #004180;
-    text-transform: none;
+    outline: none;
+    text-decoration: none;
+    cursor: pointer;
   }
 `

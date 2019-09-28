@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import  { anonymousSignIn } from 'firebase/auth.js'
-import { auth } from 'firebase.js'
 import {
   HeaderContainer, NavBar, Logo, LogoImage, LogoAnchor,
   MainNavBar, MainNavBarElements, MainNavBarElementsLinks,

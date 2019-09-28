@@ -6,6 +6,11 @@ export const ContentContainer = styled.div`
   flex-wrap: wrap;
   margin-top: 1rem;
   justify-content: center;
+  padding: 0 2rem;
+
+  @media (min-width: 768px) {
+    padding: 0;
+  }
 `
 
 export const CheckedIcon = styled(CheckCircleIcon)`
