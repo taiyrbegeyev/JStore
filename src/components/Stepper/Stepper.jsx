@@ -22,18 +22,18 @@ const theme = createMuiTheme({
   },
 })
 
-// const categories = [
-//   'Apparel, Shoes & Watches',
-//   'Automotive, Motorcycle & Industrial',
-//   'Beauty & Health',
-//   'Books & Audible',
-//   'Electronics & Computers',
-//   'Grocery/Food',
-//   'Home, Garden, Pets & DIY',
-//   'Movies, TV, Music & Games',
-//   'Sports & Outdoors',
-//   'Other'
-// ]
+const categories = [
+  'Apparel, Shoes & Watches',
+  'Automotive, Motorcycle & Industrial',
+  'Beauty & Health',
+  'Books & Audible',
+  'Electronics & Computers',
+  'Grocery/Food',
+  'Home, Garden, Pets & DIY',
+  'Movies, TV, Music & Games',
+  'Sports & Outdoors',
+  'Other'
+]
 
 const conditions = [
   'New',
@@ -98,7 +98,8 @@ class StepperUpload extends Component {
         return (
           <React.Fragment>
             <RedditTextField label="Title*" data_name="title" parentCallBack={this.callBackfunction} />
-            <SimpleSelect data_name="condition" drop_down_items={conditions} parentCallBack={this.callBackfunction} />
+            <SimpleSelect label="Category*" data_name="category" drop_down_items={categories} parentCallBack={this.callBackfunction} />
+            <SimpleSelect label="Condition*" data_name="condition" drop_down_items={conditions} parentCallBack={this.callBackfunction} />
           </React.Fragment>
         )
       default:
@@ -132,7 +133,7 @@ class StepperUpload extends Component {
                   this.handleSteps ()
                 }
                 <div>
-                  <div style={{marginTop: '10px'}}>
+                  <div style={{marginTop: '3rem'}}>
                     <Button
                       disabled={activeStep === 0}
                       onClick={this.handleBack}

@@ -12,7 +12,7 @@ const useStyles = theme => ({
     marginLeft: '1.5rem'
   },
   formControl: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
       width: 300
     },
@@ -33,12 +33,12 @@ class SimpleSelect extends Component {
   }
   
   render() {
-    const { classes, drop_down_items } = this.props
+    const { classes, label, drop_down_items } = this.props
     return (
       <div className={classes.root}>
         <FormControl fullWidth variant="outlined" className={classes.formControl}>
         <InputLabel htmlFor="outlined-age-simple">
-          Age
+          {label}
         </InputLabel>
         <Select
           value={this.state.selected_item}
