@@ -51,7 +51,6 @@ class StepperUpload extends Component {
       category: null,
       condition: null,
       description: null,
-      pick_up_location: null,
       price: null,
       payment_options: null
     }
@@ -119,7 +118,11 @@ class StepperUpload extends Component {
         )
       case 2:
         return (
-          <MultilineTextField />
+          <MultilineTextField
+            label="Description*"
+            data_name="description"
+            parentCallBack={this.callBackfunction}
+          />
         )
       default:
         return
