@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import RedditTextField from 'components/RedditTextField/RedditTextField'
+import SimpleSelect from 'components/Select/Select'
 
 const theme = createMuiTheme({
   typography: {
@@ -19,25 +20,44 @@ const theme = createMuiTheme({
       main: '#004180',
     },
   },
-  // overrides: {
-  //   MuiStepIcon: {
-  //     root: {
-  //       color: 'black',
-  //     },
-  //     active: {
-  //       color: 'black',
-  //     }
-  //   }
-  // }
 })
+
+// const categories = [
+//   'Apparel, Shoes & Watches',
+//   'Automotive, Motorcycle & Industrial',
+//   'Beauty & Health',
+//   'Books & Audible',
+//   'Electronics & Computers',
+//   'Grocery/Food',
+//   'Home, Garden, Pets & DIY',
+//   'Movies, TV, Music & Games',
+//   'Sports & Outdoors',
+//   'Other'
+// ]
+
+const conditions = [
+  'New',
+  'Open Box',
+  'Used',
+  'For parts or not working'
+]
 
 class StepperUpload extends Component {
   state = {
-    activeStep: 0
+    activeStep: 0,
+    data: {
+      title: null,
+      category: null,
+      condition: null,
+      description: null,
+      pick_up_location: null,
+      price: null,
+      payment_options: null
+    }
   }
 
   getSteps() {
-    return ['General Information', 'Add Product Details', 'Add Product Description', 'Add Product Specifics', 'Add Sellings Details']
+    return ['General Information', 'Add Product Details', 'Add Product Description', 'Add Product Images', 'Add Sellings Details']
   }
   
   getStepContent(step) {
@@ -49,8 +69,7 @@ class StepperUpload extends Component {
         return ''
     }
   }
-  
-  
+
   handleNext = () => {
     this.setState((prevState) => {
       return {
@@ -73,13 +92,13 @@ class StepperUpload extends Component {
     })
   }
 
-  handleStepsInputs = () => {
+  handleSteps = () => {
     switch (this.state.activeStep) {
       case 1:
         return (
           <React.Fragment>
-            <RedditTextField />
-            <RedditTextField />
+            <RedditTextField label="Title*" data_name="title" parentCallBack={this.callBackfunction} />
+            <SimpleSelect data_name="condition" drop_down_items={conditions} parentCallBack={this.callBackfunction} />
           </React.Fragment>
         )
       default:
@@ -87,7 +106,17 @@ class StepperUpload extends Component {
     }
   }
 
+  callBackfunction = (key, value) => {
+    this.setState(prevState => ({
+        data: {
+          ...prevState.data,
+          [key]: value
+        }
+    }))
+  }
+
   render() {
+    console.log(this.state.data)
     const {activeStep} = this.state
     const steps = this.getSteps()
     return (
@@ -100,7 +129,7 @@ class StepperUpload extends Component {
               <StepContent>
                 <Typography>{this.getStepContent(index)}</Typography>
                 {
-                  this.handleStepsInputs ()
+                  this.handleSteps ()
                 }
                 <div>
                   <div style={{marginTop: '10px'}}>

@@ -6,7 +6,6 @@ import {
   MainNavBar, MainNavBarElements, MainNavBarElementsLinks,
   ListContainer, DrawerItems
 } from './styles'
-import { createMuiTheme } from '@material-ui/core/styles'
 import {
   Drawer, List,
   ListItem, ListItemText,
@@ -14,7 +13,7 @@ import {
   DialogActions, DialogContent, DialogContentText,
   DialogTitle
 } from '@material-ui/core'
-import { ThemeProvider } from '@material-ui/styles'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore'
 import PublishIcon from '@material-ui/icons/Publish'
 import NotificationsIcon from '@material-ui/icons/Notifications'
@@ -138,10 +137,8 @@ class HomePageHeader extends Component {
     }
     
     const open = Boolean(this.state.anchorEl)
-    const { windowWidth } = this.state
-    console.log(windowWidth)
     return (
-      <ThemeProvider theme={theme}>
+      <MuiThemeProvider theme={theme}>
         <HeaderContainer>
           <NavBar>
             <Logo>
@@ -304,7 +301,7 @@ class HomePageHeader extends Component {
             </Drawer>
           </NavBar>
         </HeaderContainer>
-      </ThemeProvider>
+      </MuiThemeProvider>
     )
   }
 }
