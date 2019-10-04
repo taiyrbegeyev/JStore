@@ -4,6 +4,10 @@ import StepperUpload from 'components/Stepper/Stepper'
 import { MainContainer, UploadProductTitle } from './styles'
 
 class UploadProduct extends Component {
+  componentWillMount () {
+    window.localStorage.clear()
+  }
+  
   render() {
     return (
       <React.Fragment>

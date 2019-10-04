@@ -51,17 +51,18 @@ class CustomizedInputs extends Component {
       input_value: e.target.value
     }, () => {
       this.props.parentCallBack (this.props.data_name, this.state.input_value)
+      window.localStorage.setItem(this.props.data_name, this.state.input_value)
     })
   }
   
   render () {
-    const { classes, label } = this.props
+    const { classes, label} = this.props
     return (
       <div className={classes.root}>
         <RedditTextField
           label={label}
           className={classes.margin}
-          defaultValue=""
+          defaultValue={window.localStorage.getItem(this.props.data_name)}
           variant="filled"
           id="reddit-input"
           onChange={this.handleInputBox}

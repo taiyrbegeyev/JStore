@@ -28,7 +28,8 @@ class SimpleSelect extends Component {
     this.setState({
       selected_item: e.target.value,
     }, () => {
-      this.props.parentCallBack (this.props.data_name, this.state.selected_item)
+      this.props.parentCallBack(this.props.data_name, this.state.selected_item)
+      window.localStorage.setItem(this.props.data_name, this.state.selected_item)
     })
   }
   
@@ -41,7 +42,7 @@ class SimpleSelect extends Component {
           {label}
         </InputLabel>
         <Select
-          value={this.state.selected_item}
+          value={window.localStorage.getItem(this.props.data_name)}
           onChange={this.handleDropDown}
         >
           {

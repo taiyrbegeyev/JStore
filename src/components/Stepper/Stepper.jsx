@@ -10,6 +10,7 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import RedditTextField from 'components/RedditTextField/RedditTextField'
 import SimpleSelect from 'components/Select/Select'
+import MultilineTextField from 'components/MultiLineTextField/MultiLineTextField'
 
 const theme = createMuiTheme({
   typography: {
@@ -97,10 +98,28 @@ class StepperUpload extends Component {
       case 1:
         return (
           <React.Fragment>
-            <RedditTextField label="Title*" data_name="title" parentCallBack={this.callBackfunction} />
-            <SimpleSelect label="Category*" data_name="category" drop_down_items={categories} parentCallBack={this.callBackfunction} />
-            <SimpleSelect label="Condition*" data_name="condition" drop_down_items={conditions} parentCallBack={this.callBackfunction} />
+            <RedditTextField
+              label="Title*"
+              data_name="title"
+              parentCallBack={this.callBackfunction}
+            />
+            <SimpleSelect
+              label="Category*"
+              data_name="category"
+              drop_down_items={categories}
+              parentCallBack={this.callBackfunction}
+            />
+            <SimpleSelect
+              label="Condition*"
+              data_name="condition"
+              drop_down_items={conditions}
+              parentCallBack={this.callBackfunction}
+            />
           </React.Fragment>
+        )
+      case 2:
+        return (
+          <MultilineTextField />
         )
       default:
         return
