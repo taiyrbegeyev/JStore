@@ -56,11 +56,12 @@ class CustomizedInputs extends Component {
   }
   
   render () {
-    const { classes, label} = this.props
+    const { classes, label, error} = this.props
     return (
       <div className={classes.root}>
         <RedditTextField
           label={label}
+          error={error}
           className={classes.margin}
           defaultValue={window.localStorage.getItem(this.props.data_name)}
           variant="filled"

@@ -11,6 +11,9 @@ import { ThemeProvider } from '@material-ui/styles'
 import RedditTextField from 'components/RedditTextField/RedditTextField'
 import SimpleSelect from 'components/Select/Select'
 import MultilineTextField from 'components/MultiLineTextField/MultiLineTextField'
+import ImageUploader from 'components/ImageUploader/ImageUploader'
+import PriceInput from 'components/PriceInput/PriceInput'
+import PaymentOptionsCheckboxes from 'components/PaymentOptionsCheckboxes/PaymentOptionsCheckboxes'
 
 const theme = createMuiTheme({
   typography: {
@@ -51,9 +54,12 @@ class StepperUpload extends Component {
       category: null,
       condition: null,
       description: null,
+      file: null,
       price: null,
-      payment_options: null
-    }
+      payment_options: []
+    },
+    error: false,
+    isLoading: false
   }
 
   getSteps() {
@@ -70,9 +76,51 @@ class StepperUpload extends Component {
     }
   }
 
+  handleSubmit = () => {
+    if (this.handleNext() === true) {
+
+    }
+  }
+
   handleNext = () => {
+    const { data } = this.state
+    switch (this.state.activeStep) {
+      case 1:
+        if (!data.title || !data.category || !data.condition) {
+          this.setState({
+            error: true
+          })
+          return
+        }
+        break
+      case 2:
+        if (!data.description) {
+          this.setState({
+            error: true
+          })
+          return
+        }
+        break
+      case 3:
+        if (!data.file) {
+          this.setState({
+            error: true
+          })
+          return
+        }
+        break
+      case 4:
+        if (!data.price || !data.payment_options || !data.payment_options.length) {
+          this.setState({
+            error: true
+          })
+          return
+        }
+        return true
+    }
     this.setState((prevState) => {
       return {
+        error: false,
         activeStep: prevState.activeStep + 1
       }
     })
@@ -93,6 +141,7 @@ class StepperUpload extends Component {
   }
 
   handleSteps = () => {
+    const { error, data } = this.state
     switch (this.state.activeStep) {
       case 1:
         return (
@@ -101,18 +150,21 @@ class StepperUpload extends Component {
               label="Title*"
               data_name="title"
               parentCallBack={this.callBackfunction}
+              error={error && !data.title}
             />
             <SimpleSelect
               label="Category*"
               data_name="category"
               drop_down_items={categories}
               parentCallBack={this.callBackfunction}
+              error={error && !data.category}
             />
             <SimpleSelect
               label="Condition*"
               data_name="condition"
               drop_down_items={conditions}
               parentCallBack={this.callBackfunction}
+              error={error && !data.condition}
             />
           </React.Fragment>
         )
@@ -122,7 +174,31 @@ class StepperUpload extends Component {
             label="Description*"
             data_name="description"
             parentCallBack={this.callBackfunction}
+            error={error && !data.description}
           />
+        )
+      case 3:
+        return (
+          <ImageUploader
+            data_name="file"
+            parentCallBack={this.callBackfunction}
+            error={error && !data.file}
+          />
+        )
+      case 4:
+        return (
+          <React.Fragment>
+            <PriceInput
+              data_name="price"
+              parentCallBack={this.callBackfunction}
+              error={error && !data.price}
+            />
+            <PaymentOptionsCheckboxes
+              data_name="payment_options"
+              parentCallBack={this.callBackfunction}
+              error={error && (!data.payment_options || !data.payment_options.length)}
+            />
+          </React.Fragment>
         )
       default:
         return
@@ -165,7 +241,7 @@ class StepperUpload extends Component {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={this.handleNext}
+                      onClick={activeStep === steps.length - 1 ? this.handleSubmit : this.handleNext}
                     >
                       {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                     </Button>

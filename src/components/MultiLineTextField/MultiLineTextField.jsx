@@ -35,7 +35,7 @@ class MultiLineTextField extends Component {
   }
   
   render() {
-    const { classes, label } = this.props
+    const { classes, label, error } = this.props
     return (
       <div className={classes.container}>
         <TextField
@@ -48,6 +48,7 @@ class MultiLineTextField extends Component {
           className={classes.textField}
           variant="outlined"
           onChange={this.handleInputBox}
+          error={error}
         />
       </div>
     )

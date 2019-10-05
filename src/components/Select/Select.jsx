@@ -34,7 +34,7 @@ class SimpleSelect extends Component {
   }
   
   render() {
-    const { classes, label, drop_down_items } = this.props
+    const { classes, label, drop_down_items, error } = this.props
     return (
       <div className={classes.root}>
         <FormControl fullWidth variant="outlined" className={classes.formControl}>
@@ -44,6 +44,7 @@ class SimpleSelect extends Component {
         <Select
           value={window.localStorage.getItem(this.props.data_name)}
           onChange={this.handleDropDown}
+          error={error}
         >
           {
             drop_down_items.map((item, index) => (
