@@ -17,7 +17,7 @@ const useStyles = theme => ({
 
 class PaymentOptionsCheckboxes extends Component {
   state = {
-    cash: true,
+    cash: false,
     bank_transfer: false,
     paypal: false,
     meal_plan: false

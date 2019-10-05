@@ -1,9 +1,13 @@
 import styled from 'styled-components'
 
 export const LoginWrapper = styled.div`
-  height: 100vh;
   width: 100vw;
+  height: 85vh;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (min-width: 768px) {
+    height: 100vh;
+  }
 `
