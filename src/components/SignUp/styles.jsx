@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-// import { Card } from '@material-ui/core'
 
 export const SignUpContainer = styled.div`
   width: 100%;

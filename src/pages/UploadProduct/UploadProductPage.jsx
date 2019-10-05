@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
+import { MainContainer, UploadProductTitle } from './styles'
 import HomePageHeader from 'components/HomePageHeader/HomePageHeader'
 import StepperUpload from 'components/Stepper/Stepper'
-import { MainContainer, UploadProductTitle } from './styles'
 
 class UploadProduct extends Component {
   componentWillMount () {

@@ -5,9 +5,7 @@ import {
   LoginForm, InputContainer, ButtonContainer,
   LoadingContainer
 } from './styles'
-import { Input } from 'components/Input/Input'
-import { Button } from 'components/Button/Button'
-import EmailSent from 'components/EmailSent/EmailSent'
+import { Input, Button, EmailSent } from 'components/export'
 import logo from 'assets/jstore_logo.svg'
 import { PacmanLoader } from 'react-spinners'
 

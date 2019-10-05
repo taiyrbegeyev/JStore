@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/styles'
-import FormLabel from '@material-ui/core/FormLabel'
-import FormControl from '@material-ui/core/FormControl'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
+import {
+  FormLabel, FormControl,
+  FormGroup, FormControlLabel,
+  Checkbox
+} from '@material-ui/core'
 
 const useStyles = theme => ({
   root: {

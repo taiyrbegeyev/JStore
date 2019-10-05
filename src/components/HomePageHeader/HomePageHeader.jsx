@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { auth } from 'firebase.js'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import {
   HeaderContainer, NavBar, Logo, LogoImage, LogoAnchor,
   MainNavBar, MainNavBarElements, MainNavBarElementsLinks,
@@ -13,13 +14,11 @@ import {
   DialogActions, DialogContent, DialogContentText,
   DialogTitle
 } from '@material-ui/core'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import LocalGroceryStoreIcon from '@material-ui/icons/LocalGroceryStore'
-import PublishIcon from '@material-ui/icons/Publish'
-import NotificationsIcon from '@material-ui/icons/Notifications'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import SettingsIcon from '@material-ui/icons/Settings'
-import DehazeIcon from '@material-ui/icons/Dehaze'
+import {
+  LocalGroceryStore, Publish,
+  Notifications, AccountCircle,
+  Settings, Dehaze
+} from '@material-ui/icons'
 import logo from 'assets/jstore_logo.svg'
 
 const theme = createMuiTheme({
@@ -27,7 +26,6 @@ const theme = createMuiTheme({
     htmlFontSize: 10
   }
 })
-
 
 class HomePageHeader extends Component {
   state = {
@@ -152,23 +150,23 @@ class HomePageHeader extends Component {
               <MainNavBar>
               <MainNavBarElements>
                 <MainNavBarElementsLinks>
-                  <LocalGroceryStoreIcon />
+                  <LocalGroceryStore />
                 </MainNavBarElementsLinks>
                 <MainNavBarElementsLinks href="/upload">
-                  <PublishIcon />
+                  <Publish />
                 </MainNavBarElementsLinks>
                 <MainNavBarElementsLinks>
-                  <NotificationsIcon />
+                  <Notifications />
                 </MainNavBarElementsLinks>
                 <MainNavBarElementsLinks>
-                  <AccountCircleIcon />
+                  <AccountCircle />
                 </MainNavBarElementsLinks>
                 <MainNavBarElementsLinks
                   aria-controls="simple-menu"
                   aria-haspopup="true"
                   onClick={this.handleClick}
                 >
-                  <SettingsIcon />
+                  <Settings />
                 </MainNavBarElementsLinks>
               </MainNavBarElements>
               </MainNavBar>
@@ -178,7 +176,7 @@ class HomePageHeader extends Component {
                   <MainNavBarElementsLinks
                     onClick={this.toggleDrawer}
                   >
-                    <DehazeIcon />
+                    <Dehaze />
                   </MainNavBarElementsLinks>
                 </MainNavBarElements>
               </MainNavBar>
@@ -268,31 +266,31 @@ class HomePageHeader extends Component {
                 <List>
                   <ListItem button>
                     <DrawerItems>
-                      <LocalGroceryStoreIcon />
+                      <LocalGroceryStore />
                     </DrawerItems>
                     <ListItemText primary={'Buy'} />
                   </ListItem>
                   <ListItem button>
                     <DrawerItems>
-                      <PublishIcon />
+                      <Publish />
                     </DrawerItems>
                     <ListItemText primary={'Sell'} />
                   </ListItem>
                   <ListItem button>
                     <DrawerItems>
-                      <NotificationsIcon />
+                      <Notifications />
                     </DrawerItems>
                     <ListItemText primary={'Messages'} />
                   </ListItem>
                   <ListItem button>
                     <DrawerItems>
-                      <AccountCircleIcon />
+                      <AccountCircle />
                     </DrawerItems>
                     <ListItemText primary={'Profile'} />
                   </ListItem>
                   <ListItem button onClick={this.handleClick}>
                     <DrawerItems>
-                      <SettingsIcon />
+                      <Settings />
                     </DrawerItems>
                     <ListItemText primary={'Settings'} />
                   </ListItem>
