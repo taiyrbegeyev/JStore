@@ -1,26 +1,47 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
-import { db } from 'firebase.js'
-import  { getStarted } from 'firebase/auth.js'
+import { getStarted } from 'firebase/auth.js'
 import {
   SignUpContainer, Heading, LogoImage,
   SignUpForm, InputContainer, ButtonContainer,
   LegalNoticeContainer, LegalNotice, LegalNoticeAnchors, LoadingContainer
 } from './styles'
-import EmailSent from 'components/EmailSent/EmailSent'
-import { Input } from 'components/Input/Input'
-import { Button } from 'components/Button/Button'
+import { EmailSent, Button } from 'components/export'
+import { InputAdornment, TextField } from '@material-ui/core'
+import { withStyles } from '@material-ui/styles'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { PacmanLoader } from 'react-spinners'
 import logo from 'assets/jstore_logo.svg'
 
+const theme = createMuiTheme({
+  typography: {
+    htmlFontSize: 10
+  }
+})
+
+const useStyles = theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    flexBasis: 200,
+    whiteSpace: 'nowrap'
+  },
+})
+
 class SignUp extends Component {
   state = {
-    name: '',
     email: '',
-    password: '',
     emailSentSuccessfully: false,
-    emailExists: undefined,
-    loading: false
+    loading: false,
+    error: false
+  }
+
+  validate = (email) => {
+    // eslint-disable-next-line
+    const expression = /(?!.*\.{2})^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i
+
+    return expression.test(String(email).toLowerCase())
   }
 
   handleInputBox = (e) => {
@@ -31,32 +52,20 @@ class SignUp extends Component {
 
   handleCheckEmail = (e) => {
     e.preventDefault()
-    if (!this.state.emailSentSuccessfully) {
-      db.collection('users').doc(this.state.email || "error").get()
-        .then(email => {
-          if (!email.exists) {
-            this.setState({
-              emailExists: false
-            }, () => {
-              console.log('Email doesnt exist')
-              localStorage.setItem("email", this.state.email);
-            })
-          } else {
-            this.setState({
-              emailExists: true
-            }, () => {
-              console.log('Email exists')
-            })
-            this.handleEmailLinkAuth()
-          }
-        })
-        .catch(err => {
-          console.log('Error getting document', err);
-        })
+    const { email, emailSentSuccessfully } = this.state
+    
+    // validate email first
+    // if user entered @jacobs-university.de (he is not supposed to do it)
+    // then remove it from string
+    const validated_email = email.replace("@jacobs-university.de", "");
+    const email_jacobs = validated_email + "@jacobs-university.de"
+
+    if (this.validate(email_jacobs) && !emailSentSuccessfully) {
+      this.handleEmailLinkAuth(email_jacobs)
     }
   }
 
-  handleEmailLinkAuth = () => {
+  handleEmailLinkAuth = (email) => {
     const actionCodeSettings = {
       'url': `${process.env.REACT_APP_BASE_URL}/home`,
       'handleCodeInApp': true
@@ -66,7 +75,7 @@ class SignUp extends Component {
       loading: true
     })
 
-    getStarted(this.state.email, actionCodeSettings, errHandler => {
+    getStarted(email, actionCodeSettings, errHandler => {
       alert('Error, please make sure that everything is valid')
       this.setState({
         loading: false,
@@ -80,12 +89,10 @@ class SignUp extends Component {
     })
   }
   
-  render () {
-    if (this.state.emailExists === false) {
-      return <Redirect to='/register' />
-    }
-    
+  render () {    
+    const { classes } = this.props
     return (
+      <MuiThemeProvider theme={theme}>
       <SignUpContainer>
         <Heading>
           <LogoImage src={logo} />
@@ -97,13 +104,22 @@ class SignUp extends Component {
           <React.Fragment>
             <SignUpForm noValidate>
               <InputContainer>
-                <Input
+                <TextField
+                  id="outlined-adornment-email"
+                  className={classes.textField}
+                  variant="outlined"
                   type="text"
+                  label="Email"
                   name="email"
-                  maxlength="255"
-                  placeholder="Email (@jacobs-university.de)"
                   value={this.state.email}
                   onChange={this.handleInputBox}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        @jacobs-university.de
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </InputContainer>
               <ButtonContainer>
@@ -118,12 +134,6 @@ class SignUp extends Component {
                 <LegalNotice>By clicking Continue, you are agreeing to our <LegalNoticeAnchors>Terms of Service</LegalNoticeAnchors> and <LegalNoticeAnchors>Privacy Policy</LegalNoticeAnchors>.</LegalNotice>
               </LegalNoticeContainer>
             </SignUpForm>
-            {/* <AlreadyHaveAccountContainer>
-              <AlreadyHaveAccount>Just want to test JStore?</AlreadyHaveAccount>
-            </AlreadyHaveAccountContainer>
-            <LoginLinkContainer>
-              <LoginLink to={'/demo'}>Demo</LoginLink>
-            </LoginLinkContainer> */}
             {
               this.state.loading &&
               <LoadingContainer>
@@ -138,8 +148,9 @@ class SignUp extends Component {
           </React.Fragment>
         }
       </SignUpContainer>
+      </MuiThemeProvider>
     )
   }
 }
 
-export default SignUp
+export default withStyles(useStyles)(SignUp)

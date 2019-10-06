@@ -13,19 +13,16 @@ export const getStarted = (email, actionCodeSettings, errHandler, completionHand
     })
 }
 
-export const registerNewUser = (name, email, college, actionCodeSettings, errHandler, completionHandler) => {
+export const registerNewUser = (name, email, errHandler, completionHandler) => {
   let data = {
-    name: name,
+    fullName: name,
     email: email,
-    college: college,
-    createdAt: new Date(),
+    joinDate: new Date(),
   }
 
-  auth.signOut()
-  auth.sendSignInLinkToEmail(email, actionCodeSettings)
+  db.collection('users').doc(email).set(data)
     .then(() => {
       window.localStorage.setItem('emailForSignIn', email);
-      db.collection('users').doc(email).set(data)
       completionHandler()
     })
     .catch((err) => {

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 export const SignUpContainer = styled.div`
   width: 100%;
   max-width: 51.2rem;
+  padding: 0 2rem;
   @media (min-width: 768px) {
     padding: 6.2rem 10rem 4.8rem;
     box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.1);
@@ -32,13 +33,13 @@ export const SignUpForm = styled.form`
 
 export const InputContainer = styled.div`
   margin: auto;
-  width: 30rem;
+  width: 100%;
   margin-bottom: 1rem;
 `
 
 export const ButtonContainer = styled.div`
   margin: auto;
-  width: 30rem;
+  width: 100%;
   margin-top: 0.7rem;
   margin-bottom: 1.4rem;
 `
@@ -59,17 +60,6 @@ export const LegalNoticeAnchors = styled(Link)`
     color: #004180;
     text-decoration: none; 
   }
-`
-
-export const AlreadyHaveAccountContainer = styled.div`
-  text-align: center;
-  margin-top: 3.4rem;
-`
-
-export const AlreadyHaveAccount = styled.p`
-  color: #737373;
-  font-size: 1.4rem;
-  line-height: 1.63;
 `
 
 export const LoginLinkContainer = styled.div`
