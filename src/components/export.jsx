@@ -5,8 +5,8 @@ import HomePageHeader from 'components/HomePageHeader/HomePageHeader'
 import ImageUploader from 'components/ImageUploader/ImageUploader'
 import {Input} from 'components/Input/Input'
 import Intro from 'components/Intro/Intro'
-import Login from 'components/Login/Login'
 import MultilineTextField from 'components/MultiLineTextField/MultiLineTextField'
+import NewUserModal from 'components/NewUserModal/NewUserModal'
 import PaymentOptionsCheckboxes from 'components/PaymentOptionsCheckboxes/PaymentOptionsCheckboxes'
 import PriceInput from 'components/PriceInput/PriceInput'
 import RedditTextField from 'components/RedditTextField/RedditTextField'
@@ -17,7 +17,7 @@ import WelcomeBack from 'components/WelcomeBack/WelcomeBack'
 export {
   Button, EmailSent, Header,
   HomePageHeader, ImageUploader,
-  Input, Intro, Login, MultilineTextField,
+  Input, Intro, MultilineTextField, NewUserModal,
   PaymentOptionsCheckboxes, PriceInput,
-  RedditTextField, SimpleSelect, Stepper, WelcomeBack
+  RedditTextField, SimpleSelect, Stepper, WelcomeBack,
 }
