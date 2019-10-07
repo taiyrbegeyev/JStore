@@ -39,30 +39,6 @@ class Home extends Component {
         }
       })
     }
-      // if (auth.isSignInWithEmailLink(window.location.href)) {
-      //   // check if user is in the database
-      //   db.collection('users').doc(user_email).get()
-      //     .then(email => {
-      //       if (!email) {
-      //         this.setState({
-      //           emailExists: false,
-      //           email: user_email
-      //         }, () => {
-      //           console.log('Email doesnt exist')
-      //         })
-      //       } else {
-      //         this.setState({
-      //           emailExists: true,
-      //           email: user_email
-      //         }, () => {
-      //           console.log('Email exists')
-      //         })
-      //       }
-      //     })
-      //     .catch(err => {
-      //       console.log('Error getting document', err);
-      //     })
-      // }
   }
   
   render() {
