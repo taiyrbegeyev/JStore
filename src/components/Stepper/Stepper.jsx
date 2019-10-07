@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
-import Stepper from '@material-ui/core/Stepper'
-import Step from '@material-ui/core/Step'
-import StepLabel from '@material-ui/core/StepLabel'
-import StepContent from '@material-ui/core/StepContent'
-import Button from '@material-ui/core/Button'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
-import RedditTextField from 'components/RedditTextField/RedditTextField'
-import SimpleSelect from 'components/Select/Select'
-import MultilineTextField from 'components/MultiLineTextField/MultiLineTextField'
-import ImageUploader from 'components/ImageUploader/ImageUploader'
-import PriceInput from 'components/PriceInput/PriceInput'
-import PaymentOptionsCheckboxes from 'components/PaymentOptionsCheckboxes/PaymentOptionsCheckboxes'
+import {
+  Stepper, Step, StepLabel,
+  StepContent, Button, Paper,
+  Typography
+} from '@material-ui/core'
+import {
+  RedditTextField, SimpleSelect,
+  MultilineTextField, ImageUploader,
+  PriceInput, PaymentOptionsCheckboxes
+} from 'components/export'
+import { PacmanLoader } from 'react-spinners'
+import uuidv1 from 'uuid'
+import { auth } from 'firebase.js'
 
 const theme = createMuiTheme({
   typography: {
@@ -59,7 +59,7 @@ class StepperUpload extends Component {
       payment_options: []
     },
     error: false,
-    isLoading: false
+    loading: false
   }
 
   getSteps() {
@@ -78,7 +78,31 @@ class StepperUpload extends Component {
 
   handleSubmit = () => {
     if (this.handleNext() === true) {
+      this.setState({
+        loading: true
+      })
 
+      const { data } = this.state
+      // verify data once again
+      if (!data.title || !data.category || !data.condition || !data.description ||
+          !data.file || !data.price || !data.payment_options || !data.payment_options.length) {
+
+        alert('Something went wrong. Verify your entries.')
+        this.setState({
+          loading: false
+        })
+        return
+      }
+
+      // In case nothing fails, proceed
+      // upload image to the storage
+      const postId = uuidv1();
+      const post = {
+        ownerId: auth.currentUser.email,
+        ...data,
+      }
+      console.log(post)
+      // 
     }
   }
 
@@ -110,7 +134,10 @@ class StepperUpload extends Component {
         }
         break
       case 4:
-        if (!data.price || !data.payment_options || !data.payment_options.length) {
+        // check if price is a number
+        const price = !data.price || isNaN(data.price)
+        
+        if (price || !data.payment_options || !data.payment_options.length) {
           this.setState({
             error: true
           })
@@ -182,7 +209,7 @@ class StepperUpload extends Component {
           <ImageUploader
             data_name="file"
             parentCallBack={this.callBackfunction}
-            error={error && !data.file}
+            error_img={error && !data.file}
           />
         )
       case 4:
@@ -191,7 +218,7 @@ class StepperUpload extends Component {
             <PriceInput
               data_name="price"
               parentCallBack={this.callBackfunction}
-              error={error && !data.price}
+              error={error && (!data.price || isNaN(data.price))}
             />
             <PaymentOptionsCheckboxes
               data_name="payment_options"
@@ -215,7 +242,6 @@ class StepperUpload extends Component {
   }
 
   render() {
-    console.log(this.state.data)
     const {activeStep} = this.state
     const steps = this.getSteps()
     return (
@@ -229,6 +255,17 @@ class StepperUpload extends Component {
                 <Typography>{this.getStepContent(index)}</Typography>
                 {
                   this.handleSteps ()
+                }
+                {
+                  this.state.loading &&
+                  <React.Fragment>
+                    <PacmanLoader
+                      sizeUnit={"px"}
+                      size={20}
+                      color={'#123abc'}
+                      loading={this.state.loading}
+                    />
+                  </React.Fragment>
                 }
                 <div>
                   <div style={{marginTop: '3rem'}}>
