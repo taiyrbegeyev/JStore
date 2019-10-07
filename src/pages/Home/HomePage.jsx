@@ -16,27 +16,29 @@ class Home extends Component {
   }
   
   componentWillMount () {
-    auth.onAuthStateChanged((user) => {
-      const isNewUser = auth.currentUser.metadata.creationTime === auth.currentUser.metadata.lastSignInTime
-      console.log('isNewUser: ', isNewUser)
-      // get current user's email
-      const user_email = user.email
-      if (user_email) {
-        this.setState({
-          emailExists: !isNewUser,
-          email: user_email
-        }, () => {
-          console.log('Email exists')
-        })
-      } else {
-        this.setState({
-          emailExists: isNewUser,
-          email: user_email
-        }, () => {
-          console.log('Email does not exist')
-        })
-      }
-    })
+    if (auth.isSignInWithEmailLink(window.location.href)) {
+      auth.onAuthStateChanged((user) => {
+        const isNewUser = auth.currentUser.metadata.creationTime === auth.currentUser.metadata.lastSignInTime
+        console.log('isNewUser: ', isNewUser)
+        // get current user's email
+        const user_email = user.email
+        if (user_email) {
+          this.setState({
+            emailExists: !isNewUser,
+            email: user_email
+          }, () => {
+            console.log('Email exists')
+          })
+        } else {
+          this.setState({
+            emailExists: isNewUser,
+            email: user_email
+          }, () => {
+            console.log('Email does not exist')
+          })
+        }
+      })
+    }
       // if (auth.isSignInWithEmailLink(window.location.href)) {
       //   // check if user is in the database
       //   db.collection('users').doc(user_email).get()
