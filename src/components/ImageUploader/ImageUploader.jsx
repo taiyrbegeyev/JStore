@@ -60,7 +60,7 @@ class UploadImage extends Component {
     return (
       <React.Fragment>
         <input
-          // accept="image/*"
+          accept="image/*"
           id="photo"
           type="file"
           onChange={this.onDrop}

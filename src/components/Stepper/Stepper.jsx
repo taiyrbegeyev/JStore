@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
+import { createPost, uploadImage } from 'firebase/upload'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import {
   Stepper, Step, StepLabel,
-  StepContent, Button, Paper,
-  Typography
+  StepContent, Button, Typography
 } from '@material-ui/core'
 import {
   RedditTextField, SimpleSelect,
@@ -101,8 +101,23 @@ class StepperUpload extends Component {
         ownerId: auth.currentUser.email,
         ...data,
       }
+      delete post.file
       console.log(post)
-      // 
+      createPost(postId, post, () => {
+        alert('Error while creating a new post. Contact t.begeyev@jacobs-university.de')
+      }, () => {
+        console.log('Post added')
+      })
+
+      uploadImage(data.file, postId, () => {
+        alert('Error while uploading an image')
+      }, () => {
+        console.log('Picture uploaded')
+        this.setState({
+          loading: false
+        })
+        this.handleReset()
+      })
     }
   }
 
@@ -165,6 +180,7 @@ class StepperUpload extends Component {
     this.setState({
       activeStep: 0
     })
+    window.localStorage.clear()
   }
 
   handleSteps = () => {
@@ -246,7 +262,6 @@ class StepperUpload extends Component {
     const steps = this.getSteps()
     return (
       <ThemeProvider theme={theme}>
-        <div>
         <Stepper activeStep={activeStep} orientation="vertical">
           {steps.map((label, index) => (
             <Step key={label}>
@@ -288,15 +303,6 @@ class StepperUpload extends Component {
             </Step>
           ))}
         </Stepper>
-        {activeStep === steps.length && (
-          <Paper square elevation={0}>
-            <Typography>All steps completed - you&apos;re finished</Typography>
-            <Button onClick={this.handleReset}>
-              Reset
-            </Button>
-          </Paper>
-        )}
-        </div>
       </ThemeProvider>
     )
   }
