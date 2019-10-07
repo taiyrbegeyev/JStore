@@ -16,39 +16,57 @@ class Home extends Component {
   }
   
   componentWillMount () {
-    // get current user's email
     auth.onAuthStateChanged((user) => {
+      const isNewUser = auth.currentUser.metadata.creationTime === auth.currentUser.metadata.lastSignInTime
+      console.log('isNewUser: ', isNewUser)
+      // get current user's email
       const user_email = user.email
-
-      if (auth.isSignInWithEmailLink(window.location.href)) {
-        // check if user is in the database
-        db.collection('users').doc(user_email).get()
-          .then(email => {
-            if (!email.exists) {
-              this.setState({
-                emailExists: false,
-                email: user_email
-              }, () => {
-                console.log('Email doesnt exist')
-              })
-            } else {
-              this.setState({
-                emailExists: true,
-                email: user_email
-              }, () => {
-                console.log('Email exists')
-              })
-            }
-          })
-          .catch(err => {
-            console.log('Error getting document', err);
-          })
+      if (user_email) {
+        this.setState({
+          emailExists: !isNewUser,
+          email: user_email
+        }, () => {
+          console.log('Email exists')
+        })
+      } else {
+        this.setState({
+          emailExists: isNewUser,
+          email: user_email
+        }, () => {
+          console.log('Email does not exist')
+        })
       }
     })
+      // if (auth.isSignInWithEmailLink(window.location.href)) {
+      //   // check if user is in the database
+      //   db.collection('users').doc(user_email).get()
+      //     .then(email => {
+      //       if (!email) {
+      //         this.setState({
+      //           emailExists: false,
+      //           email: user_email
+      //         }, () => {
+      //           console.log('Email doesnt exist')
+      //         })
+      //       } else {
+      //         this.setState({
+      //           emailExists: true,
+      //           email: user_email
+      //         }, () => {
+      //           console.log('Email exists')
+      //         })
+      //       }
+      //     })
+      //     .catch(err => {
+      //       console.log('Error getting document', err);
+      //     })
+      // }
   }
   
   render() {
     const { email, emailExists } = this.state
+    console.log('email: ', email)
+    console.log('emailExists: ', emailExists)
     return (
       <React.Fragment>
         <NewUserModal
