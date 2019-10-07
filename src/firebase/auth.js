@@ -18,6 +18,7 @@ export const registerNewUser = (name, email, errHandler, completionHandler) => {
     fullName: name,
     email: email,
     joinDate: new Date(),
+    postsActive: {}
   }
 
   db.collection('users').doc(email).set(data)
