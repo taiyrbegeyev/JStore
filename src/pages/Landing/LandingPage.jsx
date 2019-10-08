@@ -3,7 +3,7 @@ import { auth } from 'firebase.js'
 import {
   LandingPageWrapper
 } from './styles'
-import { Header, Intro } from 'components/export'
+import { Footer, Header, Intro } from 'components/export'
 
 class Landing extends Component {
   state = {
@@ -32,6 +32,7 @@ class Landing extends Component {
       <LandingPageWrapper>
         <Header isAuth={this.state.isAuth}/>
         <Intro />
+        <Footer />
       </LandingPageWrapper>
     )
   }
