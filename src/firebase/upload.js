@@ -1,4 +1,3 @@
-import * as admin from 'firebase-admin';
 import { storage, db } from '../firebase'
 // create a storage reference
 const producstRef = storage.ref().child('products/')
