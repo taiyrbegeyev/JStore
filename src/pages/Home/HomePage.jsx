@@ -15,11 +15,10 @@ class Home extends Component {
     email: null
   }
   
-  componentWillMount () {
+   componentDidMount () {
     if (auth.isSignInWithEmailLink(window.location.href)) {
       auth.onAuthStateChanged((user) => {
         const isNewUser = auth.currentUser.metadata.creationTime === auth.currentUser.metadata.lastSignInTime
-        console.log('isNewUser: ', isNewUser)
         // get current user's email
         const user_email = user.email
         if (user_email) {
@@ -43,8 +42,6 @@ class Home extends Component {
   
   render() {
     const { email, emailExists } = this.state
-    console.log('email: ', email)
-    console.log('emailExists: ', emailExists)
     return (
       <React.Fragment>
         <NewUserModal

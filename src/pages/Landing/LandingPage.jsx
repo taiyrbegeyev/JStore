@@ -13,7 +13,6 @@ class Landing extends Component {
   
   componentDidMount () {
     auth.onAuthStateChanged((user) => {
-      console.log(user)
       if (user) {
         this.setState({
           isAuth: true,

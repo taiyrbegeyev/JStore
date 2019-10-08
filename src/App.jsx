@@ -3,11 +3,11 @@ import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-d
 import { auth } from 'firebase.js'
 import { routes } from 'routing'
 
-const PrivateRoute = ({ isAuth, user, component: Component, ...rest }) => {
+const PrivateRoute = ({ user, component: Component, ...rest }) => {
   return <Route
     {...rest}
     render={props => (
-      isAuth === true
+      user === true
       ? <Component
           {...props}
         />
@@ -32,75 +32,47 @@ const NormalRoute = ({ windowWidth, windowHeight, component: Component, ...rest 
 
 class App extends Component {
   state = {
-    isAuth: true,
-    user: null
+    user: true
   }
   
-  componentWillMount () {
+  componentDidMount () {
     auth.onAuthStateChanged((user) => {
-      console.log(user)
       if (user) {
         this.setState({
-          isAuth: true,
-          user: user
+          user: true
         })
-      } else {
-        if (auth.isSignInWithEmailLink(window.location.href)) {
-          let email = window.localStorage.getItem('emailForSignIn')
-          if (!email) {
-            email = window.prompt('Please provide your email for confirmation')
-          }
-          auth.signInWithEmailLink(email, window.location.href)
-            .then((result) => {
-              console.log(result.user)
-              window.localStorage.removeItem('emailForSignIn')
-              if (result.user) {
-                this.setState({
-                  isAuth: true,
-                  user: result.user
-                })
-              } else {
-                this.setState({
-                  isAuth: false,
-                  user: null
-                })
-              }
-            })
-            .catch((err) => {
-              console.log(err)
-              alert('Error: ' + err.message)
-              auth.signOut()
-              this.setState({
-                isAuth: false,
-                user: null
-              })
-            })
-        } else {
-          this.setState({
-            isAuth: false,
-            user: null
-          })
-        }
       }
     })
-  }
 
-  componentDidUpdate (prevState) {
-    if (this.state.userName !== prevState.userName) {
-      auth.onAuthStateChanged((user) => {
-        console.log(user)
-        if (user) {
+    if (auth.isSignInWithEmailLink(window.location.href)) {
+      let email = window.localStorage.getItem('emailForSignIn')
+      if (!email) {
+        email = window.prompt('Please provide your email for confirmation')
+      }
+      else {
+        auth.signInWithEmailLink(email, window.location.href)
+        .then((result) => {
+          window.localStorage.removeItem('emailForSignIn')
+          if (result.user) {
+            this.setState({
+              user: true
+            })
+          }
+          else {
+            this.setState({
+              user: false
+            })
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+          alert('Error: ' + err.message)
+          auth.signOut()
           this.setState({
-            isAuth: true,
-            user: user
+            user: false
           })
-        } else {
-          this.setState({
-            isAuth: false,
-            user: null
-          })
-        }
-      })
+        })
+      }
     }
   }
 
@@ -112,7 +84,6 @@ class App extends Component {
         return (
           <PrivateRoute
             key={index}
-            isAuth={this.state.isAuth}
             user={this.state.user}
             {...routeProps}
             component={component}
