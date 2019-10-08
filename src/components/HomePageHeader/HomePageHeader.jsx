@@ -30,7 +30,7 @@ const theme = createMuiTheme({
 class HomePageHeader extends Component {
   state = {
     anchorEl: null,
-    redirectToHome: false,
+    goTo: null,
     settings_dialog_items: {
       terms_and_condition: false,
       privacy_policy: false,
@@ -111,7 +111,7 @@ class HomePageHeader extends Component {
       case 'logout':
         this.logout()
         this.setState({
-          redirectToHome: true
+          goTo: '/'
         })
         break
       default:
@@ -128,10 +128,17 @@ class HomePageHeader extends Component {
       }
     }))
   }
+
+  goTo = (url) => {
+    this.setState({
+      goTo: url
+    })
+  }
   
   render() {
-    if (this.state.redirectToHome) {
-      return <Redirect to='/' />
+    const { goTo } = this.state
+    if (this.state.goTo) {
+      return <Redirect to={goTo} />
     }
     
     const open = Boolean(this.state.anchorEl)
@@ -149,7 +156,7 @@ class HomePageHeader extends Component {
               ?
               <MainNavBar>
               <MainNavBarElements>
-                <MainNavBarElementsLinks>
+                <MainNavBarElementsLinks href="/home">
                   <LocalGroceryStore />
                 </MainNavBarElementsLinks>
                 <MainNavBarElementsLinks href="/upload">
@@ -264,25 +271,25 @@ class HomePageHeader extends Component {
             <Drawer variant="temporary" anchor="bottom" open={this.state.drawerOpen} onClose={this.toggleDrawer}>
               <ListContainer role="presentation">
                 <List>
-                  <ListItem button>
+                  <ListItem button onClick={() => this.goTo('home')}>
                     <DrawerItems>
                       <LocalGroceryStore />
                     </DrawerItems>
                     <ListItemText primary={'Buy'} />
                   </ListItem>
-                  <ListItem button>
+                  <ListItem button onClick={() => this.goTo('upload')}>
                     <DrawerItems>
                       <Publish />
                     </DrawerItems>
                     <ListItemText primary={'Sell'} />
                   </ListItem>
-                  <ListItem button>
+                  <ListItem button onClick={() => this.goTo('')}>
                     <DrawerItems>
                       <Notifications />
                     </DrawerItems>
                     <ListItemText primary={'Messages'} />
                   </ListItem>
-                  <ListItem button>
+                  <ListItem button onClick={() => this.goTo('')}>
                     <DrawerItems>
                       <AccountCircle />
                     </DrawerItems>
