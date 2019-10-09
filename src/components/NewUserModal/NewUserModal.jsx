@@ -6,13 +6,6 @@ import {
   DialogActions, DialogContent,
   DialogContentText, DialogTitle
 } from '@material-ui/core'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-
-const theme = createMuiTheme({
-  typography: {
-    htmlFontSize: 10
-  }
-})
 
 class NewUserModal extends Component {
   state = {
@@ -61,7 +54,7 @@ class NewUserModal extends Component {
     }
 
     return (
-      <MuiThemeProvider theme={theme}>
+      <React.Fragment>
         <Dialog open={open} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">Hey, it seems like you are a new user!</DialogTitle>
           <DialogContent>
@@ -84,7 +77,7 @@ class NewUserModal extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-      </MuiThemeProvider>
+      </React.Fragment>
     )    
   }
 }

@@ -19,8 +19,7 @@ class Home extends Component {
   state = {
     user: null,
     isNewUser: null,
-    user_email: null,
-    // auth_user: this.props.user
+    user_email: null
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -44,57 +43,6 @@ class Home extends Component {
       })
     }
   }
-  
-  //  componentDidMount () {
-    // if (auth.isSignInWithEmailLink(window.location.href)) {
-    //   auth.onAuthStateChanged((user) => {
-    //     const isNewUser = auth.currentUser.metadata.creationTime === auth.currentUser.metadata.lastSignInTime
-    //     // get current user's email
-    //     const user_email = user.email
-    //     if (user_email) {
-    //       this.setState({
-    //         emailExists: !isNewUser,
-    //         email: user_email
-    //       }, () => {
-    //         console.log('Email exists')
-    //       })
-    //     } else {
-    //       this.setState({
-    //         emailExists: isNewUser,
-    //         email: user_email
-    //       }, () => {
-    //         console.log('Email does not exist')
-    //       })
-    //     }
-    //   })
-    // }
-  // }
-
-  // componentDidMount() {
-  //   const { auth_user } = this.state
-  //   const isNewUser = auth_user.metadata.creationTime === auth_user.metadata.lastSignInTime
-  //   // get current user's email
-  //   const user_email = auth_user.email
-  //   console.log(user_email)
-
-  //   if (user_email) {
-  //     this.setState({
-  //       emailExists: !isNewUser,
-  //       email: user_email
-  //     }, () => {
-  //       console.log('Email exists')
-  //     })
-  //   } else {
-  //     this.setState({
-  //       emailExists: isNewUser,
-  //       email: user_email
-  //     }, () => {
-  //       console.log('Email does not exist')
-  //     })
-  //   }
-  // }
-
-
   
   render() {
     const { isNewUser, user_email } = this.state

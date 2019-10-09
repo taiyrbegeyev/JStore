@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { auth } from 'firebase.js'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import {
   HeaderContainer, NavBar, Logo, LogoImage, LogoAnchor,
   MainNavBar, MainNavBarElements, MainNavBarElementsLinks,
@@ -20,12 +19,6 @@ import {
   Settings, Dehaze
 } from '@material-ui/icons'
 import logo from 'assets/jstore_logo.svg'
-
-const theme = createMuiTheme({
-  typography: {
-    htmlFontSize: 10
-  }
-})
 
 class HomePageHeader extends Component {
   state = {
@@ -143,7 +136,7 @@ class HomePageHeader extends Component {
     
     const open = Boolean(this.state.anchorEl)
     return (
-      <MuiThemeProvider theme={theme}>
+      <React.Fragment>
         <HeaderContainer>
           <NavBar>
             <Logo>
@@ -306,7 +299,7 @@ class HomePageHeader extends Component {
             </Drawer>
           </NavBar>
         </HeaderContainer>
-      </MuiThemeProvider>
+      </React.Fragment>
     )
   }
 }

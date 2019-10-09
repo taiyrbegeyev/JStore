@@ -1,5 +1,7 @@
+import Album from 'components/Album/Album'
 import {Button} from 'components/Button/Button'
 import EmailSent from 'components/EmailSent/EmailSent'
+import Footer from 'components/Footer/Footer'
 import Header from 'components/Header/Header'
 import HomePageHeader from 'components/HomePageHeader/HomePageHeader'
 import ImageUploader from 'components/ImageUploader/ImageUploader'
@@ -15,8 +17,8 @@ import Stepper from 'components/Stepper/Stepper'
 import WelcomeBack from 'components/WelcomeBack/WelcomeBack'
 
 export {
-  Button, EmailSent, Header,
-  HomePageHeader, ImageUploader,
+  Album, Button, EmailSent, Footer,
+  Header, HomePageHeader, ImageUploader,
   Input, Intro, MultilineTextField, NewUserModal,
   PaymentOptionsCheckboxes, PriceInput,
   RedditTextField, SimpleSelect, Stepper, WelcomeBack,
