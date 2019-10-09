@@ -28,8 +28,12 @@ function Copyright () {
   )
 }
 
-export default function Footer () {
+export default function Footer (props) {
   const classes = useStyles()
+  if (!props.isAuth) {
+    return null
+  }
+  
   return (
     <MuiThemeProvider theme={theme}>
       <footer className={classes.footer}>

@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
-import { auth, db } from 'firebase.js'
-import { HomePageHeader, NewUserModal } from 'components/export'
+import { Album, Footer, HomePageHeader, NewUserModal } from 'components/export'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+
+const theme = createMuiTheme({
+  typography: {
+    htmlFontSize: 10
+  }
+})
 
 /**
  * User gets redirected to this page after clicking on the link in an email.
@@ -11,45 +17,98 @@ import { HomePageHeader, NewUserModal } from 'components/export'
 
 class Home extends Component {
   state = {
-    emailExists: true,
-    email: null
+    user: null,
+    isNewUser: null,
+    user_email: null,
+    // auth_user: this.props.user
   }
-  
-   componentDidMount () {
-    if (auth.isSignInWithEmailLink(window.location.href)) {
-      auth.onAuthStateChanged((user) => {
-        const isNewUser = auth.currentUser.metadata.creationTime === auth.currentUser.metadata.lastSignInTime
-        // get current user's email
-        const user_email = user.email
-        if (user_email) {
-          this.setState({
-            emailExists: !isNewUser,
-            email: user_email
-          }, () => {
-            console.log('Email exists')
-          })
-        } else {
-          this.setState({
-            emailExists: isNewUser,
-            email: user_email
-          }, () => {
-            console.log('Email does not exist')
-          })
-        }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.user !== prevState.user) {
+      return ({
+        user: nextProps.user
+      })
+    }
+    return null
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // only update chart if the data has changed
+    if (prevProps.user !== this.props.user) {
+      const isNewUser = this.props.user.metadata.creationTime === this.props.user.metadata.lastSignInTime
+      const user_email = this.props.user.email
+      this.setState({
+        user: this.props.user,
+        isNewUser,
+        user_email
       })
     }
   }
   
+  //  componentDidMount () {
+    // if (auth.isSignInWithEmailLink(window.location.href)) {
+    //   auth.onAuthStateChanged((user) => {
+    //     const isNewUser = auth.currentUser.metadata.creationTime === auth.currentUser.metadata.lastSignInTime
+    //     // get current user's email
+    //     const user_email = user.email
+    //     if (user_email) {
+    //       this.setState({
+    //         emailExists: !isNewUser,
+    //         email: user_email
+    //       }, () => {
+    //         console.log('Email exists')
+    //       })
+    //     } else {
+    //       this.setState({
+    //         emailExists: isNewUser,
+    //         email: user_email
+    //       }, () => {
+    //         console.log('Email does not exist')
+    //       })
+    //     }
+    //   })
+    // }
+  // }
+
+  // componentDidMount() {
+  //   const { auth_user } = this.state
+  //   const isNewUser = auth_user.metadata.creationTime === auth_user.metadata.lastSignInTime
+  //   // get current user's email
+  //   const user_email = auth_user.email
+  //   console.log(user_email)
+
+  //   if (user_email) {
+  //     this.setState({
+  //       emailExists: !isNewUser,
+  //       email: user_email
+  //     }, () => {
+  //       console.log('Email exists')
+  //     })
+  //   } else {
+  //     this.setState({
+  //       emailExists: isNewUser,
+  //       email: user_email
+  //     }, () => {
+  //       console.log('Email does not exist')
+  //     })
+  //   }
+  // }
+
+
+  
   render() {
-    const { email, emailExists } = this.state
+    const { isNewUser, user_email } = this.state
+
     return (
-      <React.Fragment>
+      <MuiThemeProvider theme={theme}>
         <NewUserModal
-          open={!emailExists}
-          email={email}
+          open={isNewUser}
+          email={user_email}
         />
         <HomePageHeader />
-      </React.Fragment>
+        <Album />
+        <Footer />
+      </MuiThemeProvider>
     )
   }
 }

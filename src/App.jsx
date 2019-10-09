@@ -3,12 +3,14 @@ import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-d
 import { auth } from 'firebase.js'
 import { routes } from 'routing'
 
-const PrivateRoute = ({ user, component: Component, ...rest }) => {
+const PrivateRoute = ({ isAuth, user, component: Component, ...rest }) => {
   return <Route
     {...rest}
     render={props => (
-      user === true
+      isAuth === true
       ? <Component
+          isAuth={isAuth}
+          user={user}
           {...props}
         />
       : <Redirect to='get-started' />
@@ -17,11 +19,13 @@ const PrivateRoute = ({ user, component: Component, ...rest }) => {
   />
 }
 
-const NormalRoute = ({ windowWidth, windowHeight, component: Component, ...rest }) => {
+const NormalRoute = ({ isAuth, user, windowWidth, windowHeight, component: Component, ...rest }) => {
   return <Route
     {...rest}
     render={props => (
       <Component
+        isAuth={isAuth}
+        user={user}
         windowWidth={windowWidth}
         windowHeight={windowHeight}
         {...props}
@@ -32,14 +36,16 @@ const NormalRoute = ({ windowWidth, windowHeight, component: Component, ...rest 
 
 class App extends Component {
   state = {
-    user: true
+    isAuth: true,
+    user: null
   }
   
-  componentDidMount () {
+  componentWillMount () {
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.setState({
-          user: true
+          isAuth: true,
+          user: user
         })
       }
     })
@@ -55,12 +61,14 @@ class App extends Component {
           window.localStorage.removeItem('emailForSignIn')
           if (result.user) {
             this.setState({
-              user: true
+              isAuth: true,
+              user: result.user
             })
           }
           else {
             this.setState({
-              user: false
+              isAuth: false,
+              user: null
             })
           }
         })
@@ -69,7 +77,8 @@ class App extends Component {
           alert('Error: ' + err.message)
           auth.signOut()
           this.setState({
-            user: false
+            isAuth: false,
+            user: null
           })
         })
       }
@@ -77,14 +86,18 @@ class App extends Component {
   }
 
   render () {
+    const { isAuth, user } = this.state
+    console.log(user)
     const elements = routes.map((item, index) => {
       const { path, exact, isPrivate, component } = item
       const routeProps = { path, exact }
       if (isPrivate) {
+        console.log('isprivate')
         return (
           <PrivateRoute
             key={index}
-            user={this.state.user}
+            isAuth={isAuth}
+            user={user}
             {...routeProps}
             component={component}
           />
@@ -93,6 +106,8 @@ class App extends Component {
         return (
           <NormalRoute
             key={index}
+            isAuth={isAuth}
+            user={user}
             {...routeProps}
             component={component}
           />

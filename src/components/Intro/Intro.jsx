@@ -7,6 +7,10 @@ import imageUrl from 'assets/texture_1.png'
 
 class Intro extends Component {
   render () {
+    if (!this.props.isAuth) {
+      return  null
+    }
+
     return (
       <IntroContainer imageUrl={imageUrl}>
         <LeftContainer>

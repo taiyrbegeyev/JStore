@@ -16,6 +16,11 @@ class Header extends Component {
   }
 
   render() {
+    const { isAuth } = this.props
+    if (!isAuth) {
+      return null
+    }
+    
     return (
       <HeaderContainer>
         <NavBar>
@@ -26,7 +31,7 @@ class Header extends Component {
           </Logo>
           <MainNavBar>
             {
-            this.props.isAuth
+            isAuth
             ? <WelcomeBack />
             :
             <React.Fragment>
