@@ -87,12 +87,10 @@ class App extends Component {
 
   render () {
     const { isAuth, user } = this.state
-    console.log(user)
     const elements = routes.map((item, index) => {
       const { path, exact, isPrivate, component } = item
       const routeProps = { path, exact }
       if (isPrivate) {
-        console.log('isprivate')
         return (
           <PrivateRoute
             key={index}
