@@ -1,4 +1,4 @@
-import { auth, db } from '../firebase'
+import firebase, { auth, db } from 'firebase.js'
 
 export const getStarted = (email, actionCodeSettings, errHandler, completionHandler) => {
   auth.signOut()
@@ -17,7 +17,7 @@ export const registerNewUser = (name, email, errHandler, completionHandler) => {
   let data = {
     fullName: name,
     email: email,
-    joinDate: new Date(),
+    joinDate: firebase.firestore.FieldValue.serverTimestamp(),
     postsActive: {}
   }
 

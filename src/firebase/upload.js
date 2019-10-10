@@ -1,4 +1,4 @@
-import { storage, db } from '../firebase'
+import firebase, { storage, db } from 'firebase.js'
 // create a storage reference
 const producstRef = storage.ref().child('products/')
 
@@ -11,7 +11,7 @@ export const uploadImage = (file, id, errHandler, completionHandler) => {
 }
 
 export const createPost = (postId, post, errHandler, completionHandler) => {
-  post.creationDate = new Date()
+  post.creationDate = firebase.firestore.FieldValue.serverTimestamp()
   
   db.collection('postsActive').doc(postId).set(post)
     .then(() => {
