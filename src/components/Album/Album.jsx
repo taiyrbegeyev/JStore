@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { fetchPosts, getSizeOfCollection } from 'firebase/display.js'
+import { cutOffString } from 'helpers.js'
 import Pagination from "react-js-pagination"
 import {
   Button, Card, CardActions,
@@ -8,6 +9,7 @@ import {
 
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import { PaginationWrapper } from './styles'
 
 const useStyles = theme => ({
@@ -19,12 +21,21 @@ const useStyles = theme => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    wordWrap: 'break-word'
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
   },
   cardContent: {
     flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  cardActions: {
+    justifyContent: 'space-between'
+  },
+  owner: {
+    color: '#555'
   }
 })
 
@@ -125,19 +136,31 @@ class Album extends Component {
                       title="Product"
                     />
                     <CardContent className={classes.cardContent}>
-                      <Typography gutterBottom variant="h5" component="h2">
+                      <Typography variant="h5" component="h2">
                         {dbPost.title}
                       </Typography>
-                      <Typography>
-                        {dbPost.description}
+                      <Typography gutterBottom variant="h7" component="h4" className={classes.owner}>
+                        by <span className={classes.owner_email}>{dbPost.ownerId}</span>
+                      </Typography>
+                      <Typography gutterBottom variant="h6" component="h4" >
+                        €{dbPost.price}
+                      </Typography> 
+                      <Typography className={classes.description}>
+                        {cutOffString(dbPost.description, 100)}
+                        {
+                          dbPost.description.length > 100 && 
+                            <React.Fragment>
+                              <MoreHorizIcon />
+                            </React.Fragment>
+                        }
                       </Typography>
                     </CardContent>
-                    <CardActions>
+                    <CardActions className={classes.cardActions}>
                       <Button size="small" color="primary">
                         View
                       </Button>
                       <Button size="small" color="primary">
-                        Edit
+                        Contact Owner
                       </Button>
                     </CardActions>
                   </Card>
