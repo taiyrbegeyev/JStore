@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { fetchPosts } from 'firebase/display.js'
+import { fetchPosts, fetchPostImage } from 'firebase/display.js'
 import Pagination from "react-js-pagination"
 import {
   Button, Card, CardActions,
@@ -46,32 +46,51 @@ class Album extends Component {
     query.get()
       .then((snapshot) => {
         const size = snapshot.docs.size
-        const posts = snapshot.docs.map(
-          doc => doc.data()
-        )
+        const posts = snapshot.docs.map((doc) => {
+          let doc_full = Object.assign({}, doc.data())
+          // add some addtional data to post
+          doc_full.id = doc.id
+          // fetch image and get its url
+          fetchPostImage(doc.id)
+            .then((url) => {
+              doc_full.image_url = url
+            })
+          console.log(doc_full)
+          return doc_full
+        })
         console.log(posts)
         const timeStampOfLastPostLocal = posts[posts.size - 1].creationDate
-        return this.setState({
-          dbPosts: posts,
-          numberOfPosts: size,
-          timeStampOfLastPost: timeStampOfLastPostLocal
-        })
+        const res = {
+          posts: posts,
+          size: size,
+          timeStampOfLastPostLocal: timeStampOfLastPostLocal
+        }
+        console.log(res)
+        // return res
       })
+      // .then((res) => {
+      //   console.log(res)
+      //   this.setState({
+      //     dbPosts: res.posts,
+      //     numberOfPosts: res.size,
+      //     timeStampOfLastPost: res.timeStampOfLastPostLocal
+      //   })
+      // })
       .catch((err) => {
         console.error(err)
       })
   }
   
-  // componentDidMount() {
-  //   this.getPosts()
-  // }
+  componentDidMount() {
+    this.getPosts()
+  }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   const isDifferentPage = this.state.currentPage !== prevState.currentPage
-  //   if (isDifferentPage) {
-  //     this.getPosts()
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    const isDifferentPage = this.state.currentPage !== prevState.currentPage
+    if (isDifferentPage) {
+      this.getPosts()
+    }
+  }
 
   handlePageChange(pageNumber) {
     this.setState({
@@ -82,27 +101,27 @@ class Album extends Component {
   render () {
     const { classes } = this.props
     const { activePage, dbPosts, numberOfPosts } = this.state
-    console.log(dbPosts)
+    
     return (
       <React.Fragment>
         <CssBaseline />
         <main>
           <Container className={classes.cardGrid} maxWidth="md">
             <Grid container spacing={4}>
-              {cards.map(card => (
-                <Grid item key={card} xs={12} sm={6} md={4}>
+              {dbPosts && dbPosts.map(dbPost => (
+                <Grid item key={dbPost.id} xs={12} sm={6} md={4}>
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.cardMedia}
-                      image="https://source.unsplash.com/random"
-                      title="Image title"
+                      image={dbPost.image_url}
+                      title="Product"
                     />
                     <CardContent className={classes.cardContent}>
                       <Typography gutterBottom variant="h5" component="h2">
-                        Heading
+                        {dbPost.title}
                       </Typography>
                       <Typography>
-                        This is a media card. You can use this section to describe the content.
+                        {dbPost.description}
                       </Typography>
                     </CardContent>
                     <CardActions>
