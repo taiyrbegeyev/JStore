@@ -15,6 +15,19 @@ export const fetchPosts = (posts_limit, posts_startAt) => {
   return query
 }
 
+export const getSizeOfCollection = (collection_name, completionHandler) => {
+  let size
+  db.collection(collection_name).get()
+    .then((snapshot) => {
+      size = snapshot.docs.length
+      console.log(size)
+      completionHandler(size)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
 /**
  * Based on postId, fetches corresponding image from storage
  * @param postId 

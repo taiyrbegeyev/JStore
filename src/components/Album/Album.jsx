@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { fetchPosts, fetchPostImage } from 'firebase/display.js'
+import { fetchPosts, getSizeOfCollection } from 'firebase/display.js'
 import Pagination from "react-js-pagination"
 import {
   Button, Card, CardActions,
@@ -28,71 +28,79 @@ const useStyles = theme => ({
   }
 })
 
-const cards = [1]
-
 class Album extends Component {
   state = {
     currentPage: 1,
-    itemsPerPage: 15,
+    itemsPerPage: 3,
     numberOfPosts: null,
     dbPosts: null,
+    timeStampOfFirstPost: new Date(),
     timeStampOfLastPost: new Date()
   }
 
   getPosts() {
     const { itemsPerPage, timeStampOfLastPost } = this.state
 
+    let res
     const query = fetchPosts(itemsPerPage, timeStampOfLastPost)
     query.get()
       .then((snapshot) => {
-        const size = snapshot.docs.size
         const posts = snapshot.docs.map((doc) => {
           let doc_full = Object.assign({}, doc.data())
           // add some addtional data to post
           doc_full.id = doc.id
-          // fetch image and get its url
-          fetchPostImage(doc.id)
-            .then((url) => {
-              doc_full.image_url = url
-            })
-          console.log(doc_full)
+          // // fetch image and get its url
+          // fetchPostImage(doc.id)
+          //   .then((url) => {
+          //     doc_full.image_url = url
+          //   })
           return doc_full
         })
-        console.log(posts)
-        const timeStampOfLastPostLocal = posts[posts.size - 1].creationDate
-        const res = {
-          posts: posts,
-          size: size,
-          timeStampOfLastPostLocal: timeStampOfLastPostLocal
+        let timeStampOfFirstPostLocal = posts[0].creationDate
+        let timeStampOfLastPostLocal = posts[posts.length - 1].creationDate
+        res = {
+          posts,
+          timeStampOfFirstPostLocal,
+          timeStampOfLastPostLocal
         }
         console.log(res)
-        // return res
       })
-      // .then((res) => {
-      //   console.log(res)
-      //   this.setState({
-      //     dbPosts: res.posts,
-      //     numberOfPosts: res.size,
-      //     timeStampOfLastPost: res.timeStampOfLastPostLocal
-      //   })
-      // })
+      .then(() => {
+        console.log(res)
+        this.setState({
+          dbPosts: res.posts,
+          timeStampOfFirstPost: res.timeStampOfFirstPostLocal,
+          timeStampOfLastPost: res.timeStampOfLastPostLocal
+        })
+      })
       .catch((err) => {
         console.error(err)
       })
   }
-  
+
+  componentWillMount() {
+    console.log('ComponentWillMount()')
+    getSizeOfCollection('postsActive', (size) => {
+      this.setState({
+        numberOfPosts: size
+      })
+    })
+  }
+
   componentDidMount() {
     this.getPosts()
   }
 
   componentDidUpdate(prevProps, prevState) {
     const isDifferentPage = this.state.currentPage !== prevState.currentPage
+    console.log("isDifferentPage: " + isDifferentPage)
     if (isDifferentPage) {
       this.getPosts()
     }
   }
 
   handlePageChange(pageNumber) {
+    console.log(`active page is ${pageNumber}`)
     this.setState({
       currentPage: pageNumber
     })
@@ -100,7 +108,7 @@ class Album extends Component {
   
   render () {
     const { classes } = this.props
-    const { activePage, dbPosts, numberOfPosts } = this.state
+    const { currentPage, itemsPerPage, dbPosts, numberOfPosts } = this.state
     
     return (
       <React.Fragment>
@@ -113,7 +121,7 @@ class Album extends Component {
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.cardMedia}
-                      image={dbPost.image_url}
+                      image={dbPost.imageUrl}
                       title="Product"
                     />
                     <CardContent className={classes.cardContent}>
@@ -141,11 +149,11 @@ class Album extends Component {
                 innerClass="pagination"
                 itemClass="page-item"
                 linkClass="page-link"
-                activePage={activePage}
-                itemsCountPerPage={15}
+                activePage={currentPage}
+                itemsCountPerPage={itemsPerPage}
                 totalItemsCount={numberOfPosts}
                 pageRangeDisplayed={5}
-                onChange={() => this.handlePageChange(activePage)}
+                onChange={(e) => this.handlePageChange(e)}
               />
             </PaginationWrapper>
           </Container>
