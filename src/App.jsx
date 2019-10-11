@@ -41,7 +41,7 @@ class App extends Component {
   }
   
   componentWillMount () {
-    auth.onAuthStateChanged((user) => {
+    this.fireBaseListener = auth.onAuthStateChanged((user) => {
       if (user) {
         this.setState({
           isAuth: true,
@@ -83,6 +83,10 @@ class App extends Component {
         })
       }
     }
+  }
+
+  componentWillUnmount () {
+    this.fireBaseListener && this.fireBaseListener();
   }
 
   render () {
