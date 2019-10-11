@@ -2,12 +2,18 @@ import firebase, { storage, db } from 'firebase.js'
 // create a storage reference
 const postsRef = storage.ref().child('posts/')
 
-export const uploadImage = (file, id, errHandler, completionHandler) => {
+export const uploadImage = (file, id, errHandler, completionHandler, returnImageUrl) => {
   const uploadTask = postsRef.child(id).put(file)
   uploadTask.on('state_changed', () => {}, errHandler, () => {
-    completionHandler()
     // finished uploading, return downloadURL
-    return uploadTask.snapshot.ref.getDownloadURL()
+    uploadTask.snapshot.ref.getDownloadURL()
+      .then((url) => {
+        returnImageUrl(url)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    completionHandler()
   })
 }
 

@@ -84,6 +84,7 @@ class StepperUpload extends Component {
 
       const { data } = this.state
       // verify data once again
+      // in case nothing fails, continue
       if (!data.title || !data.category || !data.condition || !data.description ||
           !data.file || !data.price || !data.payment_options || !data.payment_options.length) {
 
@@ -94,29 +95,34 @@ class StepperUpload extends Component {
         return
       }
 
-      // In case nothing fails, proceed
-      // upload image to the storage
       const postId = uuidv1();
-      const post = {
-        ownerId: auth.currentUser.email,
-        ...data,
-      }
-      delete post.file
-      console.log(post)
-      createPost(postId, post, () => {
-        alert('Error while creating a new post. Contact t.begeyev@jacobs-university.de')
-      }, () => {
-        console.log('Post added')
-      })
-
+      // upload image to the storage first, get imageUrl and then write it into post object
       uploadImage(data.file, postId, () => {
         alert('Error while uploading an image')
       }, () => {
         console.log('Picture uploaded')
-        this.setState({
-          loading: false
+      }, (url) => {
+        console.log(url)
+
+        const post = {
+          ownerId: auth.currentUser.email,
+          imageUrl: url,
+          ...data,
+        }
+        delete post.file
+      
+        console.log(post)
+        // upload post to the firestore
+        createPost(postId, post, () => {
+          alert('Error while creating a new post. Contact t.begeyev@jacobs-university.de')
+        }, () => {
+          console.log('Post added')
+          this.setState({
+            loading: false
+          })
+          alert('Product was successfully added')
+          this.handleReset()
         })
-        this.handleReset()
       })
     }
   }
