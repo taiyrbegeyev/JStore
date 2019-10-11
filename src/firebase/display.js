@@ -3,17 +3,33 @@ import { storage, db } from 'firebase.js'
 /**
  * Fetches data from postsActive
  * @param {*} posts_limit 
- * @param {*} posts_startAt 
+ * @param {*} posts_startAt
+ * @param {*} isForward
  */
 
-export const fetchPosts = (posts_limit, posts_startAt) => {
-  const query = db.collection('postsActive')
-    .orderBy('creationDate', 'desc')
-    .startAt(posts_startAt)
-    .limit(posts_limit)
+export const fetchPosts = (posts_limit, posts_At, isForward) => {
+  let query
+  if (isForward) {
+    query = db.collection('postsActive')
+      .orderBy('creationDate', 'desc')
+      .startAfter(posts_At)
+      .limit(posts_limit)
+  }
+  else {
+    query = db.collection('postsActive')
+      .orderBy('creationDate', 'desc')
+      .endBefore(posts_At)
+      .limit(posts_limit)
+  }
   
   return query
 }
+
+/**
+ * Get size of the passed collection
+ * @param {*} collection_name 
+ * @param {*} completionHandler 
+ */
 
 export const getSizeOfCollection = (collection_name, completionHandler) => {
   let size

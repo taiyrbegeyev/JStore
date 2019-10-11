@@ -30,6 +30,7 @@ const useStyles = theme => ({
 
 class Album extends Component {
   state = {
+    isForward: true,
     currentPage: 1,
     itemsPerPage: 3,
     numberOfPosts: null,
@@ -39,21 +40,16 @@ class Album extends Component {
   }
 
   getPosts() {
-    const { itemsPerPage, timeStampOfLastPost } = this.state
-
+    const { isForward, itemsPerPage, timeStampOfFirstPost, timeStampOfLastPost } = this.state
+    console.log(this.state)
     let res
-    const query = fetchPosts(itemsPerPage, timeStampOfLastPost)
+    const query = fetchPosts(itemsPerPage, (isForward ? timeStampOfLastPost : timeStampOfFirstPost), isForward)
     query.get()
       .then((snapshot) => {
         const posts = snapshot.docs.map((doc) => {
           let doc_full = Object.assign({}, doc.data())
           // add some addtional data to post
           doc_full.id = doc.id
-          // // fetch image and get its url
-          // fetchPostImage(doc.id)
-          //   .then((url) => {
-          //     doc_full.image_url = url
-          //   })
           return doc_full
         })
         let timeStampOfFirstPostLocal = posts[0].creationDate
@@ -63,7 +59,6 @@ class Album extends Component {
           timeStampOfFirstPostLocal,
           timeStampOfLastPostLocal
         }
-        console.log(res)
       })
       .then(() => {
         console.log(res)
@@ -93,9 +88,14 @@ class Album extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const isDifferentPage = this.state.currentPage !== prevState.currentPage
-    console.log("isDifferentPage: " + isDifferentPage)
+    const isForward = this.state.currentPage >= prevState.currentPage
     if (isDifferentPage) {
-      this.getPosts()
+      console.log('isForward: ' + isForward)
+      this.setState({
+        isForward
+      }, () => {
+        this.getPosts()
+      })
     }
   }
 
