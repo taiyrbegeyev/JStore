@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { MainContainer, UploadProductTitle } from './styles'
-import HomePageHeader from 'components/HomePageHeader/HomePageHeader'
-import StepperUpload from 'components/Stepper/Stepper'
+import { Footer, HomePageHeader, Stepper } from 'components/export'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 const theme = createMuiTheme({
@@ -21,8 +20,9 @@ class UploadProduct extends Component {
         <HomePageHeader />
         <MainContainer>
           <UploadProductTitle>Tell us what you're selling</UploadProductTitle>
-          <StepperUpload />
+          <Stepper />
         </MainContainer>
+        <Footer isAuth={this.props.isAuth} /> 
       </MuiThemeProvider>
     )
   }

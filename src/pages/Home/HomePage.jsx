@@ -55,7 +55,7 @@ class Home extends Component {
         />
         <HomePageHeader />
         <Album />
-        <Footer />
+        <Footer isAuth={this.props.isAuth} />
       </MuiThemeProvider>
     )
   }
