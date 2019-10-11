@@ -146,6 +146,7 @@ class Album extends Component {
             </Grid>
             <PaginationWrapper>
               <Pagination
+                hideFirstLastPages
                 innerClass="pagination"
                 itemClass="page-item"
                 linkClass="page-link"
