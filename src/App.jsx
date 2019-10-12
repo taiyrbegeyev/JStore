@@ -4,16 +4,17 @@ import { auth } from 'firebase.js'
 import { routes } from 'routing'
 
 const PrivateRoute = ({ isAuth, user, component: Component, ...rest }) => {
+  console.log(isAuth)
   return <Route
     {...rest}
     render={props => (
-      isAuth === true
-      ? <Component
+      isAuth === false
+      ? <Redirect to='get-started' />
+      : <Component
           isAuth={isAuth}
           user={user}
           {...props}
         />
-      : <Redirect to='get-started' />
     )
     }
   />
@@ -45,45 +46,49 @@ class App extends Component {
     this.setState({
       isLoading: true
     })
-    if (auth.isSignInWithEmailLink(window.location.href)) {
-      let email = window.localStorage.getItem('emailForSignIn')
-      if (!email) {
-        email = window.prompt('Please provide your email for confirmation')
-      }
-      else {
-        auth.signInWithEmailLink(email, window.location.href)
-        .then((result) => {
-          window.localStorage.removeItem('emailForSignIn')
-          if (result.user) {
-            this.setState({
-              isAuth: true,
-              user: result.user,
-              isLoading: false
-            })
-          }
-          else {
+    this.fireBaseListener = auth.onAuthStateChanged((user) => {
+      if (auth.isSignInWithEmailLink(window.location.href)) {
+        console.log('isSignInWithEmailLink')
+        let email = window.localStorage.getItem('emailForSignIn')
+        if (!email) {
+          email = window.prompt('Please provide your email for confirmation')
+        }
+        else {
+          auth.signInWithEmailLink(email, window.location.href)
+          .then((result) => {
+            console.log('signInWithEmailLink')
+            window.localStorage.removeItem('emailForSignIn')
+            if (result.user) {
+              console.log(result.user)
+              this.setState({
+                isAuth: true,
+                user: result.user,
+                isLoading: false
+              })
+            }
+            else {
+              console.log('signInWithEmailLink setting to false ')
+              this.setState({
+                isAuth: false,
+                user: null,
+                isLoading: false
+              })
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+            alert('Error: ' + err.message)
+            auth.signOut()
             this.setState({
               isAuth: false,
               user: null,
               isLoading: false
             })
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-          alert('Error: ' + err.message)
-          auth.signOut()
-          this.setState({
-            isAuth: false,
-            user: null,
-            isLoading: false
           })
-        })
+        }
       }
-    }
-
-    this.fireBaseListener = auth.onAuthStateChanged((user) => {
-      if (user) {
+      else if (user) {
+        console.log('onAuthStateChanged setting to true ')
         this.setState({
           isAuth: true,
           user: user,
@@ -91,6 +96,7 @@ class App extends Component {
         })
       }
       else {
+        console.log('onAuthStateChanged setting to false ')
         this.setState({
           isAuth: false,
           user: null,
