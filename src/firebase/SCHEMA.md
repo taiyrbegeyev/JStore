@@ -12,7 +12,6 @@ posts: {
   postId: {
     sold: bool,
     ownerId: '',
-    buyerId: '', // empty if sold is false
     title: '',
     category: '',
     condition: '',
