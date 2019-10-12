@@ -5,7 +5,7 @@ users: {
     email: '',
     whatsApp: bool,
     phoneNumber: '', // empty if whatsApp is false
-    joinDate: '',
+    creationTime: '',
   }
 },
 postsActive: {
