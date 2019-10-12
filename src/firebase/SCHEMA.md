@@ -3,11 +3,9 @@ users: {
   userId: {
     fullName: '',
     email: '',
-    joinDate: '',
-    postsActive: {},
-    postsSold: {},
-    postsBought: {},
-    chats: {}
+    whatsApp: bool,
+    phoneNumber: '', // empty if whatsApp is false
+    creationTime: '',
   }
 },
 postsActive: {
