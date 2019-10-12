@@ -21,7 +21,14 @@ const useStyles = theme => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    wordWrap: 'break-word'
+    wordWrap: 'break-word',
+    position: 'relative',
+    '&::-webkit-transition': 'margin 0.5s ease-out',
+    '&::-moz-transition': 'margin 0.5s ease-out',
+    '&::-o-transition': 'margin 0.5s ease-out',
+    '&:hover': {
+      top: '-5px'
+    }
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
@@ -36,6 +43,10 @@ const useStyles = theme => ({
   },
   owner: {
     color: '#555'
+  },
+  price: {
+    color: '#004180',
+    fontWeight: '700'
   }
 })
 
@@ -142,7 +153,7 @@ class Album extends Component {
                       <Typography gutterBottom variant="h7" component="h4" className={classes.owner}>
                         by <span className={classes.owner_email}>{dbPost.ownerId}</span>
                       </Typography>
-                      <Typography gutterBottom variant="h6" component="h4" >
+                      <Typography gutterBottom variant="h6" component="h4" className={classes.price}>
                         €{dbPost.price}
                       </Typography> 
                       <Typography className={classes.description}>
