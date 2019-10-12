@@ -69,7 +69,7 @@ class UploadImage extends Component {
           error_img && <p>{error_msg}</p>
         }
         {
-          !error && window.localStorage.getItem("uploaded_picture") && <p>{window.localStorage.getItem("uploaded_picture")} is already uploaded</p>
+          !error && window.localStorage.getItem("uploaded_picture") && <p>{window.localStorage.getItem("uploaded_picture")} was uploaded</p>
         }
       </React.Fragment>
     )

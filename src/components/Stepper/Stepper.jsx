@@ -129,6 +129,7 @@ class StepperUpload extends Component {
 
   handleNext = () => {
     const { data } = this.state
+    // eslint-disable-next-line
     switch (this.state.activeStep) {
       case 1:
         if (!data.title || !data.category || !data.condition) {
