@@ -17,8 +17,8 @@ class Landing extends Component {
       <MuiThemeProvider theme={theme}>
         <LandingPageWrapper>
           <Header isAuth={this.props.isAuth} />
-          <Intro isAuth={this.props.isAuth} />
-          <Footer isAuth={this.props.isAuth} />
+          <Intro />
+          <Footer />
         </LandingPageWrapper>
       </MuiThemeProvider>
     )

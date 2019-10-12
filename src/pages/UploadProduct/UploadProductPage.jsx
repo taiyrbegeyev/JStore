@@ -22,7 +22,7 @@ class UploadProduct extends Component {
           <UploadProductTitle>Tell us what you're selling</UploadProductTitle>
           <Stepper />
         </MainContainer>
-        <Footer isAuth={this.props.isAuth} /> 
+        <Footer /> 
       </MuiThemeProvider>
     )
   }

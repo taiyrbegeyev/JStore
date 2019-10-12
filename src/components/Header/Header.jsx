@@ -17,9 +17,6 @@ class Header extends Component {
 
   render() {
     const { isAuth } = this.props
-    if (!isAuth) {
-      return null
-    }
     
     return (
       <HeaderContainer>
