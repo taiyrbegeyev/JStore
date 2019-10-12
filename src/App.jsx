@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom'
 import { auth } from 'firebase.js'
+import { userExists } from 'firebase/auth.js'
 import { routes } from 'routing'
 
-const PrivateRoute = ({ isAuth, user, component: Component, ...rest }) => {
+const PrivateRoute = ({ isAuth, user, isNewUser, component: Component, ...rest }) => {
   console.log(isAuth)
   return <Route
     {...rest}
@@ -13,6 +14,7 @@ const PrivateRoute = ({ isAuth, user, component: Component, ...rest }) => {
       : <Component
           isAuth={isAuth}
           user={user}
+          isNewUser={isNewUser}
           {...props}
         />
     )
@@ -39,6 +41,7 @@ class App extends Component {
   state = {
     isAuth: null,
     user: null,
+    isNewUser: null,
     isLoading: true
   }
   
@@ -46,11 +49,14 @@ class App extends Component {
     this.setState({
       isLoading: true
     })
+
     this.fireBaseListener = auth.onAuthStateChanged((user) => {
+      console.log(user)
       if (auth.isSignInWithEmailLink(window.location.href)) {
         console.log('isSignInWithEmailLink')
         let email = window.localStorage.getItem('emailForSignIn')
-        if (!email) {
+        console.log(email)
+        if (!email && !this.state.user) {
           email = window.prompt('Please provide your email for confirmation')
         }
         else {
@@ -58,16 +64,18 @@ class App extends Component {
           .then((result) => {
             console.log('signInWithEmailLink')
             window.localStorage.removeItem('emailForSignIn')
+
             if (result.user) {
-              console.log(result.user)
+              console.log('signInWithEmailLink setting to true')
               this.setState({
                 isAuth: true,
                 user: result.user,
+                isNewUser: result.additionalUserInfo.isNewUser,
                 isLoading: false
               })
             }
             else {
-              console.log('signInWithEmailLink setting to false ')
+              console.log('signInWithEmailLink setting to false')
               this.setState({
                 isAuth: false,
                 user: null,
@@ -111,7 +119,7 @@ class App extends Component {
   }
 
   render () {
-    const { isAuth, user, isLoading } = this.state
+    const { isAuth, user, isNewUser, isLoading } = this.state
 
     if (isLoading) {
       return null
@@ -126,6 +134,7 @@ class App extends Component {
             key={index}
             isAuth={isAuth}
             user={user}
+            isNewUser={isNewUser}
             {...routeProps}
             component={component}
           />

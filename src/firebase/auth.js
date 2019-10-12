@@ -4,12 +4,22 @@ export const getStarted = (email, actionCodeSettings, errHandler, completionHand
   auth.signOut()
   auth.sendSignInLinkToEmail(email, actionCodeSettings)
     .then(() => {
-      window.localStorage.setItem('emailForSignIn', email)
       completionHandler()
     })
     .catch((err) => {
       console.log(err)
       errHandler()
+    })
+}
+
+export const userExists = (email, completionHandler) => {
+  db.collection('users').doc(email).get()
+    .then((snapshot) => {
+      console.log(snapshot.exists)
+      completionHandler(snapshot.exists)
+    })
+    .catch((err) => {
+      console.log(err)
     })
 }
 

@@ -16,42 +16,44 @@ const theme = createMuiTheme({
  */
 
 class Home extends Component {
-  state = {
-    user: null,
-    isNewUser: null,
-    user_email: null
-  }
+  // state = {
+  //   user: null,
+  //   isNewUser: null,
+  //   user_email: null
+  // }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.user !== prevState.user) {
-      return ({
-        user: nextProps.user
-      })
-    }
-    return null
-  }
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (nextProps.user !== prevState.user) {
+  //     return ({
+  //       user: nextProps.user
+  //     })
+  //   }
+  //   return null
+  // }
 
-  componentDidUpdate(prevProps, prevState) {
-    // only update chart if the data has changed
-    if (prevProps.user !== this.props.user) {
-      const isNewUser = this.props.user.metadata.creationTime === this.props.user.metadata.lastSignInTime
-      const user_email = this.props.user.email
-      this.setState({
-        user: this.props.user,
-        isNewUser,
-        user_email
-      })
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   // only update chart if the data has changed
+  //   if (prevProps.user !== this.props.user) {
+  //     const isNewUser = this.props.user.metadata.creationTime === this.props.user.metadata.lastSignInTime
+  //     const user_email = this.props.user.email
+  //     this.setState({
+  //       user: this.props.user,
+  //       isNewUser,
+  //       user_email
+  //     })
+  //   }
+  // }
   
   render() {
-    const { isNewUser, user_email } = this.state
+    const { isNewUser, user } = this.props
+    // const { user_email } = this.state
+    console.log('isnewUser: ', isNewUser)
 
     return (
       <MuiThemeProvider theme={theme}>
         <NewUserModal
           open={isNewUser}
-          email={user_email}
+          email={user.email}
         />
         <HomePageHeader />
         <Album />

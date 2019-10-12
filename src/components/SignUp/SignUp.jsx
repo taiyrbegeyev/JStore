@@ -82,6 +82,7 @@ class SignUp extends Component {
         emailSentSuccessfully: false
       })
     }, () => {
+      window.localStorage.setItem('emailForSignIn', email)
       this.setState({
         loading: false,
         emailSentSuccessfully: true
