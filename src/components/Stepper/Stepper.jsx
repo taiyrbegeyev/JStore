@@ -106,6 +106,7 @@ class StepperUpload extends Component {
 
         const post = {
           ownerId: auth.currentUser.email,
+          ownerName: auth.currentUser.displayName,
           imageUrl: url,
           ...data,
         }

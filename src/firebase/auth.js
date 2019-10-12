@@ -13,12 +13,17 @@ export const getStarted = (email, actionCodeSettings, errHandler, completionHand
     })
 }
 
-export const registerNewUser = (name, email, errHandler, completionHandler) => {
+export const registerNewUser = (name, email, whatsApp, phoneNumber, errHandler, completionHandler) => {
   let data = {
     fullName: name,
     email: email,
-    joinDate: firebase.firestore.FieldValue.serverTimestamp(),
-    postsActive: {}
+    whatsApp: whatsApp,
+    phoneNumber: phoneNumber,
+    creationDate: firebase.firestore.FieldValue.serverTimestamp(),
+  }
+
+  if (!whatsApp) {
+    delete data.phoneNumber
   }
 
   db.collection('users').doc(email).set(data)

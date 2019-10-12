@@ -22,15 +22,7 @@ export const createPost = (postId, post, errHandler, completionHandler) => {
   
   db.collection('postsActive').doc(postId).set(post)
     .then(() => {
-      // update user, add additonal info which is post_id
-      const postsActive = {}
-      postsActive[postId] = true
-      db.collection('users').doc(post.ownerId).set({
-        postsActive
-      }, { merge: true })
-      .then(() => {
-        completionHandler()
-      })
+      completionHandler() 
     })
     .catch((err) => {
       console.log(err)

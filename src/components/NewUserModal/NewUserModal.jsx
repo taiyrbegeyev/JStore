@@ -1,17 +1,23 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
+import { auth } from 'firebase.js'
 import  { registerNewUser } from 'firebase/auth.js'
 import {
-  Button, TextField, Dialog,
+  Button, Checkbox, TextField, Dialog,
   DialogActions, DialogContent,
-  DialogContentText, DialogTitle
+  DialogContentText, DialogTitle,
+  FormControlLabel, InputAdornment
 } from '@material-ui/core'
 
 class NewUserModal extends Component {
   state = {
     open: null,
     fullName: null,
-    redirectToHome: false
+    checkedWhatsApp: true,
+    phoneNumber: null,
+    redirectToHome: false,
+    error_fullName: false,
+    error_phoneNumber: false
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -24,18 +30,52 @@ class NewUserModal extends Component {
 
   handleInputBox = (e) => {
     this.setState({
-      fullName: e.target.value
+      [e.target.name]: e.target.value
+    })
+  }
+
+  handleChange = (name) => (e) => {
+    this.setState({
+      [name]: e.target.checked
     })
   }
 
   handleClose = () => {
     const { email } = this.props
-    const { fullName } = this.state
-    console.log(email + " " + fullName)
-    if (fullName) {
-      registerNewUser(fullName, email, errHandler => {
+    const { fullName, phoneNumber, checkedWhatsApp } = this.state
+
+    // validate inputs
+    if (!fullName) {
+      this.setState({
+        error_fullName: true
+      })
+    }
+    else {
+      this.setState({
+        error_fullName: false
+      })
+    }
+
+    if (checkedWhatsApp && !phoneNumber) {
+      this.setState({
+        error_phoneNumber: true
+      })
+    }
+    else {
+      this.setState({
+        error_phoneNumber: false
+      })
+    }
+    
+    if (fullName && ( (checkedWhatsApp && phoneNumber) || !checkedWhatsApp ) ) {
+      console.log(email + " " + fullName + " " + phoneNumber)
+      registerNewUser(fullName, email, checkedWhatsApp, phoneNumber, () => {
         alert('Error, please make sure that everything is valid')
         }, () => {
+          auth.currentUser.updateProfile({
+            displayName: fullName,
+            phoneNumber: phoneNumber
+          })
           this.setState({
             redirectToHome: true
           }, () => {
@@ -47,8 +87,7 @@ class NewUserModal extends Component {
   }
   
   render() {
-    const { open, redirectToHome } = this.state
-
+    const { open, redirectToHome, checkedWhatsApp, error_fullName, error_phoneNumber } = this.state
     if (redirectToHome) {
       return <Redirect to='home' />
     }
@@ -62,13 +101,41 @@ class NewUserModal extends Component {
               Almost there! 
             </DialogContentText>
             <TextField
-              autoFocus
               margin="dense"
               id="fullName"
+              name="fullName"
               label="Full Name"
               type="text"
               fullWidth
               onChange={this.handleInputBox}
+              error={error_fullName}
+              placeholder="Example: Elon Musk"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checkedWhatsApp}
+                  onChange={this.handleChange('checkedWhatsApp')}
+                  value="checkedWhatsApp"
+                  color="primary"
+                />
+              }
+              label="I want to be contacted via What's App"
+            />
+            <TextField
+              disabled={!checkedWhatsApp}
+              margin="dense"
+              id="phoneNumber"
+              name="phoneNumber"
+              label="Phone Number"
+              type="tel"
+              fullWidth
+              onChange={this.handleInputBox}
+              error={error_phoneNumber}
+              placeholder="Example: 49 000 0000 0000"
+              InputProps={{
+                startAdornment: <InputAdornment position="start">+</InputAdornment>
+              }}
             />
           </DialogContent>
           <DialogActions>
