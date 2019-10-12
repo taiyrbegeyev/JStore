@@ -5,35 +5,23 @@ users: {
     email: '',
     whatsApp: bool,
     phoneNumber: '', // empty if whatsApp is false
+    creationTime: '',
   }
 },
-postsActive: {
+posts: {
   postId: {
+    sold: bool,
     ownerId: '',
-    ownerName: '',
+    buyerId: '', // empty if sold is false
     title: '',
     category: '',
     condition: '',
     description: '',
     imageUrl: '',
     price: 0.0,
-    paymentOptions: []
-    creationDate: 0,
-  }
-},
-postsSold: {
-  postId: {
-    ownerId: '',
-    ownerName: '',
-    title: '',
-    category: '',
-    condition: '',
-    description: '',
-    imageUrl: '',
-    price: 0.0,
-    paymentOptions: []
-    creationDate: 0,
-    soldDate: 0
+    paymentOptions: [],
+    creationDate: '',
+    soldDate: '', // empty is sold is false
   }
 },
 ```
