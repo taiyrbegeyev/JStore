@@ -36,20 +36,15 @@ const NormalRoute = ({ isAuth, user, windowWidth, windowHeight, component: Compo
 
 class App extends Component {
   state = {
-    isAuth: true,
-    user: null
+    isAuth: null,
+    user: null,
+    isLoading: true
   }
   
   componentWillMount () {
-    this.fireBaseListener = auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({
-          isAuth: true,
-          user: user
-        })
-      }
+    this.setState({
+      isLoading: true
     })
-
     if (auth.isSignInWithEmailLink(window.location.href)) {
       let email = window.localStorage.getItem('emailForSignIn')
       if (!email) {
@@ -62,13 +57,15 @@ class App extends Component {
           if (result.user) {
             this.setState({
               isAuth: true,
-              user: result.user
+              user: result.user,
+              isLoading: false
             })
           }
           else {
             this.setState({
               isAuth: false,
-              user: null
+              user: null,
+              isLoading: false
             })
           }
         })
@@ -78,11 +75,29 @@ class App extends Component {
           auth.signOut()
           this.setState({
             isAuth: false,
-            user: null
+            user: null,
+            isLoading: false
           })
         })
       }
     }
+
+    this.fireBaseListener = auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          isAuth: true,
+          user: user,
+          isLoading: false
+        })
+      }
+      else {
+        this.setState({
+          isAuth: false,
+          user: null,
+          isLoading: false
+        })
+      }
+    })
   }
 
   componentWillUnmount () {
@@ -90,7 +105,12 @@ class App extends Component {
   }
 
   render () {
-    const { isAuth, user } = this.state
+    const { isAuth, user, isLoading } = this.state
+
+    if (isLoading) {
+      return null
+    }
+    
     const elements = routes.map((item, index) => {
       const { path, exact, isPrivate, component } = item
       const routeProps = { path, exact }
