@@ -28,7 +28,6 @@ postsSold: {
   postId: {
     ownerId: '',
     ownerName: '',
-    buyerId: '',
     title: '',
     category: '',
     condition: '',
