@@ -33,7 +33,7 @@ export const registerNewUser = (name, email, whatsApp, phoneNumber, errHandler, 
   }
 
   if (!whatsApp) {
-    delete data.phoneNumber
+    data.phoneNumber = ''
   }
 
   db.collection('users').doc(email).set(data)
