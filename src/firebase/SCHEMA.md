@@ -13,6 +13,7 @@ users: {
 postsActive: {
   postId: {
     ownerId: '',
+    ownerName: '',
     title: '',
     category: '',
     condition: '',
@@ -26,6 +27,7 @@ postsActive: {
 postsSold: {
   postId: {
     ownerId: '',
+    ownerName: '',
     buyerId: '',
     title: '',
     category: '',
@@ -38,25 +40,4 @@ postsSold: {
     soldDate: 0
   }
 },
-chats: {
-  chatId: {
-    aliceId: '',
-    bobId: '',
-    postId: '',
-    lastMessageId: '',
-    seen : false
-  }
-},
-messages: {
-  chatId: {
-    messageId: {
-      receiverId: '',
-      senderId: '',
-      timestamp: '',
-      text: '',
-      type: '',
-      seen: true
-    }
-  }
-}
 ```
