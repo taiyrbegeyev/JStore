@@ -68,8 +68,10 @@ export const fetchPostImage = (postId) => {
           console.log('User canceled the upload')
           break
         case 'storage/unknown':
-            console.log('Unknown error occurred, inspect the server response')
-            break
+          console.log('Unknown error occurred, inspect the server response')
+          break
+        default:
+          break
       }
     })
 }

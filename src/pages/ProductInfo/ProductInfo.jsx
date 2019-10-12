@@ -94,6 +94,7 @@ class ProductInfo extends Component {
             </ProductInfo1>
             <ProductInfo2>
               <DescriptionContainer>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laborum, sequi placeat? Eius autem cupiditate, laborum eligendi soluta itaque inventore perferendis, labore dolorem doloribus numquam provident praesentium velit. Quia, tempora distinctio.
               </DescriptionContainer>
             </ProductInfo2>
           </ProductDetails>

@@ -3,6 +3,10 @@ import styled from 'styled-components'
 export const MainContainer = styled.div`
   padding: 2rem 2rem;
 
+  @media (min-width: 768px) {
+    padding: 0 6rem;
+  }
+
   @media (min-width: 960px) {
     padding: 0 12rem;
     flex-direction: row;
@@ -14,8 +18,11 @@ export const MainContainer = styled.div`
 `
 
 export const ImageContainer = styled.div`
-  width: 30rem;
+  width: 35rem;
   align-self: center;
+  @media (min-width: 960px) {
+    align-self: flex-start;
+  }
 `
 
 export const Image = styled.img`
@@ -26,11 +33,9 @@ export const Image = styled.img`
 export const ProductDetails = styled.div`
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-/* 
-  @media (min-width: 768px) {
-    flex-direction: row;
-  } */
+  @media (min-width: 960px) {
+    width: 70%;
+  }
 `
 
 export const ProductInfo1 = styled.div`
@@ -75,9 +80,12 @@ export const PreferredPaymentOptions = styled.div`
 `
 
 export const ProductInfo2 = styled.div`
-
+  margin: 4rem 0 0 0;
+  @media (min-width: 960px) {
+    margin: 4rem 0 0 4rem;
+  }
 `
 
-export const DescriptionContainer = styled.div`
+export const DescriptionContainer = styled.p`
 
 `
