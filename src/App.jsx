@@ -67,10 +67,14 @@ class App extends Component {
 
             if (result.user) {
               console.log('signInWithEmailLink setting to true')
+              userExists(email, (res) => {
+                this.setState({
+                  isNewUser: !res 
+                })
+              })
               this.setState({
                 isAuth: true,
                 user: result.user,
-                isNewUser: result.additionalUserInfo.isNewUser,
                 isLoading: false
               })
             }
