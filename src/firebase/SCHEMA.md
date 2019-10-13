@@ -12,6 +12,7 @@ posts: {
   postId: {
     sold: bool,
     ownerId: '',
+    ownerName: '',
     title: '',
     category: '',
     condition: '',
