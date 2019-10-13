@@ -159,8 +159,12 @@ class StepperUpload extends Component {
       case 4:
         // check if price is a number
         const price = !data.price || isNaN(data.price)
+
+        if (data.price.length >= 8) {
+          alert('Error: Amount of digits exceeded')
+        }
         
-        if (price || !data.payment_options || !data.payment_options.length) {
+        if (price || !data.payment_options || !data.payment_options.length || data.price.length >= 8) {
           this.setState({
             error: true
           })
@@ -242,7 +246,7 @@ class StepperUpload extends Component {
             <PriceInput
               data_name="price"
               parentCallBack={this.callBackfunction}
-              error={error && (!data.price || isNaN(data.price))}
+              error={error && (!data.price || isNaN(data.price) || data.price.length >= 8)}
             />
             <PaymentOptionsCheckboxes
               data_name="payment_options"
