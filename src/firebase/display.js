@@ -62,7 +62,9 @@ export const fetchPosts = (posts_limit, posts_At, isForward) => {
 
 export const getSizeOfCollection = (collection_name, completionHandler) => {
   let size
-  db.collection(collection_name).where('sold', '==', false)
+  db.collection(collection_name)
+    .where('sold', '==', false)
+    .get()
     .then((snapshot) => {
       size = snapshot.docs.length
       console.log(size)
