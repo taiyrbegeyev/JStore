@@ -8,8 +8,9 @@ users: {
     creationTime: '',
   }
 },
-postsActive: {
+posts: {
   postId: {
+    sold: bool,
     ownerId: '',
     ownerName: '',
     title: '',
@@ -18,23 +19,9 @@ postsActive: {
     description: '',
     imageUrl: '',
     price: 0.0,
-    paymentOptions: []
-    creationDate: 0,
-  }
-},
-postsSold: {
-  postId: {
-    ownerId: '',
-    ownerName: '',
-    title: '',
-    category: '',
-    condition: '',
-    description: '',
-    imageUrl: '',
-    price: 0.0,
-    paymentOptions: []
-    creationDate: 0,
-    soldDate: 0
+    paymentOptions: [],
+    creationDate: '',
+    soldDate: '', // empty is sold is false
   }
 },
 ```
