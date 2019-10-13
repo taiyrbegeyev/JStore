@@ -56,7 +56,7 @@ class StepperUpload extends Component {
       description: null,
       file: null,
       price: null,
-      payment_options: []
+      paymentOptions: []
     },
     error: false,
     loading: false
@@ -86,7 +86,7 @@ class StepperUpload extends Component {
       // verify data once again
       // in case nothing fails, continue
       if (!data.title || !data.category || !data.condition || !data.description ||
-          !data.file || !data.price || !data.payment_options || !data.payment_options.length) {
+          !data.file || !data.price || !data.paymentOptions || !data.paymentOptions.length) {
 
         alert('Something went wrong. Verify your entries.')
         this.setState({
@@ -108,6 +108,8 @@ class StepperUpload extends Component {
           ownerId: auth.currentUser.email,
           ownerName: auth.currentUser.displayName,
           imageUrl: url,
+          sold: false,
+          soldDate: '',
           ...data,
         }
         delete post.file
@@ -164,7 +166,7 @@ class StepperUpload extends Component {
           alert('Error: Amount of digits exceeded')
         }
         
-        if (price || !data.payment_options || !data.payment_options.length || data.price.length >= 8) {
+        if (price || !data.paymentOptions || !data.paymentOptions.length || data.price.length >= 8) {
           this.setState({
             error: true
           })
@@ -249,9 +251,9 @@ class StepperUpload extends Component {
               error={error && (!data.price || isNaN(data.price) || data.price.length >= 8)}
             />
             <PaymentOptionsCheckboxes
-              data_name="payment_options"
+              data_name="paymentOptions"
               parentCallBack={this.callBackfunction}
-              error={error && (!data.payment_options || !data.payment_options.length)}
+              error={error && (!data.paymentOptions || !data.paymentOptions.length)}
             />
           </React.Fragment>
         )

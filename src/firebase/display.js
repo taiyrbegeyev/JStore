@@ -6,10 +6,14 @@ import { storage, db } from 'firebase.js'
  */
 
 export const fetchPost = (postId, errHandler, completionHandler) => {
-  db.collection('postsActive').doc(postId).get()
+  db.collection('posts').doc(postId).get()
     .then((doc) => {
       if (!doc.exists) {
         console.log('No such document!')
+        errHandler()
+      }
+      else if (doc.data().sold === true) {
+        alert('Error: product has already been sold')
         errHandler()
       }
       else {
@@ -24,7 +28,7 @@ export const fetchPost = (postId, errHandler, completionHandler) => {
 }
 
 /**
- * Fetches data from postsActive
+ * Fetches data from posts
  * @param {*} posts_limit 
  * @param {*} posts_startAt
  * @param {*} isForward
@@ -33,13 +37,15 @@ export const fetchPost = (postId, errHandler, completionHandler) => {
 export const fetchPosts = (posts_limit, posts_At, isForward) => {
   let query
   if (isForward) {
-    query = db.collection('postsActive')
+    query = db.collection('posts')
+      .where('sold', '==', false)
       .orderBy('creationDate', 'desc')
       .startAfter(posts_At)
       .limit(posts_limit)
   }
   else {
-    query = db.collection('postsActive')
+    query = db.collection('posts')
+      .where('sold', '==', false)
       .orderBy('creationDate', 'desc')
       .endBefore(posts_At)
       .limit(posts_limit)
@@ -56,7 +62,7 @@ export const fetchPosts = (posts_limit, posts_At, isForward) => {
 
 export const getSizeOfCollection = (collection_name, completionHandler) => {
   let size
-  db.collection(collection_name).get()
+  db.collection(collection_name).where('sold', '==', false)
     .then((snapshot) => {
       size = snapshot.docs.length
       console.log(size)

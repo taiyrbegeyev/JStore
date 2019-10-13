@@ -20,7 +20,7 @@ export const uploadImage = (file, id, errHandler, completionHandler, returnImage
 export const createPost = (postId, post, errHandler, completionHandler) => {
   post.creationDate = firebase.firestore.FieldValue.serverTimestamp()
   
-  db.collection('postsActive').doc(postId).set(post)
+  db.collection('posts').doc(postId).set(post)
     .then(() => {
       completionHandler() 
     })

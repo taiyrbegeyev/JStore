@@ -63,8 +63,6 @@ class Album extends Component {
 
   getPosts() {
     const { isForward, itemsPerPage, timeStampOfFirstPost, timeStampOfLastPost } = this.state
-    console.log(this.state)
-    let res
     const query = fetchPosts(itemsPerPage, (isForward ? timeStampOfLastPost : timeStampOfFirstPost), isForward)
     query.get()
       .then((snapshot) => {
@@ -76,14 +74,14 @@ class Album extends Component {
         })
         let timeStampOfFirstPostLocal = posts[0].creationDate
         let timeStampOfLastPostLocal = posts[posts.length - 1].creationDate
-        res = {
+        let res = {
           posts,
           timeStampOfFirstPostLocal,
           timeStampOfLastPostLocal
         }
         return res
       })
-      .then(() => {
+      .then((res) => {
         console.log(res)
         this.setState({
           dbPosts: res.posts,
@@ -97,8 +95,7 @@ class Album extends Component {
   }
 
   componentWillMount() {
-    console.log('ComponentWillMount()')
-    getSizeOfCollection('postsActive', (size) => {
+    getSizeOfCollection('posts', (size) => {
       this.setState({
         numberOfPosts: size
       })
@@ -133,7 +130,6 @@ class Album extends Component {
     const { classes } = this.props
     const { currentPage, itemsPerPage, dbPosts, numberOfPosts } = this.state
     
-    console.log(dbPosts)
     return (
       <React.Fragment>
         <CssBaseline />

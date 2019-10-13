@@ -126,7 +126,7 @@ class ProductInfo extends Component {
                 </Typography>
                 <PreferredPaymentOptions>
                   {
-                    data.payment_options.map((paymentOption, index) => {
+                    data.paymentOptions.map((paymentOption, index) => {
                       let label
                       switch(paymentOption) {
                         case 'cash':
