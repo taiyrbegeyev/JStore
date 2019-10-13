@@ -1,6 +1,29 @@
 import { storage, db } from 'firebase.js'
 
 /**
+ * Fetch one single post
+ * @param {*} postId 
+ */
+
+export const fetchPost = (postId, errHandler, completionHandler) => {
+  db.collection('postsActive').doc(postId).get()
+    .then((doc) => {
+      if (!doc.exists) {
+        console.log('No such document!')
+        errHandler()
+      }
+      else {
+        console.log(doc.data())
+        completionHandler(doc.data())
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+      errHandler()
+    })
+}
+
+/**
  * Fetches data from postsActive
  * @param {*} posts_limit 
  * @param {*} posts_startAt

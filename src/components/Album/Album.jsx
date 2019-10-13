@@ -81,6 +81,7 @@ class Album extends Component {
           timeStampOfFirstPostLocal,
           timeStampOfLastPostLocal
         }
+        return res
       })
       .then(() => {
         console.log(res)
@@ -132,6 +133,7 @@ class Album extends Component {
     const { classes } = this.props
     const { currentPage, itemsPerPage, dbPosts, numberOfPosts } = this.state
     
+    console.log(dbPosts)
     return (
       <React.Fragment>
         <CssBaseline />
@@ -167,11 +169,8 @@ class Album extends Component {
                       </Typography>
                     </CardContent>
                     <CardActions className={classes.cardActions}>
-                      <Button size="small" color="primary">
+                      <Button size="small" color="primary" href={`/posts/${dbPost.id}`}>
                         View
-                      </Button>
-                      <Button size="small" color="primary">
-                        Contact Owner
                       </Button>
                     </CardActions>
                   </Card>
@@ -187,7 +186,7 @@ class Album extends Component {
                 activePage={currentPage}
                 itemsCountPerPage={itemsPerPage}
                 totalItemsCount={numberOfPosts}
-                pageRangeDisplayed={5}
+                pageRangeDisplayed={1}
                 onChange={(e) => this.handlePageChange(e)}
               />
             </PaginationWrapper>

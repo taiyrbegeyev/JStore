@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import { Footer, HomePageHeader } from 'components/export'
 import {
   MainContainer, ProductDetails,
@@ -9,6 +10,7 @@ import {
 } from './styles'
 import { Avatar, Typography, Link, Chip } from '@material-ui/core'
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles'
+import { fetchPost } from 'firebase/display.js'
 
 const theme = createMuiTheme({
   typography: {
@@ -39,33 +41,71 @@ const useStyles = theme => ({
 })
 
 class ProductInfo extends Component {
+  state = {
+    data: null,
+    error: null,
+    loading: false
+  }
+  
+  componentWillMount() {
+    this.setState({
+      loading: true
+    })
+    // extract id of post from url
+    const postId = window.location.pathname.split('/')[2]
+    console.log(postId)
+    fetchPost(postId, () => {
+      this.setState({
+        error: true,
+        loading: false
+      })
+    }, (data) => {
+      this.setState({
+        data,
+        loading: false
+      })
+    })
+  }
+  
   render() {
     const { classes } = this.props
+    const { data, error, loading } = this.state
+
+    if (error) {
+      return <Redirect to='/home' />
+    }
+
+    if (loading) {
+      return null
+    }
+
+    console.log(data.imageUrl)
+    
     return (
       <MuiThemeProvider theme={theme}>
         <HomePageHeader />
         <MainContainer>
           <ImageContainer>
-            <Image src="https://source.unsplash.com/random" />
+            <Image src={data.imageUrl} />
           </ImageContainer>
           <ProductDetails>
             <ProductInfo1>
               <TitleContainer>
                 <Typography gutterBottom variant="h5" component="h2">
-                  Macbook Pro 15 2019
+                  {data.title}
                 </Typography>
                 <Typography gutterBottom variant="h6" component="h4" className={classes.price}>
-                  €1000
+                  €{data.price}
                 </Typography>
                 <OwnerInfoContainer>
                   <Avatar className={classes.avatar}>TB</Avatar>
                   <OwnerInfo>
                     <Typography variant="h7" component="h4">
-                      Taiyr Begeyev
+                      {data.ownerName}
                     </Typography>
                     <Typography variant="h7" component="h4">
-                      <Link href="mailto:t.begeyev@jacobs-university.de">
-                        t.begeyev@jacobs-university.de
+                      <Link href={`mailto:${data.ownerId}`}>
+                        {data.ownerId}
                       </Link>
                     </Typography>
                   </OwnerInfo>
@@ -76,30 +116,51 @@ class ProductInfo extends Component {
                   Product Details
                 </Typography>
                 <Typography gutterBottom variant="h7" component="h4">
-                  Category: Electrnics and smth
+                  Category: {data.category}
                 </Typography>
                 <Typography gutterBottom variant="h7" component="h4">
-                  Condition: New
+                  Condition: {data.condition}
                 </Typography>
                 <Typography gutterBottom variant="h7" component="h4">
-                  Product Uploaded: 12.10.2019
+                  Product Uploaded: {data.creationDate.toDate().toString()}
                 </Typography>
                 <PreferredPaymentOptions>
-                  <Chip label="Cash" color="primary" className={classes.chip} />
-                  <Chip label="Paypal" color="primary" className={classes.chip} />
-                  <Chip label="Bank Transfer" color="primary" className={classes.chip} />
-                  <Chip label="Meal Plan" color="primary" className={classes.chip} />
+                  {
+                    data.payment_options.map((paymentOption, index) => {
+                      let label
+                      switch(paymentOption) {
+                        case 'cash':
+                          label = "Cash"
+                          break
+                        case 'bank_transfer':
+                          label = "Paypal"
+                          break
+                        case 'paypal':
+                          label = "Bank Transfer"
+                          break
+                        case 'meal_plan':
+                          label = "Meal Plan"
+                          break
+                        default:
+                          label = 'Unknown'
+                          break
+                      }
+                      return (
+                        <Chip label={label} key={index} color="primary" className={classes.chip} />
+                      )
+                    })
+                  }
                 </PreferredPaymentOptions>
               </ProductSpecificationsContainer>
             </ProductInfo1>
             <ProductInfo2>
-              <DescriptionContainer>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laborum, sequi placeat? Eius autem cupiditate, laborum eligendi soluta itaque inventore perferendis, labore dolorem doloribus numquam provident praesentium velit. Quia, tempora distinctio.
-              </DescriptionContainer>
+              <Typography gutterBottom variant="h6" component="h3">
+                {data.description}
+              </Typography>
             </ProductInfo2>
           </ProductDetails>
         </MainContainer>
-        <Footer isAuth={this.props.isAuth} />
+        <Footer />
       </MuiThemeProvider>
     )
   }
