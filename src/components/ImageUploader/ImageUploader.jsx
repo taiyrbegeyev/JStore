@@ -30,7 +30,7 @@ class UploadImage extends Component {
     if (file.size > 2000000) {
       this.setState({
         error_img: true,
-        error_msg: 'File is too huge'
+        error_msg: 'File is too huge (Size limit is 2MB)'
       }, () => {
         this.props.parentCallBack (this.props.data_name, null)
       })

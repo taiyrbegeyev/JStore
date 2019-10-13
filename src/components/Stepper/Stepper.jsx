@@ -133,7 +133,7 @@ class StepperUpload extends Component {
     // eslint-disable-next-line
     switch (this.state.activeStep) {
       case 1:
-        if (!data.title || !data.category || !data.condition) {
+        if (!data.title || data.title.length >= 50 || !data.category || !data.condition) {
           this.setState({
             error: true
           })
@@ -141,7 +141,7 @@ class StepperUpload extends Component {
         }
         break
       case 2:
-        if (!data.description) {
+        if (!data.description || data.description.length >= 300) {
           this.setState({
             error: true
           })
@@ -201,7 +201,7 @@ class StepperUpload extends Component {
               label="Title*"
               data_name="title"
               parentCallBack={this.callBackfunction}
-              error={error && !data.title}
+              error={error && (!data.title || data.title.length >= 50)}
             />
             <SimpleSelect
               label="Category*"
@@ -225,7 +225,7 @@ class StepperUpload extends Component {
             label="Description*"
             data_name="description"
             parentCallBack={this.callBackfunction}
-            error={error && !data.description}
+            error={error && (!data.description || data.description.length >= 300)}
           />
         )
       case 3:

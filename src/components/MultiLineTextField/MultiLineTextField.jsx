@@ -22,7 +22,7 @@ const useStyles = theme => ({
 
 class MultiLineTextField extends Component {
   state = {
-    input_value: ''
+    input_value: window.localStorage.getItem(this.props.data_name) || ''
   }
 
   handleInputBox = (e) => {
@@ -35,11 +35,15 @@ class MultiLineTextField extends Component {
   }
   
   render() {
+    const { input_value } = this.state
     const { classes, label, error } = this.props
+    const limit = 300 - input_value.length
+    const left = 'Characters Left: ' + limit
     return (
       <div className={classes.container}>
         <TextField
           id="outlined-multiline-static"
+          helperText={left}
           label={label}
           multiline
           fullWidth

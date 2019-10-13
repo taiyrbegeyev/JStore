@@ -51,7 +51,6 @@ class App extends Component {
     })
 
     this.fireBaseListener = auth.onAuthStateChanged((user) => {
-      console.log(user)
       if (auth.isSignInWithEmailLink(window.location.href)) {
         console.log('isSignInWithEmailLink')
         let email = window.localStorage.getItem('emailForSignIn')

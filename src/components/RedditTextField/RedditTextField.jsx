@@ -43,7 +43,7 @@ const useStyles = theme => ({
 
 class CustomizedInputs extends Component {
   state = {
-    input_value: ''
+    input_value: window.localStorage.getItem(this.props.data_name) || ''
   }
 
   handleInputBox = (e) => {
@@ -56,10 +56,14 @@ class CustomizedInputs extends Component {
   }
   
   render () {
+    const { input_value } = this.state
     const { classes, label, error} = this.props
+    const limit = 50 - input_value.length
+    const left = 'Characters Left: ' + limit
     return (
       <div className={classes.root}>
         <RedditTextField
+          helperText={left}
           label={label}
           error={error}
           className={classes.margin}
