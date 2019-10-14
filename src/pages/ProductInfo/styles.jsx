@@ -1,20 +1,22 @@
 import styled from 'styled-components'
 
 export const MainContainer = styled.div`
+  margin: 2rem 0 0 0;
   padding: 2rem 2rem;
 
   @media (min-width: 768px) {
-    padding: 0 6rem;
+    padding: 0 3rem 0 6rem;
   }
 
   @media (min-width: 960px) {
-    padding: 0 12rem;
+    padding: 0 6rem 0 12rem;
     flex-direction: row;
   }
 
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
+  width: 100vw;
 `
 
 export const ImageContainer = styled.div`
@@ -39,6 +41,7 @@ export const ProductDetails = styled.div`
 `
 
 export const ProductInfo1 = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   @media (min-width: 1280px) {
@@ -71,7 +74,7 @@ export const ProductSpecificationsContainer = styled.div`
     margin: 4rem 0 0 4rem;
   }
   @media (min-width: 1280px) {
-    margin: 0 0 0 10rem;
+    margin: 0 0 0 4rem;
   }
 `
 
@@ -80,6 +83,9 @@ export const PreferredPaymentOptions = styled.div`
 `
 
 export const ProductInfo2 = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
   margin: 4rem 0 0 0;
   @media (min-width: 960px) {
     margin: 4rem 0 0 4rem;
