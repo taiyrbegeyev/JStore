@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { displayDate } from 'helpers.js'
 import { Redirect } from 'react-router-dom'
 import { Footer, HomePageHeader } from 'components/export'
 import {
@@ -37,6 +38,9 @@ const useStyles = theme => ({
   },
   chip: {
     margin: 2
+  },
+  names: {
+    fontWeight: 550
   }
 })
 
@@ -91,7 +95,7 @@ class ProductInfo extends Component {
           <ProductDetails>
             <ProductInfo1>
               <TitleContainer>
-                <Typography gutterBottom variant="h5" component="h2">
+                <Typography gutterBottom variant="h5" component="h2" className={classes.names}>
                   {data.title}
                 </Typography>
                 <Typography gutterBottom variant="h6" component="h4" className={classes.price}>
@@ -112,7 +116,7 @@ class ProductInfo extends Component {
                 </OwnerInfoContainer>
               </TitleContainer>
               <ProductSpecificationsContainer className={classes.product_details}>
-                <Typography gutterBottom variant="h5" component="h2">
+                <Typography gutterBottom variant="h5" component="h2" className={classes.names}>
                   Product Details
                 </Typography>
                 <Typography gutterBottom variant="h7" component="h4">
@@ -122,7 +126,7 @@ class ProductInfo extends Component {
                   Condition: {data.condition}
                 </Typography>
                 <Typography gutterBottom variant="h7" component="h4">
-                  Product Uploaded: {data.creationDate.toDate().toString()}
+                  Product Uploaded: {displayDate(data.creationDate.toDate())}
                 </Typography>
                 <PreferredPaymentOptions>
                   {
