@@ -16,7 +16,6 @@ export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
-  width: 100vw;
 `
 
 export const ImageContainer = styled.div`
@@ -41,7 +40,6 @@ export const ProductDetails = styled.div`
 `
 
 export const ProductInfo1 = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
   @media (min-width: 1280px) {
@@ -83,15 +81,8 @@ export const PreferredPaymentOptions = styled.div`
 `
 
 export const ProductInfo2 = styled.div`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-wrap: break-word;
   margin: 4rem 0 0 0;
   @media (min-width: 960px) {
     margin: 4rem 0 0 4rem;
   }
-`
-
-export const DescriptionContainer = styled.p`
-
 `

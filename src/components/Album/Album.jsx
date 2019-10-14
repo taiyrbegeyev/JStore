@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { auth } from 'firebase.js'
 import { fetchPosts, getSizeOfCollection } from 'firebase/display.js'
 import { cutOffString } from 'helpers.js'
 import Pagination from "react-js-pagination"
@@ -171,7 +172,7 @@ class Album extends Component {
                         {dbPost.title}
                       </Typography>
                       <Typography gutterBottom variant="h7" component="h4" className={classes.owner}>
-                        by <span className={classes.owner_email}>{dbPost.ownerId}</span>
+                        by <span className={classes.owner_email}>{dbPost.ownerName || dbPost.ownerId}</span>
                       </Typography>
                       <Typography gutterBottom variant="h6" component="h4" className={classes.price}>
                         €{dbPost.price}
