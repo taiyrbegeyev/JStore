@@ -46,8 +46,8 @@ export const fetchPosts = (posts_limit, posts_At, isForward) => {
   else {
     query = db.collection('posts')
       .where('sold', '==', false)
-      .orderBy('creationDate', 'desc')
-      .endBefore(posts_At)
+      .orderBy('creationDate', 'asc')
+      .startAfter(posts_At)
       .limit(posts_limit)
   }
   

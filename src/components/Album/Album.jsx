@@ -61,9 +61,23 @@ class Album extends Component {
     timeStampOfLastPost: new Date()
   }
 
+  // sort by creation date in desc order
+  compare(postA, postB) {
+    if (postA.creationDate > postB.creationDate) {
+      return -1
+    }
+    if (postA.creationDate < postB.creationDate) {
+      return 1
+    }
+    return 0
+  }
+
   getPosts() {
     const { isForward, itemsPerPage, timeStampOfFirstPost, timeStampOfLastPost } = this.state
-    const query = fetchPosts(itemsPerPage, (isForward ? timeStampOfLastPost : timeStampOfFirstPost), isForward)
+    let timeStampOfPost = isForward ? timeStampOfLastPost : timeStampOfFirstPost
+
+    const query = fetchPosts(itemsPerPage, timeStampOfPost, isForward)
+    let res
     query.get()
       .then((snapshot) => {
         const posts = snapshot.docs.map((doc) => {
@@ -72,17 +86,26 @@ class Album extends Component {
           doc_full.id = doc.id
           return doc_full
         })
+
+        // sort posts
+        posts.sort(this.compare)
+        
         let timeStampOfFirstPostLocal = posts[0].creationDate
-        let timeStampOfLastPostLocal = posts[posts.length - 1].creationDate
-        let res = {
+        let timeStampOfLastPostLocal
+        if (posts.length <= 0) {
+          timeStampOfLastPostLocal = posts[0].creationDate
+        }
+        else {
+          timeStampOfLastPostLocal = posts[posts.length - 1].creationDate
+        }
+        res = {
           posts,
           timeStampOfFirstPostLocal,
           timeStampOfLastPostLocal
         }
         return res
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         this.setState({
           dbPosts: res.posts,
           timeStampOfFirstPost: res.timeStampOfFirstPostLocal,
@@ -108,9 +131,8 @@ class Album extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const isDifferentPage = this.state.currentPage !== prevState.currentPage
-    const isForward = this.state.currentPage >= prevState.currentPage
+    const isForward = this.state.currentPage > prevState.currentPage
     if (isDifferentPage) {
-      console.log('isForward: ' + isForward)
       this.setState({
         isForward
       }, () => {
