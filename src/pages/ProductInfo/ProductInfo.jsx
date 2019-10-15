@@ -25,9 +25,6 @@ const theme = createMuiTheme({
     secondary: {
       main: '#25D366',
       contrastText: '#fff',
-      '&:hover': {
-        contrastText: '#fff',
-      }
     }
   },
 })
@@ -52,7 +49,10 @@ const useStyles = theme => ({
   },
   margin: {
     margin: theme.spacing(1),
-    textTransform: 'none'
+    textTransform: 'none',
+    '&:hover': {
+      color: '#fff',
+    }
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
@@ -141,7 +141,9 @@ class ProductInfo extends Component {
                     <Email className={classes.extendedIcon} />
                     Write me an email
                   </Fab>
-                  <Fab
+                  {
+                    data.whatsApp && data.phoneNumber &&
+                    <Fab
                     variant="extended"
                     size="medium"
                     color="secondary"
@@ -152,6 +154,7 @@ class ProductInfo extends Component {
                     <WhatsApp className={classes.extendedIcon} />
                     Drop me a message
                   </Fab>
+                  }
                 </BuyProduct>
               </TitleContainer>
               <ProductSpecificationsContainer className={classes.product_details}>

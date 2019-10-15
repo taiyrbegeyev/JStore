@@ -16,6 +16,7 @@ export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.6rem;
+  width: 100%;
 `
 
 export const ImageContainer = styled.div`
@@ -30,12 +31,18 @@ export const ImageContainer = styled.div`
   }
 
   @media (min-width: 960px) {
-    width: 50%;
+    min-width: 40%;
     align-self: flex-start;
   }
   
   @media (min-width: 1280px) {
-    width: 35%;
+    min-width: 35%;
+    max-width: 35%;
+  }
+
+  @media (min-width: 1690px) {
+    min-width: 50%;
+    max-width: 50%;
   }
 `
 
@@ -83,6 +90,10 @@ export const BuyProduct = styled.div`
   margin: 2rem 0 0 0;
   display: flex;
   justify-content: center;
+
+  @media (min-width: 960px) {
+    flex-direction: column;
+  }
 `
 
 export const ProductSpecificationsContainer = styled.div`
