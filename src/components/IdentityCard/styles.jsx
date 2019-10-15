@@ -2,10 +2,10 @@ import styled from 'styled-components'
 
 export const IdentityCardWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  width: 25rem;
+  width: 30rem;
   border: 0.15rem solid #eaeaea;
 `
 
@@ -36,12 +36,14 @@ export const UserName = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
 `
 
 export const ListOfTabs = styled.ul`
   width: 100%;
   margin: 0;
   padding: 0;
+  margin: auto;
 `
 
 export const Tab = styled.li`
@@ -50,5 +52,5 @@ export const Tab = styled.li`
   list-style: none;
   border-top: 0.15rem solid #eaeaea;
   display: flex;
-  justify-content: center;
+  align-items: center;
 `
