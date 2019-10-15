@@ -4,6 +4,7 @@ import EmailSent from 'components/EmailSent/EmailSent'
 import Footer from 'components/Footer/Footer'
 import Header from 'components/Header/Header'
 import HomePageHeader from 'components/HomePageHeader/HomePageHeader'
+import IdentityCard from 'components/IdentityCard/IdentityCard'
 import ImageUploader from 'components/ImageUploader/ImageUploader'
 import {Input} from 'components/Input/Input'
 import Intro from 'components/Intro/Intro'
@@ -18,7 +19,7 @@ import WelcomeBack from 'components/WelcomeBack/WelcomeBack'
 
 export {
   Album, Button, EmailSent, Footer,
-  Header, HomePageHeader, ImageUploader,
+  Header, HomePageHeader, IdentityCard, ImageUploader,
   Input, Intro, MultilineTextField, NewUserModal,
   PaymentOptionsCheckboxes, PriceInput,
   RedditTextField, SimpleSelect, Stepper, WelcomeBack,

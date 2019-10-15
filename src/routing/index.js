@@ -3,6 +3,7 @@ import SignUp from 'pages/SignUp/SignUpPage'
 import Home from 'pages/Home/HomePage'
 import UploadProduct from 'pages/UploadProduct/UploadProductPage'
 import ProductInfo from 'pages/ProductInfo/ProductInfo'
+import Profile from 'pages/Profile/Profile'
 
 export const routes = [
   {
@@ -32,5 +33,10 @@ export const routes = [
     path: '/posts',
     isPrivate: true,
     component: ProductInfo
+  },
+  {
+    path: '/profile',
+    isPrivate: true,
+    component: Profile
   }
 ]

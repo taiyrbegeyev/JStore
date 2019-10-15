@@ -155,10 +155,10 @@ class HomePageHeader extends Component {
                 <MainNavBarElementsLinks href="/upload">
                   <Publish />
                 </MainNavBarElementsLinks>
-                <MainNavBarElementsLinks>
+                {/* <MainNavBarElementsLinks>
                   <Notifications />
-                </MainNavBarElementsLinks>
-                <MainNavBarElementsLinks>
+                </MainNavBarElementsLinks> */}
+                <MainNavBarElementsLinks href="/profile">
                   <AccountCircle />
                 </MainNavBarElementsLinks>
                 <MainNavBarElementsLinks
@@ -276,13 +276,13 @@ class HomePageHeader extends Component {
                     </DrawerItems>
                     <ListItemText primary={'Sell'} />
                   </ListItem>
-                  <ListItem button onClick={() => this.goTo('')}>
+                  {/* <ListItem button onClick={() => this.goTo('')}>
                     <DrawerItems>
                       <Notifications />
                     </DrawerItems>
                     <ListItemText primary={'Messages'} />
-                  </ListItem>
-                  <ListItem button onClick={() => this.goTo('')}>
+                  </ListItem> */}
+                  <ListItem button onClick={() => this.goTo('/profile')}>
                     <DrawerItems>
                       <AccountCircle />
                     </DrawerItems>

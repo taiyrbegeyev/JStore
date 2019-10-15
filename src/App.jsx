@@ -4,7 +4,7 @@ import { auth } from 'firebase.js'
 import { userExists } from 'firebase/auth.js'
 import { routes } from 'routing'
 
-const PrivateRoute = ({ isAuth, user, isNewUser, component: Component, ...rest }) => {
+const PrivateRoute = ({ isAuth, user, windowWidth, windowHeight, isNewUser, component: Component, ...rest }) => {
   console.log(isAuth)
   return <Route
     {...rest}
@@ -15,6 +15,8 @@ const PrivateRoute = ({ isAuth, user, isNewUser, component: Component, ...rest }
           isAuth={isAuth}
           user={user}
           isNewUser={isNewUser}
+          windowWidth={windowWidth}
+          windowHeight={windowHeight}
           {...props}
         />
     )
