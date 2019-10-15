@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
-import { displayDate, cutFullName } from 'helpers.js'
+import { fetchPost } from 'firebase/display.js'
+import { displayDate, cutFullName, generateWhatsAppLink } from 'helpers.js'
 import { Redirect } from 'react-router-dom'
 import { Footer, HomePageHeader } from 'components/export'
 import {
   MainContainer, ProductDetails,
   ImageContainer, Image, TitleContainer, OwnerInfoContainer,
   OwnerInfo, ProductSpecificationsContainer,
-  PreferredPaymentOptions, ProductInfo1, ProductInfo2
+  PreferredPaymentOptions, ProductInfo1, ProductInfo2,
+  BuyProduct
 } from './styles'
-import { Avatar, Typography, Link, Chip } from '@material-ui/core'
+import { Avatar, Typography, Link, Chip, Fab } from '@material-ui/core'
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles'
-import { fetchPost } from 'firebase/display.js'
+import { Email, WhatsApp } from '@material-ui/icons'
 
 const theme = createMuiTheme({
   typography: {
@@ -20,6 +22,13 @@ const theme = createMuiTheme({
     primary: {
       main: '#004180',
     },
+    secondary: {
+      main: '#25D366',
+      contrastText: '#fff',
+      '&:hover': {
+        contrastText: '#fff',
+      }
+    }
   },
 })
 
@@ -40,7 +49,14 @@ const useStyles = theme => ({
   },
   names: {
     fontWeight: 550
-  }
+  },
+  margin: {
+    margin: theme.spacing(1),
+    textTransform: 'none'
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
 })
 
 class ProductInfo extends Component {
@@ -113,6 +129,30 @@ class ProductInfo extends Component {
                     </Typography>
                   </OwnerInfo>
                 </OwnerInfoContainer>
+                <BuyProduct>
+                  <Fab
+                    variant="extended"
+                    size="medium"
+                    color="default"
+                    aria-label="add"
+                    className={classes.margin}
+                    // href={}
+                  >
+                    <Email className={classes.extendedIcon} />
+                    Write me an email
+                  </Fab>
+                  <Fab
+                    variant="extended"
+                    size="medium"
+                    color="secondary"
+                    aria-label="add"
+                    className={classes.margin}
+                    href={generateWhatsAppLink(data.phoneNumber, data.ownerName, window.location.href, data.imageUrl)}
+                  >
+                    <WhatsApp className={classes.extendedIcon} />
+                    Drop me a message
+                  </Fab>
+                </BuyProduct>
               </TitleContainer>
               <ProductSpecificationsContainer className={classes.product_details}>
                 <Typography gutterBottom variant="h5" component="h2" className={classes.names}>

@@ -7,12 +7,12 @@ export const displayDate = (timestamp) => {
   let DD = ("0" + timestamp.getDate()).slice(-2)
   // getMonth returns month from 0
   let MM = ("0" + (timestamp.getMonth() + 1)).slice(-2)
-  var YYYY = timestamp.getFullYear();
+  let YYYY = timestamp.getFullYear()
 
-  var hh = ("0" + timestamp.getHours()).slice(-2);
-  var mm = ("0" + timestamp.getMinutes()).slice(-2);
-  var ss = ("0" + timestamp.getSeconds()).slice(-2);
-  var date_string = DD + "-" + MM + "-" + YYYY + " " + hh + ":" + mm + ":" + ss
+  let hh = ("0" + timestamp.getHours()).slice(-2)
+  let mm = ("0" + timestamp.getMinutes()).slice(-2)
+  let ss = ("0" + timestamp.getSeconds()).slice(-2)
+  let date_string = DD + "-" + MM + "-" + YYYY + " " + hh + ":" + mm + ":" + ss
 
   // will output something like "14-10-2019 11:04:42"
   return date_string
@@ -44,4 +44,10 @@ export const validatePhoneNumber = (phoneNumber) => {
     return true
   }
   return false
+}
+
+export const generateWhatsAppLink = (phoneNumber, fullName, link, imageUrl) => {
+  const sanitized_phoneNumber = phoneNumber.replace(/\D/g,'')
+  console.log(sanitized_phoneNumber)
+  return `https://api.whatsapp.com/send?phone=${sanitized_phoneNumber}&text=Hey! I'm contacting you by clicking on the WhatsApp button of JStore. My name is ${fullName}". I am interested in the following item: ${link}><img src=${imageUrl}`
 }

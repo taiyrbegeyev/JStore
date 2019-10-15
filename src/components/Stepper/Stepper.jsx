@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { fetchPhoneNumberOfUser } from 'firebase/auth.js'
 import { createPost, uploadImage } from 'firebase/upload'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
@@ -104,27 +105,31 @@ class StepperUpload extends Component {
       }, (url) => {
         console.log(url)
 
-        const post = {
-          ownerId: auth.currentUser.email,
-          ownerName: auth.currentUser.displayName,
-          imageUrl: url,
-          sold: false,
-          soldDate: '',
-          ...data,
-        }
-        delete post.file
-      
-        console.log(post)
-        // upload post to the firestore
-        createPost(postId, post, () => {
-          alert('Error while creating a new post. Contact t.begeyev@jacobs-university.de')
-        }, () => {
-          console.log('Post added')
-          this.setState({
-            loading: false
+        fetchPhoneNumberOfUser(auth.currentUser.email, (phoneNumber) => {
+          const post = {
+            ownerId: auth.currentUser.email,
+            ownerName: auth.currentUser.displayName,
+            imageUrl: url,
+            sold: false,
+            soldDate: '',
+            whatsApp: phoneNumber === '' ? false : true,
+            phoneNumber: phoneNumber,
+            ...data,
+          }
+          delete post.file
+        
+          console.log(post)
+          // upload post to the firestore
+          createPost(postId, post, () => {
+            alert('Error while creating a new post. Contact t.begeyev@jacobs-university.de')
+          }, () => {
+            console.log('Post added')
+            this.setState({
+              loading: false
+            })
+            alert('Product was successfully added')
+            this.handleReset()
           })
-          alert('Product was successfully added')
-          this.handleReset()
         })
       })
     }
@@ -135,7 +140,7 @@ class StepperUpload extends Component {
     // eslint-disable-next-line
     switch (this.state.activeStep) {
       case 1:
-        if (!data.title || data.title.length >= 50 || !data.category || !data.condition) {
+        if (!data.title || data.title.length > 50 || !data.category || !data.condition) {
           this.setState({
             error: true
           })
@@ -143,7 +148,7 @@ class StepperUpload extends Component {
         }
         break
       case 2:
-        if (!data.description || data.description.length >= 300) {
+        if (!data.description || data.description.length > 300) {
           this.setState({
             error: true
           })
@@ -162,11 +167,11 @@ class StepperUpload extends Component {
         // check if price is a number
         const price = !data.price || isNaN(data.price)
 
-        if (data.price.length >= 8) {
+        if (data.price.length > 8) {
           alert('Error: Amount of digits exceeded')
         }
         
-        if (price || !data.paymentOptions || !data.paymentOptions.length || data.price.length >= 8) {
+        if (price || !data.paymentOptions || !data.paymentOptions.length || data.price.length > 8) {
           this.setState({
             error: true
           })
@@ -207,7 +212,7 @@ class StepperUpload extends Component {
               label="Title*"
               data_name="title"
               parentCallBack={this.callBackfunction}
-              error={error && (!data.title || data.title.length >= 50)}
+              error={error && (!data.title || data.title.length > 50)}
             />
             <SimpleSelect
               label="Category*"
@@ -231,7 +236,7 @@ class StepperUpload extends Component {
             label="Description*"
             data_name="description"
             parentCallBack={this.callBackfunction}
-            error={error && (!data.description || data.description.length >= 300)}
+            error={error && (!data.description || data.description.length > 300)}
           />
         )
       case 3:
@@ -248,7 +253,7 @@ class StepperUpload extends Component {
             <PriceInput
               data_name="price"
               parentCallBack={this.callBackfunction}
-              error={error && (!data.price || isNaN(data.price) || data.price.length >= 8)}
+              error={error && (!data.price || isNaN(data.price) || data.price.length > 8)}
             />
             <PaymentOptionsCheckboxes
               data_name="paymentOptions"

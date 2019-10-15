@@ -61,7 +61,7 @@ export const ProductInfo1 = styled.div`
 `
 
 export const TitleContainer = styled.div`
-  margin: 4rem 0;
+  margin: 4rem 0 2rem 0;
   width: 100%;
   @media (min-width: 960px) {
     margin: 0;
@@ -79,9 +79,15 @@ export const OwnerInfo = styled.div`
   margin-left: 1rem;
 `
 
+export const BuyProduct = styled.div`
+  margin: 2rem 0 0 0;
+  display: flex;
+  justify-content: center;
+`
+
 export const ProductSpecificationsContainer = styled.div`
   @media (min-width: 960px) {
-    margin: 4rem 0 0 0rem;
+    margin: 2rem 0 0 0rem;
   }
 `
 
