@@ -32,3 +32,16 @@ export const cutFullName = (fullName) => {
     return array_fullName[0] + array_fullName[array_fullName.length - 1]
   }
 }
+
+export const validatePhoneNumber = (phoneNumber) => {
+  // truncate phone number first
+  phoneNumber = phoneNumber.replace(/\s/g, '');
+
+  // remove all non-digits
+  const sanitized_phoneNumber = phoneNumber.replace(/\D/g,'')
+  // if number doesn't contain any characters except numbers
+  if (sanitized_phoneNumber === phoneNumber && sanitized_phoneNumber.length >= 4 && sanitized_phoneNumber.length <= 15) {
+    return true
+  }
+  return false
+}

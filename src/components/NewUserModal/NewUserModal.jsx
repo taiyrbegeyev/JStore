@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { auth } from 'firebase.js'
 import  { registerNewUser } from 'firebase/auth.js'
+import { validatePhoneNumber } from 'helpers.js'
 import {
   Button, Checkbox, TextField, Dialog,
   DialogActions, DialogContent,
@@ -12,9 +13,9 @@ import {
 class NewUserModal extends Component {
   state = {
     open: null,
-    fullName: null,
+    fullName: '',
     checkedWhatsApp: true,
-    phoneNumber: null,
+    phoneNumber: '',
     redirectToHome: false,
     error_fullName: false,
     error_phoneNumber: false
@@ -45,7 +46,7 @@ class NewUserModal extends Component {
     const { fullName, phoneNumber, checkedWhatsApp } = this.state
 
     // validate inputs
-    if (!fullName) {
+    if (!fullName || fullName.length > 50) {
       this.setState({
         error_fullName: true
       })
@@ -56,10 +57,17 @@ class NewUserModal extends Component {
       })
     }
 
-    if (checkedWhatsApp && !phoneNumber) {
-      this.setState({
-        error_phoneNumber: true
-      })
+    if (checkedWhatsApp) {
+      if (!phoneNumber || !validatePhoneNumber(phoneNumber)) {
+        this.setState({
+          error_phoneNumber: true
+        })
+      }
+      else {
+        this.setState({
+          error_phoneNumber: false
+        })
+      }
     }
     else {
       this.setState({
@@ -67,7 +75,7 @@ class NewUserModal extends Component {
       })
     }
     
-    if (fullName && ( (checkedWhatsApp && phoneNumber) || !checkedWhatsApp ) ) {
+    if (fullName && ( (checkedWhatsApp && phoneNumber) || !checkedWhatsApp ) && fullName.length <= 50 && validatePhoneNumber(phoneNumber)) {
       let phoneNumberPlus = "+" + phoneNumber
       console.log(email + " " + fullName + " " + phoneNumberPlus)
       registerNewUser(fullName, email, checkedWhatsApp, phoneNumberPlus, () => {
@@ -87,10 +95,13 @@ class NewUserModal extends Component {
   }
   
   render() {
-    const { open, redirectToHome, checkedWhatsApp, error_fullName, error_phoneNumber } = this.state
+    const { open, redirectToHome, checkedWhatsApp, error_fullName, error_phoneNumber, fullName, phoneNumber } = this.state
     if (redirectToHome) {
       return <Redirect to='home' />
     }
+
+    const limit_1 = 50 - fullName.length
+    const left_1 = 'Characters Left: ' + limit_1
 
     return (
       <React.Fragment>
@@ -110,6 +121,7 @@ class NewUserModal extends Component {
               onChange={this.handleInputBox}
               error={error_fullName}
               placeholder="Example: Elon Musk"
+              helperText={left_1}
             />
             <FormControlLabel
               control={
@@ -136,6 +148,7 @@ class NewUserModal extends Component {
               InputProps={{
                 startAdornment: <InputAdornment position="start">+</InputAdornment>
               }}
+              helperText={error_phoneNumber && "You don't need to add the leading + . Also make sure that you are entering only digits. The limits for the phone number are >= 4 and <=15"}
             />
           </DialogContent>
           <DialogActions>
