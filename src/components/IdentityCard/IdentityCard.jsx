@@ -4,18 +4,38 @@ import {
   ProfileImage, UserName, ListOfTabs, Tab
 } from './styles'
 import { Person, Euro, LocalMall, SettingsApplications } from '@material-ui/icons'
-import { Typography } from '@material-ui/core'
+import {
+  Typography, List, ListItem,
+  ListItemIcon, ListItemText, Divider
+} from '@material-ui/core'
 import { withStyles } from '@material-ui/styles'
 
 const useStyles = theme => ({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+  },
   icon: {
     marginRight: '1rem'
-  }
+  },
 })
 
 class IdentityCard extends Component {
+  state = {
+    selectedIndex: 0
+  }
+
+  handleTabs = (e, selectedIndex) => {
+    this.setState({
+      selectedIndex: selectedIndex
+    })
+  }
+  
   render() {
     const { classes } = this.props
+    const { selectedIndex } = this.state
+    
     return (
       <IdentityCardWrapper>
         <ProfilePictureInformation>
@@ -29,32 +49,57 @@ class IdentityCard extends Component {
             </Typography>
           </UserName>
         </ProfilePictureInformation>
-        <ListOfTabs>
-          <Tab>
-            <Person className={classes.icon} />
-            <Typography variant="h7" component="h5">
-              Personal Info
-            </Typography>
-          </Tab>
-          <Tab>
-            <LocalMall className={classes.icon} />
-            <Typography variant="h7" component="h5">
-              Active Items
-            </Typography>
-          </Tab>
-          <Tab>
-            <Euro className={classes.icon} />
-            <Typography variant="h7" component="h5">
-              Sold Items
-            </Typography>
-          </Tab>
-          <Tab>
-            <SettingsApplications className={classes.icon} />
-            <Typography variant="h7" component="h5">
-              Settings
-            </Typography>
-          </Tab>
-        </ListOfTabs>
+        <div className={classes.root}>
+          <List component="nav" aria-label="secondary profile activities" disablePadding>
+            <ListItem
+              divider
+            ></ListItem>
+            <ListItem
+              button
+              onClick={e => this.handleTabs(e, 0)}
+              selected={selectedIndex === 0}
+              divider
+            >
+              <ListItemIcon>
+                <Person />
+              </ListItemIcon>
+              <ListItemText primary="Profile" />
+            </ListItem>
+            <ListItem
+              button
+              onClick={e => this.handleTabs(e, 1)}
+              selected={selectedIndex === 1}
+              divider
+            >
+            <ListItemIcon>
+              <SettingsApplications />
+            </ListItemIcon>
+            <ListItemText primary="Profile Settings" />
+          </ListItem>
+          <ListItem
+            button
+            onClick={e => this.handleTabs(e, 2)}
+            selected={selectedIndex === 2}
+            divider
+          >
+            <ListItemIcon>
+              <LocalMall />
+            </ListItemIcon>
+            <ListItemText primary="Active Items" />
+          </ListItem>
+          <ListItem
+            button
+            onClick={e => this.handleTabs(e, 3)}
+            selected={selectedIndex === 3}
+            divider
+          >
+            <ListItemIcon>
+              <Euro />
+            </ListItemIcon>
+            <ListItemText primary="Sold Items" />
+          </ListItem>
+          </List>
+        </div>
       </IdentityCardWrapper>
     )
   }
