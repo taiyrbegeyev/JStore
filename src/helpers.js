@@ -25,5 +25,10 @@ export const cutFullName = (fullName) => {
     return word.charAt(0).toUpperCase()
   })
   console.log(array_fullName)
-  return array_fullName[0] + array_fullName[array_fullName.length - 1]
+  if (array_fullName.length == 1) {
+    return array_fullName[0]
+  }
+  else {
+    return array_fullName[0] + array_fullName[array_fullName.length - 1]
+  }
 }
