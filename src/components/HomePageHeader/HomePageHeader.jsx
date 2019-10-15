@@ -15,8 +15,7 @@ import {
 } from '@material-ui/core'
 import {
   LocalGroceryStore, Publish,
-  Notifications, AccountCircle,
-  Settings, Dehaze
+  AccountCircle, Settings, Dehaze
 } from '@material-ui/icons'
 import logo from 'assets/jstore_logo.svg'
 

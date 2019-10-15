@@ -4,8 +4,7 @@ import { Redirect } from 'react-router-dom'
 import { Footer, HomePageHeader } from 'components/export'
 import {
   MainContainer, ProductDetails,
-  DescriptionContainer, ImageContainer,
-  Image, TitleContainer, OwnerInfoContainer,
+  ImageContainer, Image, TitleContainer, OwnerInfoContainer,
   OwnerInfo, ProductSpecificationsContainer,
   PreferredPaymentOptions, ProductInfo1, ProductInfo2
 } from './styles'

@@ -6,6 +6,12 @@ import { storage, db } from 'firebase.js'
  */
 
 export const fetchPost = (postId, errHandler, completionHandler) => {
+  if (!postId) {
+    console.log('Post does not exist')
+    errHandler()
+    return
+  }
+  
   db.collection('posts').doc(postId).get()
     .then((doc) => {
       if (!doc.exists) {

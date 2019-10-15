@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { auth } from 'firebase.js'
 import { fetchPosts, getSizeOfCollection } from 'firebase/display.js'
 import { cutOffString } from 'helpers.js'
 import Pagination from "react-js-pagination"
