@@ -17,3 +17,13 @@ export const displayDate = (timestamp) => {
   // will output something like "14-10-2019 11:04:42"
   return date_string
 }
+
+export const cutFullName = (fullName) => {
+  // split fullName by spaces
+  let array_fullName = fullName.split(" ")
+  array_fullName = array_fullName.map((word) => {
+    return word.charAt(0).toUpperCase()
+  })
+  console.log(array_fullName)
+  return array_fullName[0] + array_fullName[array_fullName.length - 1]
+}

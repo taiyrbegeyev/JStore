@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { displayDate } from 'helpers.js'
+import { displayDate, cutFullName } from 'helpers.js'
 import { Redirect } from 'react-router-dom'
 import { Footer, HomePageHeader } from 'components/export'
 import {
@@ -102,7 +102,7 @@ class ProductInfo extends Component {
                   €{data.price}
                 </Typography>
                 <OwnerInfoContainer>
-                  <Avatar className={classes.avatar}>TB</Avatar>
+                  <Avatar className={classes.avatar}>{cutFullName(data.ownerName)}</Avatar>
                   <OwnerInfo>
                     <Typography variant="h7" component="h4">
                       {data.ownerName}
