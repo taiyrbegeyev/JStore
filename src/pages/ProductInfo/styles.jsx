@@ -9,7 +9,7 @@ export const MainContainer = styled.div`
   }
 
   @media (min-width: 960px) {
-    padding: 0 6rem 0 12rem;
+    padding: 0 6rem 0 10.5rem;
     flex-direction: row;
   }
 
@@ -19,10 +19,23 @@ export const MainContainer = styled.div`
 `
 
 export const ImageContainer = styled.div`
-  width: 35rem;
+  width: 100%;
   align-self: center;
+  @media (min-width: 600px) {
+    width: 70%;
+  }
+
+  @media (min-width: 768px) {
+    width: 60%;
+  }
+
   @media (min-width: 960px) {
+    width: 50%;
     align-self: flex-start;
+  }
+  
+  @media (min-width: 1280px) {
+    width: 35%;
   }
 `
 
@@ -34,31 +47,30 @@ export const Image = styled.img`
 export const ProductDetails = styled.div`
   display: flex;
   flex-direction: column;
-  @media (min-width: 960px) {
-    width: 70%;
-  }
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 `
 
 export const ProductInfo1 = styled.div`
   display: flex;
   flex-direction: column;
-  @media (min-width: 1280px) {
-    flex-direction: row;
+  @media (min-width: 960px) {
+    margin-left: 6rem;
   }
 `
 
 export const TitleContainer = styled.div`
   margin: 4rem 0;
+  width: 100%;
   @media (min-width: 960px) {
-    margin: 0 0 0 4rem;
+    margin: 0;
+    width: 80%;
   }
 `
 
 export const OwnerInfoContainer = styled.div`
   margin: 2rem 0 0 0;
-  @media (min-width: 960px) {
-    margin: 4rem 0 0 0;
-  }
   display: flex;
   align-items: center;
 `
@@ -69,10 +81,7 @@ export const OwnerInfo = styled.div`
 
 export const ProductSpecificationsContainer = styled.div`
   @media (min-width: 960px) {
-    margin: 4rem 0 0 4rem;
-  }
-  @media (min-width: 1280px) {
-    margin: 0 0 0 4rem;
+    margin: 4rem 0 0 0rem;
   }
 `
 
@@ -83,6 +92,6 @@ export const PreferredPaymentOptions = styled.div`
 export const ProductInfo2 = styled.div`
   margin: 4rem 0 0 0;
   @media (min-width: 960px) {
-    margin: 4rem 0 0 4rem;
+    margin: 4rem 0 0 6rem;
   }
 `

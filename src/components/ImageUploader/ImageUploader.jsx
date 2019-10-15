@@ -24,7 +24,7 @@ class UploadImage extends Component {
     console.log(e.target.files)
     const file = e.target.files[0];
     console.log(file.size)
-    const admittedTypes = ['image/jpg', 'image/jpeg', 'image/png']
+    const admittedTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/heic']
 
     // file size is measured in bytes
     if (file.size > 2000000) {
