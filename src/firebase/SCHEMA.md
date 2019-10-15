@@ -11,8 +11,10 @@ users: {
 posts: {
   postId: {
     sold: bool,
-    ownerId: '',
+    ownerId: '', // email
     ownerName: '',
+    whatsApp: bool,
+    phoneNumber: '', // empty if whatsApp is false
     title: '',
     category: '',
     condition: '',
