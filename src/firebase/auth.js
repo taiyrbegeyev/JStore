@@ -16,7 +16,13 @@ export const userExists = (email, completionHandler) => {
   db.collection('users').doc(email).get()
     .then((snapshot) => {
       console.log(snapshot.exists)
-      completionHandler(snapshot.exists)
+      const exists = snapshot.exists
+      if (exists) {
+        auth.currentUser.updateProfile({
+          displayName: snapshot.data().fullName
+        })
+      }
+      completionHandler(exists)
     })
     .catch((err) => {
       console.log(err)
@@ -38,7 +44,7 @@ export const registerNewUser = (name, email, whatsApp, phoneNumber, errHandler, 
 
   db.collection('users').doc(email).set(data)
     .then(() => {
-      window.localStorage.setItem('emailForSignIn', email);
+      // window.localStorage.setItem('emailForSignIn', email);
       completionHandler()
     })
     .catch((err) => {

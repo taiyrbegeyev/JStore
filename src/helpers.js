@@ -43,7 +43,7 @@ export const validatePhoneNumber = (phoneNumber) => {
 export const generateWhatsAppLink = (phoneNumber, fullName, itemName, link, imageUrl) => {
   const sanitized_phoneNumber = phoneNumber.replace(/\D/g,'')
   console.log(sanitized_phoneNumber)
-  return `https://api.whatsapp.com/send?phone=${sanitized_phoneNumber}&text=[JStore]%20${itemName}%0D%0A%0D%0AHey! I'm contacting you by clicking on the WhatsApp button of JStore.%0D%0A My name is ${fullName}.%0D%0AI am interested in the following item:%0D%0A${link}`
+  return `https://api.whatsapp.com/send?phone=${sanitized_phoneNumber}&text=[JStore]%20${itemName}%0D%0A%0D%0AHey! I'm contacting you by clicking on the WhatsApp button of JStore.%0D%0AMy name is ${fullName}.%0D%0AI am interested in the following item:%0D%0A${link}`
 }
 
 export const generateeMail = (email, fullName, itemName, link, imageUrl) => {
