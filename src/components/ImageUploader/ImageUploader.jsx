@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import imageCompression from 'browser-image-compression'
 
 class UploadImage extends Component {
   state = {
@@ -6,6 +7,17 @@ class UploadImage extends Component {
     error_img: false,
     error_msg: '',
     loading: false
+  }
+
+  options = { 
+    // (default: Number.POSITIVE_INFINITY)
+    maxSizeMB: 0.5,
+    // compressedFile will scale down by ratio to a point that width or height is smaller than maxWidthOrHeight (default: undefined)
+    maxWidthOrHeight: undefined,
+    // use multi-thread web worker, fallback to run in main-thread (default: true)
+    useWebWorker: true,
+    // max number of iteration to compress the image (default: 10)
+    maxIteration: 10
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -23,35 +35,37 @@ class UploadImage extends Component {
     const reader = new FileReader();
     console.log(e.target.files)
     const file = e.target.files[0];
-    console.log(file.size)
-    const admittedTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/heic']
+    console.log(file.size / 1000000 + ' mb')
 
-    // file size is measured in bytes
-    if (file.size > 2000000) {
-      this.setState({
-        error_img: true,
-        error_msg: 'File is too huge (Size limit is 2MB)'
-      }, () => {
-        this.props.parentCallBack (this.props.data_name, null)
+    // compress image
+    imageCompression(file, this.options)
+      .then((file) => {
+        console.log('Compressed: ' + file.size / 1000000 + ' mb')
+        // file size is measured in bytes
+        if (file.size > 1000000) {
+          this.setState({
+            error_img: true,
+            error_msg: 'File is too huge'
+          }, () => {
+            this.props.parentCallBack (this.props.data_name, null)
+          })
+        } else {
+          reader.onloadend = () => {
+            /** correct format and loaded -> reset errors and set file */
+            this.setState({
+              file,
+              error_img: false,
+            }, () => {
+              this.props.parentCallBack (this.props.data_name, this.state.file)
+              window.localStorage.setItem("uploaded_picture", file.name)
+            })
+          }
+          reader.readAsDataURL(file);
+        }
       })
-    } else if (admittedTypes.indexOf(file.type) !== -1) {
-      reader.onloadend = () => {
-        /** correct format and loaded -> reset errors and set file */
-        this.setState({
-          file,
-          error_img: false,
-        }, () => {
-          this.props.parentCallBack (this.props.data_name, this.state.file)
-          window.localStorage.setItem("uploaded_picture", file.name)
-        })
-      }
-      reader.readAsDataURL(file);
-    } else {
-      this.setState({
-        error_img: true,
-        error_msg: 'Invalid image type. Supported types are .png, .jpg and .jpeg'
+      .catch((err) => {
+        console.log(err)
       })
-    }
 	}
 
   render() {
