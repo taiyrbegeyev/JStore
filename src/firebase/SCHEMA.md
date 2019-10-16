@@ -10,6 +10,7 @@ users: {
 },
 posts: {
   postId: {
+    postId: '',
     sold: bool,
     ownerId: '', // email
     ownerName: '',
