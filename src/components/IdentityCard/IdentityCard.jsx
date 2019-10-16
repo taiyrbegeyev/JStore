@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import {
   IdentityCardWrapper, ProfilePictureInformation,
-  ProfileImage, UserName, ListOfTabs, Tab
+  ProfileImage, UserName
 } from './styles'
-import { Person, Euro, LocalMall, SettingsApplications } from '@material-ui/icons'
+import { Euro, LocalMall, SettingsApplications } from '@material-ui/icons'
 import {
   Typography, List, ListItem,
-  ListItemIcon, ListItemText, Divider
+  ListItemIcon, ListItemText
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/styles'
 

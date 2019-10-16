@@ -1,4 +1,4 @@
-import firebase, { storage, db } from 'firebase.js'
+import { db } from 'firebase.js'
 
 export const fetchPhoneNumberOfUser = (user, completionHandler) => {
   db.collection('users').doc(user).get()
@@ -26,3 +26,13 @@ export const fetchUser = (user, errHandler, completionHandler) => {
     })
 }
 
+export const updatePersonalInfo = (email, data, errHandler, completionHandler) => {
+  db.collection('users').doc(email).update(data)
+    .then(() => {
+      completionHandler()
+    })
+    .catch((err) => {
+      console.log(err)
+      errHandler()
+    })
+}

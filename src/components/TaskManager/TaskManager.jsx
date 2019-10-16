@@ -5,20 +5,16 @@ import {
 import { AccountSettings } from 'components/export'
 
 class TaskManager extends Component {
-  state = {
-    currentItem: this.props.currentItem || 'profileSettings'
-  }
-
   handleTabs = () => {
-    switch(this.state.currentItem) {
+    switch(this.props.currentItem) {
       case 'profileSettings':
         return <AccountSettings />
       case 'activeItems':
-        return
+        return null
       case 'soldItems':
-        return
-      default:
-        return <AccountSettings />
+        return null
+      default: 
+        return null
     }
   }
 

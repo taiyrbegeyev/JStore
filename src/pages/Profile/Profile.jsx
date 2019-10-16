@@ -29,7 +29,7 @@ class Profile extends Component {
         item = 'soldItems'
         break
       default:
-        item = 'accountSettings'
+        item = null
         break
     }
     this.setState({
