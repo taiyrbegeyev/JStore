@@ -111,7 +111,7 @@ class StepperUpload extends Component {
             ownerName: auth.currentUser.displayName,
             imageUrl: url,
             sold: false,
-            soldDate: '',
+            soldDate: null,
             whatsApp: phoneNumber === '' ? false : true,
             phoneNumber: phoneNumber,
             ...data,
