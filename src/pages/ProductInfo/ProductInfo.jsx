@@ -118,10 +118,10 @@ class ProductInfo extends Component {
                   €{data.price}
                 </Typography>
                 <OwnerInfoContainer>
-                  <Avatar className={classes.avatar}>{cutFullName(data.ownerName)}</Avatar>
+                  <Avatar className={classes.avatar}>{data.ownerName ? cutFullName(data.ownerName) : 'N.A'}</Avatar>
                   <OwnerInfo>
                     <Typography variant="h7" component="h4">
-                      {data.ownerName}
+                      {data.ownerName || 'N.A'}
                     </Typography>
                     <Typography variant="h7" component="h4">
                       <Link href={`mailto:${data.ownerId}`}>

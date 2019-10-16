@@ -30,6 +30,10 @@ class UploadImage extends Component {
   }
 
 	onDrop = (e) => {
+    this.setState({
+      loading: true
+    })
+    
     e.preventDefault();
 
     const reader = new FileReader();
@@ -45,7 +49,8 @@ class UploadImage extends Component {
         if (file.size > 1000000) {
           this.setState({
             error_img: true,
-            error_msg: 'File is too huge'
+            error_msg: 'File is too huge',
+            loading: false
           }, () => {
             this.props.parentCallBack (this.props.data_name, null)
           })
@@ -55,6 +60,7 @@ class UploadImage extends Component {
             this.setState({
               file,
               error_img: false,
+              loading: false
             }, () => {
               this.props.parentCallBack (this.props.data_name, this.state.file)
               window.localStorage.setItem("uploaded_picture", file.name)
@@ -69,7 +75,7 @@ class UploadImage extends Component {
 	}
 
   render() {
-    const { error_img, error_msg } = this.state
+    const { error_img, error_msg, loading } = this.state
     const { error } = this.props
     return (
       <React.Fragment>
@@ -79,6 +85,9 @@ class UploadImage extends Component {
           type="file"
           onChange={this.onDrop}
         />
+        {
+          loading && <p>Loading ...</p>
+        }
         {
           error_img && <p>{error_msg}</p>
         }

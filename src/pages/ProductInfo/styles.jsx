@@ -107,6 +107,14 @@ export const PreferredPaymentOptions = styled.div`
 `
 
 export const ProductInfo2 = styled.div`
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+
   margin: 4rem 0 0 0;
   @media (min-width: 960px) {
     margin: 4rem 0 0 6rem;
