@@ -47,21 +47,6 @@ export const registerNewUser = (name, email, whatsApp, phoneNumber, errHandler, 
     })
 }
 
-export const fetchPhoneNumberOfUser = (user, completionHandler) => {
-  db.collection('users').doc(user).get()
-    .then((doc) => {
-      if (doc.data().whatsApp) {
-        completionHandler(doc.data().phoneNumber)
-      }
-      else {
-        completionHandler('')
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
-
 export const anonymousSignIn = (errHandler) => {
   auth.signInAnonymously().catch((err) => {
     console.log(err)

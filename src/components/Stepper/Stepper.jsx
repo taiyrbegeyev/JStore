@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { fetchPhoneNumberOfUser } from 'firebase/auth.js'
+import { fetchPhoneNumberOfUser } from 'firebase/user.js'
 import { createPost, uploadImage } from 'firebase/upload'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'

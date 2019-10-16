@@ -1,3 +1,4 @@
+import AccountSettings from 'components/AccountSettings/AccountSettings'
 import Album from 'components/Album/Album'
 import {Button} from 'components/Button/Button'
 import EmailSent from 'components/EmailSent/EmailSent'
@@ -15,12 +16,14 @@ import PriceInput from 'components/PriceInput/PriceInput'
 import RedditTextField from 'components/RedditTextField/RedditTextField'
 import SimpleSelect from 'components/Select/Select'
 import Stepper from 'components/Stepper/Stepper'
+import TaskManager from 'components/TaskManager/TaskManager'
 import WelcomeBack from 'components/WelcomeBack/WelcomeBack'
 
 export {
-  Album, Button, EmailSent, Footer,
+  AccountSettings, Album, Button, EmailSent, Footer,
   Header, HomePageHeader, IdentityCard, ImageUploader,
   Input, Intro, MultilineTextField, NewUserModal,
   PaymentOptionsCheckboxes, PriceInput,
-  RedditTextField, SimpleSelect, Stepper, WelcomeBack,
+  RedditTextField, SimpleSelect, TaskManager,
+  Stepper, WelcomeBack,
 }

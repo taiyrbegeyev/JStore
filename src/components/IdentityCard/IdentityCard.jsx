@@ -29,6 +29,8 @@ class IdentityCard extends Component {
   handleTabs = (e, selectedIndex) => {
     this.setState({
       selectedIndex: selectedIndex
+    }, () => {
+      this.props.parentCallBack(this.state.selectedIndex)
     })
   }
   
@@ -60,26 +62,15 @@ class IdentityCard extends Component {
               selected={selectedIndex === 0}
               divider
             >
-              <ListItemIcon>
-                <Person />
-              </ListItemIcon>
-              <ListItemText primary="Profile" />
-            </ListItem>
-            <ListItem
-              button
-              onClick={e => this.handleTabs(e, 1)}
-              selected={selectedIndex === 1}
-              divider
-            >
             <ListItemIcon>
               <SettingsApplications />
             </ListItemIcon>
-            <ListItemText primary="Profile Settings" />
+            <ListItemText primary="Account Settings" />
           </ListItem>
           <ListItem
             button
-            onClick={e => this.handleTabs(e, 2)}
-            selected={selectedIndex === 2}
+            onClick={e => this.handleTabs(e, 1)}
+            selected={selectedIndex === 1}
             divider
           >
             <ListItemIcon>
@@ -89,8 +80,8 @@ class IdentityCard extends Component {
           </ListItem>
           <ListItem
             button
-            onClick={e => this.handleTabs(e, 3)}
-            selected={selectedIndex === 3}
+            onClick={e => this.handleTabs(e, 2)}
+            selected={selectedIndex === 2}
             divider
           >
             <ListItemIcon>
