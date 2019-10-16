@@ -38,7 +38,8 @@ const useStyles = theme => ({
     flexDirection: 'column'
   },
   cardActions: {
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    flexWrap: 'wrap'
   },
   owner: {
     color: '#555'
