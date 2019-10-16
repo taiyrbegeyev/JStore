@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { fetchPosts, getSizeOfCollection } from 'firebase/display.js'
-import { cutOffString } from 'helpers.js'
+import { cutOffString, displayDate } from 'helpers.js'
 import Pagination from "react-js-pagination"
 import {
   Button, Card, CardActions,
   CardContent, CardMedia, CssBaseline,
-  Grid, Typography, Container
-
+  Grid, Typography, Container, Chip
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
@@ -47,7 +46,11 @@ const useStyles = theme => ({
   price: {
     color: '#004180',
     fontWeight: '700'
-  }
+  },
+  chip: {
+    margin: 2,
+    backgroundColor: '#004180'
+  },
 })
 
 class Album extends Component {
@@ -173,6 +176,9 @@ class Album extends Component {
                       <Typography gutterBottom variant="h7" component="h4" className={classes.owner}>
                         by <span className={classes.owner_email}>{dbPost.ownerName || dbPost.ownerId}</span>
                       </Typography>
+                      <Typography gutterBottom variant="h7" component="h4" className={classes.owner}>
+                        {displayDate(dbPost.creationDate.toDate().toString())}
+                      </Typography>
                       <Typography gutterBottom variant="h6" component="h4" className={classes.price}>
                         €{dbPost.price}
                       </Typography> 
@@ -190,6 +196,7 @@ class Album extends Component {
                       <Button size="small" color="primary" href={`/posts/${dbPost.id}`}>
                         View
                       </Button>
+                      <Chip label={dbPost.category} color="primary" className={classes.chip} />
                     </CardActions>
                   </Card>
                 </Grid>

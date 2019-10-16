@@ -3,25 +3,13 @@ export const cutOffString = (str, limit) => {
 }
 
 export const displayDate = (timeStamp) => {
-  // // ensure date comes as 01, 09 etc
-  // let DD = ("0" + timestamp.getDate()).slice(-2)
-  // // getMonth returns month from 0
-  // let MM = ("0" + (timestamp.getMonth() + 1)).slice(-2)
-  // let YYYY = timestamp.getFullYear()
-
-  // let hh = ("0" + timestamp.getHours()).slice(-2)
-  // let mm = ("0" + timestamp.getMinutes()).slice(-2)
-  // let ss = ("0" + timestamp.getSeconds()).slice(-2)
-  // let date_string = DD + "-" + MM + "-" + YYYY + " " + hh + ":" + mm + ":" + ss
-
-  // // will output something like "October 15, 2019 at 4:43:49 PM"
-  // return date_string
-
-  // expected output: Wed Jul 28 1993d
-  let date = timeStamp.toDateString()
-  // get rid of day of the week
-  date = date.slice(4)
-  return date
+  // split by either GMT or UTC
+  let time = timeStamp.split('GMT')
+  time = time[0].split('UTC')
+  // remove day of the week in front
+  time = time[0].slice(4)
+  
+  return time
 }
 
 export const cutFullName = (fullName) => {

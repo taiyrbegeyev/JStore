@@ -169,7 +169,7 @@ class ProductInfo extends Component {
                   Condition: {data.condition}
                 </Typography>
                 <Typography gutterBottom variant="h7" component="h4">
-                  Product Uploaded: {displayDate(data.creationDate.toDate())}
+                  Product Uploaded: {displayDate(data.creationDate.toDate().toString())}
                 </Typography>
                 <PreferredPaymentOptions>
                   {
