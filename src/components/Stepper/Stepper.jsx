@@ -107,6 +107,7 @@ class StepperUpload extends Component {
 
         fetchPhoneNumberOfUser(auth.currentUser.email, (phoneNumber) => {
           const post = {
+            postId: postId,
             ownerId: auth.currentUser.email,
             ownerName: auth.currentUser.displayName,
             imageUrl: url,
