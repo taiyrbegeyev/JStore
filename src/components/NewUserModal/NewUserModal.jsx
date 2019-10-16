@@ -75,7 +75,7 @@ class NewUserModal extends Component {
       })
     }
     
-    if (fullName && ( (checkedWhatsApp && phoneNumber) || !checkedWhatsApp ) && fullName.length <= 50 && validatePhoneNumber(phoneNumber)) {
+    if (fullName && ( (checkedWhatsApp && phoneNumber && validatePhoneNumber(phoneNumber)) || !checkedWhatsApp ) && fullName.length <= 50) {
       let phoneNumberPlus = "+" + phoneNumber
       console.log(email + " " + fullName + " " + phoneNumberPlus)
       registerNewUser(fullName, email, checkedWhatsApp, phoneNumberPlus, () => {

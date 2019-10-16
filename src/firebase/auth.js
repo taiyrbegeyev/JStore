@@ -29,6 +29,19 @@ export const userExists = (email, completionHandler) => {
     })
 }
 
+export const fullNameExists = (email, completionHandler) => {
+  db.collection('users').doc(email).get()
+    .then((doc) => {
+      if (!doc.exists || doc.data().fullName === '') {
+        console.log('full name does not exist')
+        completionHandler()
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
 export const registerNewUser = (name, email, whatsApp, phoneNumber, errHandler, completionHandler) => {
   let data = {
     fullName: name,

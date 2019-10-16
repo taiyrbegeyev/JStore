@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom'
 import { auth } from 'firebase.js'
-import { userExists } from 'firebase/auth.js'
+import { userExists, fullNameExists } from 'firebase/auth.js'
 import { routes } from 'routing'
 
 const PrivateRoute = ({ isAuth, user, windowWidth, windowHeight, isNewUser, component: Component, ...rest }) => {
@@ -55,6 +55,11 @@ class App extends Component {
     this.fireBaseListener = auth.onAuthStateChanged((user) => {
       if (user) {
         console.log('onAuthStateChanged setting to true ')
+        fullNameExists(user.email, () => {
+          this.setState({
+            isNewUser: true
+          })
+        })
         this.setState({
           isAuth: true,
           user: user,
