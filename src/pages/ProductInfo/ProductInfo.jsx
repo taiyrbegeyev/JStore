@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import { auth } from 'firebase.js'
 import { fetchPost } from 'firebase/display.js'
-import { displayDate, cutFullName, generateWhatsAppLink } from 'helpers.js'
+import { displayDate, cutFullName, generateWhatsAppLink, generateeMail } from 'helpers.js'
 import { Redirect } from 'react-router-dom'
 import { Footer, HomePageHeader } from 'components/export'
 import {
@@ -136,7 +137,7 @@ class ProductInfo extends Component {
                     color="default"
                     aria-label="add"
                     className={classes.margin}
-                    // href={}
+                    href={generateeMail(data.ownerId, auth.currentUser.displayName, data.title, window.location.href, data.imageUrl)}
                   >
                     <Email className={classes.extendedIcon} />
                     Write me an email
@@ -149,7 +150,7 @@ class ProductInfo extends Component {
                     color="secondary"
                     aria-label="add"
                     className={classes.margin}
-                    href={generateWhatsAppLink(data.phoneNumber, data.ownerName, window.location.href, data.imageUrl)}
+                    href={generateWhatsAppLink(data.phoneNumber, auth.currentUser.displayName, data.title, window.location.href, data.imageUrl)}
                   >
                     <WhatsApp className={classes.extendedIcon} />
                     Drop me a message

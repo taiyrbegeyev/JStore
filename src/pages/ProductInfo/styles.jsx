@@ -53,6 +53,7 @@ export const Image = styled.img`
 
 export const ProductDetails = styled.div`
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   padding: 0;
   margin: 0;
@@ -72,7 +73,6 @@ export const TitleContainer = styled.div`
   width: 100%;
   @media (min-width: 960px) {
     margin: 0;
-    width: 80%;
   }
 `
 

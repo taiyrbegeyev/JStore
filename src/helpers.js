@@ -2,20 +2,26 @@ export const cutOffString = (str, limit) => {
   return str.substr(0, limit)
 }
 
-export const displayDate = (timestamp) => {
-  // ensure date comes as 01, 09 etc
-  let DD = ("0" + timestamp.getDate()).slice(-2)
-  // getMonth returns month from 0
-  let MM = ("0" + (timestamp.getMonth() + 1)).slice(-2)
-  let YYYY = timestamp.getFullYear()
+export const displayDate = (timeStamp) => {
+  // // ensure date comes as 01, 09 etc
+  // let DD = ("0" + timestamp.getDate()).slice(-2)
+  // // getMonth returns month from 0
+  // let MM = ("0" + (timestamp.getMonth() + 1)).slice(-2)
+  // let YYYY = timestamp.getFullYear()
 
-  let hh = ("0" + timestamp.getHours()).slice(-2)
-  let mm = ("0" + timestamp.getMinutes()).slice(-2)
-  let ss = ("0" + timestamp.getSeconds()).slice(-2)
-  let date_string = DD + "-" + MM + "-" + YYYY + " " + hh + ":" + mm + ":" + ss
+  // let hh = ("0" + timestamp.getHours()).slice(-2)
+  // let mm = ("0" + timestamp.getMinutes()).slice(-2)
+  // let ss = ("0" + timestamp.getSeconds()).slice(-2)
+  // let date_string = DD + "-" + MM + "-" + YYYY + " " + hh + ":" + mm + ":" + ss
 
-  // will output something like "14-10-2019 11:04:42"
-  return date_string
+  // // will output something like "October 15, 2019 at 4:43:49 PM"
+  // return date_string
+
+  // expected output: Wed Jul 28 1993d
+  let date = timeStamp.toDateString()
+  // get rid of day of the week
+  date = date.slice(4)
+  return date
 }
 
 export const cutFullName = (fullName) => {
@@ -46,8 +52,12 @@ export const validatePhoneNumber = (phoneNumber) => {
   return false
 }
 
-export const generateWhatsAppLink = (phoneNumber, fullName, link, imageUrl) => {
+export const generateWhatsAppLink = (phoneNumber, fullName, itemName, link, imageUrl) => {
   const sanitized_phoneNumber = phoneNumber.replace(/\D/g,'')
   console.log(sanitized_phoneNumber)
-  return `https://api.whatsapp.com/send?phone=${sanitized_phoneNumber}&text=Hey! I'm contacting you by clicking on the WhatsApp button of JStore. My name is ${fullName}". I am interested in the following item: ${link}><img src=${imageUrl}`
+  return `https://api.whatsapp.com/send?phone=${sanitized_phoneNumber}&text=[JStore]%20${itemName}%0D%0A%0D%0AHey! I'm contacting you by clicking on the WhatsApp button of JStore.%0D%0A My name is ${fullName}.%0D%0AI am interested in the following item:%0D%0A${link}`
+}
+
+export const generateeMail = (email, fullName, itemName, link, imageUrl) => {
+  return `mailto:${email}?subject=[JStore]%20${itemName}&body=Hey!%20I'm%20contacting%20you%20by%20clicking%20on%20the%20Email%20button%20of%20JStore.%0D%0A My%20name%20is%20${fullName}.%20I%20am%20interested%20in%20the%20following%20item:%0D%0A${link}%0D%0A%0D%0ASincerely,%0D%0A${fullName}`
 }
