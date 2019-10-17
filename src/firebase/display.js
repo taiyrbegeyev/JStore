@@ -1,4 +1,5 @@
 import { storage, db } from 'firebase.js'
+import { compare } from 'helpers.js'
 
 /**
  * Fetch one single post
@@ -40,7 +41,7 @@ export const fetchPost = (postId, errHandler, completionHandler) => {
  * @param {*} isForward
  */
 
-export const fetchPosts = (posts_limit, posts_At, isForward) => {
+export const fetchPosts = (posts_limit, posts_At, isForward, errHandler, completionhandler) => {
   let query
   if (isForward) {
     query = db.collection('posts')
@@ -56,8 +57,36 @@ export const fetchPosts = (posts_limit, posts_At, isForward) => {
       .startAfter(posts_At)
       .limit(posts_limit)
   }
-  
-  return query
+
+  query.get()
+    .then((snapshot) => {
+      const posts = snapshot.docs.map((doc) => {
+        let doc_full = Object.assign({}, doc.data())
+        return doc_full
+      })
+    
+      // sort posts
+      posts.sort(compare)
+      
+      let timeStampOfFirstPostLocal = posts[0].creationDate
+      let timeStampOfLastPostLocal
+      if (posts.length <= 0) {
+        timeStampOfLastPostLocal = posts[0].creationDate
+      }
+      else {
+        timeStampOfLastPostLocal = posts[posts.length - 1].creationDate
+      }
+      const res = {
+        posts,
+        timeStampOfFirstPostLocal,
+        timeStampOfLastPostLocal
+      }
+      completionhandler(res)
+    })
+    .catch((err) => {
+      console.error(err)
+      errHandler(err)
+    })
 }
 
 /**
@@ -110,5 +139,67 @@ export const fetchPostImage = (postId) => {
         default:
           break
       }
+    })
+}
+
+/**
+ * Get all active posts of a certain user
+ * @param {*} user 
+ * @param {*} completionHandler 
+ */
+
+export const activePosts = (user, errHandler, completionHandler) => {
+  db.collection(user)
+    .where('ownerId', '==', user)
+    .where('sold', '==', false)
+    .get()
+    .then((snapshot) => {
+      if (snapshot.empty) {
+        console.log('No matching documents.')
+        return
+      }
+
+      // create an array of objects
+      const posts = snapshot.docs.map((doc) => {
+        let doc_full = Object.assign({}, doc.data())
+        return doc_full
+      })
+      
+      completionHandler(posts)
+    })
+    .catch((err) => {
+      console.log(err)
+      errHandler()
+    })
+}
+
+/**
+ * Get all sold posts of a certain user
+ * @param {*} user 
+ * @param {*} completionHandler 
+ */
+
+export const soldPosts = (user, errHandler, completionHandler) => {
+  db.collection(user)
+    .where('ownerId', '==', user)
+    .where('sold', '==', true)
+    .get()
+    .then((snapshot) => {
+      if (snapshot.empty) {
+        console.log('No matching documents.')
+        return
+      }
+
+      // create an array of objects
+      const posts = snapshot.docs.map((doc) => {
+        let doc_full = Object.assign({}, doc.data())
+        return doc_full
+      })
+      
+      completionHandler(posts)
+    })
+    .catch((err) => {
+      console.log(err)
+      errHandler()
     })
 }

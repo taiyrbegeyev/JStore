@@ -1,3 +1,14 @@
+// sort by creation date in desc order
+export const compare = (postA, postB) => {
+  if (postA.creationDate > postB.creationDate) {
+    return -1
+  }
+  if (postA.creationDate < postB.creationDate) {
+    return 1
+  }
+  return 0
+}
+
 export const cutOffString = (str, limit) => {
   return str.substr(0, limit)
 }

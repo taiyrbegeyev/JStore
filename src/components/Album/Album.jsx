@@ -65,60 +65,19 @@ class Album extends Component {
     timeStampOfLastPost: new Date()
   }
 
-  // sort by creation date in desc order
-  compare(postA, postB) {
-    if (postA.creationDate > postB.creationDate) {
-      return -1
-    }
-    if (postA.creationDate < postB.creationDate) {
-      return 1
-    }
-    return 0
-  }
-
   getPosts() {
     const { isForward, itemsPerPage, timeStampOfFirstPost, timeStampOfLastPost } = this.state
     let timeStampOfPost = isForward ? timeStampOfLastPost : timeStampOfFirstPost
 
-    const query = fetchPosts(itemsPerPage, timeStampOfPost, isForward)
-    let res
-    query.get()
-      .then((snapshot) => {
-        const posts = snapshot.docs.map((doc) => {
-          let doc_full = Object.assign({}, doc.data())
-          // add some addtional data to post
-          doc_full.id = doc.id
-          return doc_full
-        })
-
-        // sort posts
-        posts.sort(this.compare)
-        
-        let timeStampOfFirstPostLocal = posts[0].creationDate
-        let timeStampOfLastPostLocal
-        if (posts.length <= 0) {
-          timeStampOfLastPostLocal = posts[0].creationDate
-        }
-        else {
-          timeStampOfLastPostLocal = posts[posts.length - 1].creationDate
-        }
-        res = {
-          posts,
-          timeStampOfFirstPostLocal,
-          timeStampOfLastPostLocal
-        }
-        return res
+    fetchPosts(itemsPerPage, timeStampOfPost, isForward, (err) => {
+      alert(err)
+    }, (res) => {
+      this.setState({
+        dbPosts: res.posts,
+        timeStampOfFirstPost: res.timeStampOfFirstPostLocal,
+        timeStampOfLastPost: res.timeStampOfLastPostLocal
       })
-      .then(() => {
-        this.setState({
-          dbPosts: res.posts,
-          timeStampOfFirstPost: res.timeStampOfFirstPostLocal,
-          timeStampOfLastPost: res.timeStampOfLastPostLocal
-        })
-      })
-      .catch((err) => {
-        console.error(err)
-      })
+    })
   }
 
   componentWillMount() {
@@ -163,7 +122,7 @@ class Album extends Component {
           <Container className={classes.cardGrid} maxWidth="md">
             <Grid container spacing={4}>
               {dbPosts && dbPosts.map(dbPost => (
-                <Grid item key={dbPost.id} xs={12} sm={6} md={4}>
+                <Grid item key={dbPost.postId} xs={12} sm={6} md={4}>
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.cardMedia}
@@ -194,7 +153,7 @@ class Album extends Component {
                       </Typography>
                     </CardContent>
                     <CardActions className={classes.cardActions}>
-                      <Button size="small" color="primary" href={`/posts/${dbPost.id}`}>
+                      <Button size="small" color="primary" href={`/posts/${dbPost.postId}`}>
                         View
                       </Button>
                       <Chip label={dbPost.category} color="primary" className={classes.chip} />
