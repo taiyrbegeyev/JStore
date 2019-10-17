@@ -35,10 +35,12 @@ export const fetchPost = (postId, errHandler, completionHandler) => {
 }
 
 /**
- * Fetches data from posts
+ * Fetch all active posts for the home page
  * @param {*} posts_limit 
- * @param {*} posts_startAt
- * @param {*} isForward
+ * @param {*} posts_At 
+ * @param {*} isForward 
+ * @param {*} errHandler 
+ * @param {*} completionhandler 
  */
 
 export const fetchPosts = (posts_limit, posts_At, isForward, errHandler, completionhandler) => {
@@ -68,24 +70,29 @@ export const fetchPosts = (posts_limit, posts_At, isForward, errHandler, complet
       // sort posts
       posts.sort(compare)
       
-      let timeStampOfFirstPostLocal = posts[0].creationDate
-      let timeStampOfLastPostLocal
-      if (posts.length <= 0) {
-        timeStampOfLastPostLocal = posts[0].creationDate
+      if (posts.length > 0) {
+        let timeStampOfFirstPostLocal = posts[0].creationDate
+        let timeStampOfLastPostLocal
+        if (posts.length === 0) {
+          timeStampOfLastPostLocal = posts[0].creationDate
+        }
+        else {
+          timeStampOfLastPostLocal = posts[posts.length - 1].creationDate
+        }
+        const res = {
+          posts,
+          timeStampOfFirstPostLocal,
+          timeStampOfLastPostLocal
+        }
+        completionhandler(res)
       }
       else {
-        timeStampOfLastPostLocal = posts[posts.length - 1].creationDate
+        errHandler()
       }
-      const res = {
-        posts,
-        timeStampOfFirstPostLocal,
-        timeStampOfLastPostLocal
-      }
-      completionhandler(res)
     })
     .catch((err) => {
       console.error(err)
-      errHandler(err)
+      errHandler()
     })
 }
 
@@ -143,29 +150,23 @@ export const fetchPostImage = (postId) => {
 }
 
 /**
- * Get all active posts of a certain user
+ * Get a size of the collection
  * @param {*} user 
+ * @param {*} sold 
+ * @param {*} errHandler 
  * @param {*} completionHandler 
  */
 
-export const activePosts = (user, errHandler, completionHandler) => {
-  db.collection(user)
+export const getUsersPostsCollectionSize = (user, sold, errHandler, completionHandler) => {
+  let size
+  db.collection('posts')
     .where('ownerId', '==', user)
-    .where('sold', '==', false)
+    .where('sold', '==', sold)
     .get()
     .then((snapshot) => {
-      if (snapshot.empty) {
-        console.log('No matching documents.')
-        return
-      }
-
-      // create an array of objects
-      const posts = snapshot.docs.map((doc) => {
-        let doc_full = Object.assign({}, doc.data())
-        return doc_full
-      })
-      
-      completionHandler(posts)
+      size = snapshot.docs.length
+      console.log(size)
+      completionHandler(size)
     })
     .catch((err) => {
       console.log(err)
@@ -174,29 +175,63 @@ export const activePosts = (user, errHandler, completionHandler) => {
 }
 
 /**
- * Get all sold posts of a certain user
+ * Get a certain user's either all sold or active posts
+ * @param {*} posts_limit 
+ * @param {*} posts_At 
+ * @param {*} isForward 
  * @param {*} user 
- * @param {*} completionHandler 
+ * @param {*} sold 
+ * @param {*} errHandler 
+ * @param {*} completionhandler 
  */
 
-export const soldPosts = (user, errHandler, completionHandler) => {
-  db.collection(user)
-    .where('ownerId', '==', user)
-    .where('sold', '==', true)
-    .get()
-    .then((snapshot) => {
-      if (snapshot.empty) {
-        console.log('No matching documents.')
-        return
-      }
+export const fetchUsersPosts = (posts_limit, posts_At, isForward, user, sold, errHandler, completionhandler) => {
+  let query
+  if (isForward) {
+    query = db.collection('posts')
+      .where('ownerId', '==', user)
+      .where('sold', '==', sold)
+      .orderBy('creationDate', 'desc')
+      .startAfter(posts_At)
+      .limit(posts_limit)
+  }
+  else {
+    query = db.collection('posts')
+      .where('ownerId', '==', user)
+      .where('sold', '==', sold)
+      .orderBy('creationDate', 'asc')
+      .startAfter(posts_At)
+      .limit(posts_limit)
+  }
 
-      // create an array of objects
+  query.get()
+    .then((snapshot) => {
       const posts = snapshot.docs.map((doc) => {
         let doc_full = Object.assign({}, doc.data())
         return doc_full
       })
-      
-      completionHandler(posts)
+      // sort posts
+      posts.sort(compare)
+
+      if (posts.length > 0) {
+        let timeStampOfFirstPostLocal = posts[0].creationDate
+        let timeStampOfLastPostLocal
+        if (posts.length === 0) {
+          timeStampOfLastPostLocal = posts[0].creationDate
+        }
+        else {
+          timeStampOfLastPostLocal = posts[posts.length - 1].creationDate
+        }
+        const res = {
+          posts,
+          timeStampOfFirstPostLocal,
+          timeStampOfLastPostLocal
+        }
+        completionhandler(res)
+      }
+      else {
+        errHandler()
+      }
     })
     .catch((err) => {
       console.log(err)

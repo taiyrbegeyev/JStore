@@ -9,6 +9,7 @@ import IdentityCard from 'components/IdentityCard/IdentityCard'
 import ImageUploader from 'components/ImageUploader/ImageUploader'
 import {Input} from 'components/Input/Input'
 import Intro from 'components/Intro/Intro'
+import ItemAction from 'components/ItemAction/ItemAction'
 import MultilineTextField from 'components/MultiLineTextField/MultiLineTextField'
 import NewUserModal from 'components/NewUserModal/NewUserModal'
 import PaymentOptionsCheckboxes from 'components/PaymentOptionsCheckboxes/PaymentOptionsCheckboxes'
@@ -17,13 +18,15 @@ import RedditTextField from 'components/RedditTextField/RedditTextField'
 import SimpleSelect from 'components/Select/Select'
 import Stepper from 'components/Stepper/Stepper'
 import TaskManager from 'components/TaskManager/TaskManager'
+import UserActivePosts from 'components/UserActivePosts/UserActivePosts'
+import UserSoldPosts from 'components/UserSoldPosts/UserSoldPosts'
 import WelcomeBack from 'components/WelcomeBack/WelcomeBack'
 
 export {
   AccountSettings, Album, Button, EmailSent, Footer,
   Header, HomePageHeader, IdentityCard, ImageUploader,
-  Input, Intro, MultilineTextField, NewUserModal,
+  Input, Intro, ItemAction, MultilineTextField, NewUserModal,
   PaymentOptionsCheckboxes, PriceInput,
   RedditTextField, SimpleSelect, TaskManager,
-  Stepper, WelcomeBack,
+  UserActivePosts, UserSoldPosts, Stepper, WelcomeBack,
 }

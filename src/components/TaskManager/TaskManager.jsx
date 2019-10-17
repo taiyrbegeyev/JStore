@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {
   TaskManagerWrapper
 } from './styles'
-import { AccountSettings } from 'components/export'
+import { AccountSettings, UserActivePosts, UserSoldPosts } from 'components/export'
 
 class TaskManager extends Component {
   handleTabs = () => {
@@ -10,10 +10,10 @@ class TaskManager extends Component {
       case 'profileSettings':
         return <AccountSettings />
       case 'activeItems':
-        return null
+        return <UserActivePosts />
       case 'soldItems':
-        return null
-      default: 
+        return <UserSoldPosts />
+      default:
         return null
     }
   }

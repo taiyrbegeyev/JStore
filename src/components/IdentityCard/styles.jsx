@@ -1,16 +1,16 @@
 import styled from 'styled-components'
 
 export const IdentityCardWrapper = styled.div`
+  height: 40rem;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 30rem;
   border: 0.15rem solid #eaeaea;
 `
 
 export const ProfilePictureInformation = styled.div`
-  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -62,25 +62,32 @@ class Album extends Component {
     numberOfPosts: null,
     dbPosts: null,
     timeStampOfFirstPost: new Date(),
-    timeStampOfLastPost: new Date()
+    timeStampOfLastPost: new Date(),
+    loading: true
   }
 
   getPosts() {
     const { isForward, itemsPerPage, timeStampOfFirstPost, timeStampOfLastPost } = this.state
     let timeStampOfPost = isForward ? timeStampOfLastPost : timeStampOfFirstPost
 
-    fetchPosts(itemsPerPage, timeStampOfPost, isForward, (err) => {
-      alert(err)
+    fetchPosts(itemsPerPage, timeStampOfPost, isForward, () => {
+      this.setState({
+        loading: false
+      })
     }, (res) => {
       this.setState({
-        dbPosts: res.posts,
+        dbPosts: res.posts || null,
         timeStampOfFirstPost: res.timeStampOfFirstPostLocal,
-        timeStampOfLastPost: res.timeStampOfLastPostLocal
+        timeStampOfLastPost: res.timeStampOfLastPostLocal,
+        loading: false
       })
     })
   }
 
   componentWillMount() {
+    this.setState({
+      loading: true
+    })
     getSizeOfCollection('posts', (size) => {
       this.setState({
         numberOfPosts: size
@@ -113,7 +120,13 @@ class Album extends Component {
   
   render () {
     const { classes } = this.props
-    const { currentPage, itemsPerPage, dbPosts, numberOfPosts } = this.state
+    const { currentPage, itemsPerPage, dbPosts, numberOfPosts, loading } = this.state
+
+    if (loading) {
+      return <Typography variant="h7" component="h4">
+        Loading ...
+      </Typography>
+    }
     
     return (
       <React.Fragment>
@@ -121,7 +134,7 @@ class Album extends Component {
         <main>
           <Container className={classes.cardGrid} maxWidth="md">
             <Grid container spacing={4}>
-              {dbPosts && dbPosts.map(dbPost => (
+              {dbPosts ? dbPosts.map(dbPost => (
                 <Grid item key={dbPost.postId} xs={12} sm={6} md={4}>
                   <Card className={classes.card}>
                     <CardMedia
@@ -160,7 +173,11 @@ class Album extends Component {
                     </CardActions>
                   </Card>
                 </Grid>
-              ))}
+              ))
+              : <Typography variant="h7" component="h4">
+                No Posts
+              </Typography>
+            }
             </Grid>
             <PaginationWrapper>
               <Pagination
