@@ -57,6 +57,7 @@ class AccountSettings extends Component {
     fetchUser(auth.currentUser.email, () => {
       alert("Error: can't fetch data")
     }, (data) => {
+      data.phoneNumber = data.phoneNumber.replace(/\D/g,'')
       this.setState({
         data: data,
         loading: false,
@@ -113,10 +114,7 @@ class AccountSettings extends Component {
       })
     }
     
-    if (fullName && ( (checkedWhatsApp && phoneNumber) || !checkedWhatsApp ) && fullName.length <= 50 && validatePhoneNumber(phoneNumber)) {
-      let phoneNumberPlus = "+" + phoneNumber
-      console.log(data.email + " " + fullName + " " + phoneNumberPlus)
-
+    if (fullName && ( (checkedWhatsApp && phoneNumber && validatePhoneNumber(phoneNumber)) || !checkedWhatsApp ) && fullName.length <= 50) {
       const doc = {}
       if (data.fullName !== fullName) {
         doc.fullName = fullName
@@ -125,9 +123,9 @@ class AccountSettings extends Component {
         doc.whatsApp = checkedWhatsApp
       }
       const trimmed_phoneNumber_data = data.phoneNumber.replace(/\s/g, '')
-      const trimmed_phoneNumber = phoneNumberPlus.replace(/\s/g, '')
+      const trimmed_phoneNumber = phoneNumber.replace(/\s/g, '')
       if (trimmed_phoneNumber_data !== trimmed_phoneNumber) {
-        doc.phoneNumber = phoneNumberPlus
+        doc.phoneNumber = trimmed_phoneNumber
       }
       
       updatePersonalInfo(data.email, doc, () => {
@@ -163,14 +161,6 @@ class AccountSettings extends Component {
       return <p>Loading ...</p>
     }
 
-    if (data.phoneNumber[0] === '+') {
-      data.phoneNumber = data.phoneNumber.slice(1)
-      console.log(data.phoneNumber)
-    }
-    else {
-      data.phoneNumber = data.phoneNumber.replace(/\D/g,'')
-    }
-    
     return (
       <MuiThemeProvider theme={theme}>
         <Typography variant="h5" component="h2">

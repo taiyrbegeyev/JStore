@@ -76,9 +76,7 @@ class NewUserModal extends Component {
     }
     
     if (fullName && ( (checkedWhatsApp && phoneNumber && validatePhoneNumber(phoneNumber)) || !checkedWhatsApp ) && fullName.length <= 50) {
-      let phoneNumberPlus = "+" + phoneNumber
-      console.log(email + " " + fullName + " " + phoneNumberPlus)
-      registerNewUser(fullName, email, checkedWhatsApp, phoneNumberPlus, () => {
+      registerNewUser(fullName, email, checkedWhatsApp, phoneNumber, () => {
         alert('Error, please make sure that everything is valid')
         }, () => {
           auth.currentUser.updateProfile({

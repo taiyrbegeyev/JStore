@@ -27,6 +27,10 @@ export const fetchUser = (user, errHandler, completionHandler) => {
 }
 
 export const updatePersonalInfo = (email, data, errHandler, completionHandler) => {
+  if (!data.whatsApp || data.whatsApp === false) {
+    data.phoneNumber = ''
+  }
+
   db.collection('users').doc(email).update(data)
     .then(() => {
       completionHandler()

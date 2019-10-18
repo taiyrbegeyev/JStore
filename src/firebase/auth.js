@@ -54,6 +54,9 @@ export const registerNewUser = (name, email, whatsApp, phoneNumber, errHandler, 
   if (!whatsApp) {
     data.phoneNumber = ''
   }
+  else {
+    data.phoneNumber = data.phoneNumber.replace(/\s/g, '')
+  }
 
   db.collection('users').doc(email).set(data)
     .then(() => {
