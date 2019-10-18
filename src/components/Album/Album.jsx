@@ -116,6 +116,8 @@ class Album extends Component {
     console.log(`active page is ${pageNumber}`)
     this.setState({
       currentPage: pageNumber
+    }, () => {
+      window.scrollTo(0, 0)
     })
   }
   

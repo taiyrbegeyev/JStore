@@ -61,6 +61,14 @@ export const ProductDetails = styled.div`
 `
 
 export const ProductInfo1 = styled.div`
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+
   display: flex;
   flex-direction: column;
   @media (min-width: 960px) {
