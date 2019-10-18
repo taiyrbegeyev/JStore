@@ -6,7 +6,7 @@ import Pagination from "react-js-pagination"
 import { Typography } from '@material-ui/core'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { ItemAction } from 'components/export'
-import { PostsContainer, PaginationWrapper } from './styles'
+import { PostsContainer, PaginationWrapper, UserSoldPostsWrapper } from './styles'
 
 const theme = createMuiTheme({
   typography: {
@@ -104,18 +104,17 @@ class UserActivePosts extends Component {
     
     return (
       <MuiThemeProvider theme={theme}>
+        <PostsContainer>
         <Typography variant="h5" component="h2">
           Sold Posts
         </Typography>
-        <PostsContainer>
-          {
-            dbPosts ? <ItemAction dbPosts={dbPosts} />
-            :
-            <Typography variant="h7" component="h4">
-              No Sold Items
-            </Typography>
-          }
-        </PostsContainer>
+        {
+          dbPosts ? <ItemAction dbPosts={dbPosts} />
+          :
+          <Typography variant="h7" component="h4">
+            No Sold Items
+          </Typography>
+        }
         <PaginationWrapper>
           <Pagination
             hideFirstLastPages
@@ -129,6 +128,7 @@ class UserActivePosts extends Component {
             onChange={(e) => this.handlePageChange(e)}
           />
         </PaginationWrapper>
+        </PostsContainer>
       </MuiThemeProvider>
     )
   }

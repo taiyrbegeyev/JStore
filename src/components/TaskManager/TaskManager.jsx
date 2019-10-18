@@ -2,17 +2,25 @@ import React, { Component } from 'react'
 import {
   TaskManagerWrapper
 } from './styles'
-import { AccountSettings, UserActivePosts, UserSoldPosts } from 'components/export'
+import { AccountSettings, UserActivePosts, UserSoldPosts, Album } from 'components/export'
 
 class TaskManager extends Component {
   handleTabs = () => {
     switch(this.props.currentItem) {
       case 'profileSettings':
-        return <AccountSettings />
+        return (
+          <TaskManagerWrapper>
+            <AccountSettings />
+          </TaskManagerWrapper>
+        )
       case 'activeItems':
         return <UserActivePosts />
       case 'soldItems':
-        return <UserSoldPosts />
+        return (
+          <React.Fragment>
+            <UserSoldPosts />
+          </React.Fragment>
+        )
       default:
         return null
     }
@@ -20,11 +28,11 @@ class TaskManager extends Component {
 
   render() {
     return (
-      <TaskManagerWrapper>
+      <React.Fragment>
         {
           this.handleTabs()
         }
-      </TaskManagerWrapper>
+      </React.Fragment>
     )
   }
 }

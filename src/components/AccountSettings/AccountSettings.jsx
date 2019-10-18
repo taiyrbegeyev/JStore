@@ -172,6 +172,7 @@ class AccountSettings extends Component {
 
     return (
       <MuiThemeProvider theme={theme}>
+        <div>
         <Typography variant="h5" component="h2">
           Account Settings
         </Typography>
@@ -213,6 +214,7 @@ class AccountSettings extends Component {
             <SaveIcon className={classes.leftIcon} />
             Save
           </Button>
+        </div>
         </div>
       </MuiThemeProvider>
     )
