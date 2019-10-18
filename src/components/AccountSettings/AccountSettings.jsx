@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { auth } from 'firebase.js'
+import { PacmanLoader } from 'react-spinners'
 import { fetchUser, updatePersonalInfo } from 'firebase/user'
 import { validatePhoneNumber } from 'helpers.js'
 import {
@@ -158,7 +159,15 @@ class AccountSettings extends Component {
     }
 
     if (loading) {
-      return <p>Loading ...</p>
+      return (
+        <PacmanLoader
+          sizeUnit={"px"}
+          size={20}
+          color={'#123abc'}
+          loading={loading}
+          css={{position: 'absolute', left: '50%', top: '50%', zIndex: '999'}}
+        />
+      )
     }
 
     return (

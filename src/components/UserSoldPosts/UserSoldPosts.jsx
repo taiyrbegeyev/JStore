@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { auth } from 'firebase.js' 
+import { PacmanLoader } from 'react-spinners'
+import { auth } from 'firebase.js'
 import { fetchUsersPosts, getUsersPostsCollectionSize } from 'firebase/display.js'
 import Pagination from "react-js-pagination"
 import { Typography } from '@material-ui/core'
@@ -88,7 +89,15 @@ class UserActivePosts extends Component {
     const { currentPage, itemsPerPage, dbPosts, numberOfPosts, loading } = this.state
 
     if (loading) {
-      return <p>Loading ...</p>
+      return (
+        <PacmanLoader
+          sizeUnit={"px"}
+          size={20}
+          color={'#123abc'}
+          loading={loading}
+          css={{position: 'absolute', left: '50%', top: '50%', zIndex: '999'}}
+        />
+      )
     }
     
     return (
@@ -98,9 +107,7 @@ class UserActivePosts extends Component {
         </Typography>
         <PostsContainer>
           {
-            dbPosts ? dbPosts.map(dbPost => (
-              <ItemAction dbPost={dbPost} />
-            ))
+            dbPosts ? <ItemAction dbPosts={dbPosts} />
             :
             <Typography variant="h7" component="h4">
               No Sold Items
