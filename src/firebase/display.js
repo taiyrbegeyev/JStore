@@ -191,7 +191,7 @@ export const fetchUsersPosts = (posts_limit, posts_At, isForward, user, sold, er
     query = db.collection('posts')
       .where('ownerId', '==', user)
       .where('sold', '==', sold)
-      .orderBy('creationDate', 'desc')
+      .orderBy('soldDate', 'desc')
       .startAfter(posts_At)
       .limit(posts_limit)
   }
@@ -199,7 +199,7 @@ export const fetchUsersPosts = (posts_limit, posts_At, isForward, user, sold, er
     query = db.collection('posts')
       .where('ownerId', '==', user)
       .where('sold', '==', sold)
-      .orderBy('creationDate', 'asc')
+      .orderBy('soldDate', 'asc')
       .startAfter(posts_At)
       .limit(posts_limit)
   }
@@ -214,13 +214,13 @@ export const fetchUsersPosts = (posts_limit, posts_At, isForward, user, sold, er
       posts.sort(compare)
 
       if (posts.length > 0) {
-        let timeStampOfFirstPostLocal = posts[0].creationDate
+        let timeStampOfFirstPostLocal = posts[0].soldDate
         let timeStampOfLastPostLocal
         if (posts.length === 0) {
-          timeStampOfLastPostLocal = posts[0].creationDate
+          timeStampOfLastPostLocal = posts[0].soldDate
         }
         else {
-          timeStampOfLastPostLocal = posts[posts.length - 1].creationDate
+          timeStampOfLastPostLocal = posts[posts.length - 1].soldDate
         }
         const res = {
           posts,
