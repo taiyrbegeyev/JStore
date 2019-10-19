@@ -188,20 +188,40 @@ export const getUsersPostsCollectionSize = (user, sold, errHandler, completionHa
 export const fetchUsersPosts = (posts_limit, posts_At, isForward, user, sold, errHandler, completionhandler) => {
   let query
   if (isForward) {
-    query = db.collection('posts')
-      .where('ownerId', '==', user)
-      .where('sold', '==', sold)
-      .orderBy('soldDate', 'desc')
-      .startAfter(posts_At)
-      .limit(posts_limit)
+    if (sold) {
+      query = db.collection('posts')
+        .where('ownerId', '==', user)
+        .where('sold', '==', sold)
+        .orderBy('soldDate', 'desc')
+        .startAfter(posts_At)
+        .limit(posts_limit)
+    }
+    else {
+      query = db.collection('posts')
+        .where('ownerId', '==', user)
+        .where('sold', '==', sold)
+        .orderBy('creationDate', 'desc')
+        .startAfter(posts_At)
+        .limit(posts_limit)
+    }
   }
   else {
-    query = db.collection('posts')
-      .where('ownerId', '==', user)
-      .where('sold', '==', sold)
-      .orderBy('soldDate', 'asc')
-      .startAfter(posts_At)
-      .limit(posts_limit)
+    if (sold) {
+      query = db.collection('posts')
+        .where('ownerId', '==', user)
+        .where('sold', '==', sold)
+        .orderBy('soldDate', 'asc')
+        .startAfter(posts_At)
+        .limit(posts_limit)
+    }
+    else {
+      query = db.collection('posts')
+        .where('ownerId', '==', user)
+        .where('sold', '==', sold)
+        .orderBy('creationDate', 'asc')
+        .startAfter(posts_At)
+        .limit(posts_limit)
+    }
   }
 
   query.get()
@@ -214,20 +234,38 @@ export const fetchUsersPosts = (posts_limit, posts_At, isForward, user, sold, er
       posts.sort(compare)
 
       if (posts.length > 0) {
-        let timeStampOfFirstPostLocal = posts[0].soldDate
-        let timeStampOfLastPostLocal
-        if (posts.length === 0) {
-          timeStampOfLastPostLocal = posts[0].soldDate
+        if (sold) {
+          let timeStampOfFirstPostLocal = posts[0].soldDate
+          let timeStampOfLastPostLocal
+          if (posts.length === 0) {
+            timeStampOfLastPostLocal = posts[0].soldDate
+          }
+          else {
+            timeStampOfLastPostLocal = posts[posts.length - 1].soldDate
+          }
+          const res = {
+            posts,
+            timeStampOfFirstPostLocal,
+            timeStampOfLastPostLocal
+          }
+          completionhandler(res)
         }
         else {
-          timeStampOfLastPostLocal = posts[posts.length - 1].soldDate
+          let timeStampOfFirstPostLocal = posts[0].creationDate
+          let timeStampOfLastPostLocal
+          if (posts.length === 0) {
+            timeStampOfLastPostLocal = posts[0].creationDate
+          }
+          else {
+            timeStampOfLastPostLocal = posts[posts.length - 1].creationDate
+          }
+          const res = {
+            posts,
+            timeStampOfFirstPostLocal,
+            timeStampOfLastPostLocal
+          }
+          completionhandler(res)
         }
-        const res = {
-          posts,
-          timeStampOfFirstPostLocal,
-          timeStampOfLastPostLocal
-        }
-        completionhandler(res)
       }
       else {
         errHandler()

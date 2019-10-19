@@ -6,7 +6,7 @@ import Pagination from "react-js-pagination"
 import { Typography } from '@material-ui/core'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { ItemAction } from 'components/export'
-import { PostsContainer, PaginationWrapper, UserSoldPostsWrapper } from './styles'
+import { PostsContainer, PaginationWrapper } from './styles'
 
 const theme = createMuiTheme({
   typography: {
@@ -19,7 +19,7 @@ const theme = createMuiTheme({
   },
 })
 
-class UserActivePosts extends Component {
+class UserSoldPosts extends Component {
   state = {
     isForward: true,
     currentPage: 1,
@@ -134,4 +134,4 @@ class UserActivePosts extends Component {
   }
 }
 
-export default UserActivePosts
+export default UserSoldPosts

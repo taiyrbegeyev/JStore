@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {
   TaskManagerWrapper
 } from './styles'
-import { AccountSettings, UserActivePosts, UserSoldPosts, Album } from 'components/export'
+import { AccountSettings, UserActivePosts, UserSoldPosts } from 'components/export'
 
 class TaskManager extends Component {
   handleTabs = () => {
