@@ -1,9 +1,20 @@
 // sort by creation date in desc order
-export const compare = (postA, postB) => {
+export const compare_creationDate = (postA, postB) => {
   if (postA.creationDate > postB.creationDate) {
     return -1
   }
   if (postA.creationDate < postB.creationDate) {
+    return 1
+  }
+  return 0
+}
+
+// sort by sold date in desc order
+export const compare_soldDate = (postA, postB) => {
+  if (postA.soldDate > postB.soldDate) {
+    return -1
+  }
+  if (postA.soldDate < postB.soldDate) {
     return 1
   }
   return 0

@@ -5,7 +5,7 @@ import {
   Grid, Typography,
   Card, CardActions,
   CardContent, CardMedia,
-  Container, Chip
+  Container, Chip, Button
 } from '@material-ui/core'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
@@ -70,7 +70,7 @@ const useStyles = (theme) => ({
 
 class ItemAction extends Component {
   render() {
-    const { classes, dbPosts } = this.props
+    const { classes, dbPosts, handleMarkAsSold, active } = this.props
 
     return (
       <Container className={classes.cardGrid} maxWidth="md">
@@ -89,7 +89,10 @@ class ItemAction extends Component {
                     {dbPost.title}
                   </Typography>
                   <Typography gutterBottom variant="h7" component="h4" className={classes.owner}>
-                    {displayDate(dbPost.creationDate.toDate().toString())}
+                    {
+                      active ? displayDate(dbPost.creationDate.toDate().toString())
+                      : displayDate(dbPost.soldDate.toDate().toString())
+                    }
                   </Typography>
                   <Typography gutterBottom variant="h6" component="h4" className={classes.price}>
                     €{dbPost.price}
@@ -107,6 +110,20 @@ class ItemAction extends Component {
                 <CardActions className={classes.cardActions}>
                   <Chip label={dbPost.category} color="primary" className={classes.chip} />
                 </CardActions>
+                {
+                  active &&
+                  <CardActions>
+                    <Button size="small" color="primary" href={`/posts/${dbPost.postId}`}>
+                      Edit
+                    </Button>
+                    <Button size="small" color="primary" onClick={() => handleMarkAsSold(dbPost.postId)}>
+                      Mark as sold
+                    </Button>
+                    <Button size="small" color="primary" href={`/posts/${dbPost.postId}`}>
+                      Delete
+                    </Button>
+                  </CardActions>
+                }
               </Card>
             </Grid>
           ))

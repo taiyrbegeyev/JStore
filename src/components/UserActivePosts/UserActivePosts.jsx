@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { PacmanLoader } from 'react-spinners'
 import { auth } from 'firebase.js'
 import { fetchUsersPosts, getUsersPostsCollectionSize } from 'firebase/display.js'
+import { markAsSold } from 'firebase/remove.js'
 import Pagination from "react-js-pagination"
 import { Typography } from '@material-ui/core'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
@@ -28,10 +29,11 @@ class UserActivePosts extends Component {
     dbPosts: null,
     timeStampOfFirstPost: new Date(),
     timeStampOfLastPost: new Date(),
-    loading: true
+    loading: true,
+    marking: false
   }
 
-  getPosts() {
+  getPosts = () => {
     const { isForward, itemsPerPage, timeStampOfFirstPost, timeStampOfLastPost } = this.state
     let timeStampOfPost = isForward ? timeStampOfLastPost : timeStampOfFirstPost
 
@@ -45,6 +47,24 @@ class UserActivePosts extends Component {
         timeStampOfFirstPost: res.timeStampOfFirstPostLocal,
         timeStampOfLastPost: res.timeStampOfLastPostLocal,
         loading: false
+      })
+    })
+  }
+
+  handleMarkAsSold = (postId) => {
+    this.setState({
+      loading: true
+    })
+    markAsSold(postId, () => {
+
+    }, () => {
+      this.setState({
+        timeStampOfFirstPost: new Date(),
+        timeStampOfLastPost: new Date(),
+        loading: false,
+        marking: true,
+      }, () => {
+        alert('Marked As Sold')
       })
     })
   }
@@ -74,6 +94,21 @@ class UserActivePosts extends Component {
         isForward
       }, () => {
         this.getPosts()
+      })
+    }
+
+    if (this.state.marking !== prevState.marking) {
+      this.setState({
+        marking: false
+      }, () => {
+        getUsersPostsCollectionSize(auth.currentUser.email, false, () => {
+          alert('Error: contact t.begeyev@jacobs-university.de')
+        }, (size) => {
+          this.setState({
+            numberOfPosts: size
+          })
+          this.getPosts()
+        })
       })
     }
   }
@@ -109,7 +144,13 @@ class UserActivePosts extends Component {
             Active Posts
           </Typography>
           {
-            dbPosts ? <ItemAction dbPosts={dbPosts} active />
+            dbPosts
+            ?
+              <ItemAction
+                dbPosts={dbPosts}
+                active
+                handleMarkAsSold={this.handleMarkAsSold}
+              />
             :
             <div style={{marginTop: '4rem'}}>
               <Typography variant="h7" component="h4">

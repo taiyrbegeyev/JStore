@@ -1,5 +1,5 @@
 import { storage, db } from 'firebase.js'
-import { compare } from 'helpers.js'
+import { compare_creationDate, compare_soldDate } from 'helpers.js'
 
 /**
  * Fetch one single post
@@ -68,7 +68,7 @@ export const fetchPosts = (posts_limit, posts_At, isForward, errHandler, complet
       })
     
       // sort posts
-      posts.sort(compare)
+      posts.sort(compare_creationDate)
       
       if (posts.length > 0) {
         let timeStampOfFirstPostLocal = posts[0].creationDate
@@ -231,7 +231,12 @@ export const fetchUsersPosts = (posts_limit, posts_At, isForward, user, sold, er
         return doc_full
       })
       // sort posts
-      posts.sort(compare)
+      if (sold) {
+        posts.sort(compare_soldDate)
+      }
+      else {
+        posts.sort(compare_creationDate)
+      }
 
       if (posts.length > 0) {
         if (sold) {
