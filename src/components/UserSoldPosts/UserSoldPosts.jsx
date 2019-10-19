@@ -111,9 +111,11 @@ class UserSoldPosts extends Component {
           {
             dbPosts ? <ItemAction dbPosts={dbPosts} />
             :
-            <Typography variant="h7" component="h4">
-              No Sold Items
-            </Typography>
+            <div style={{marginTop: '4rem'}}>
+              <Typography variant="h7" component="h4">
+                No Sold Items
+              </Typography>
+            </div>
           }
           <PaginationWrapper>
             <Pagination

@@ -10,7 +10,8 @@ import {
 import {
   RedditTextField, SimpleSelect,
   MultilineTextField, ImageUploader,
-  PriceInput, PaymentOptionsCheckboxes
+  PriceInput, PaymentOptionsCheckboxes,
+  SnackBar
 } from 'components/export'
 import { PacmanLoader } from 'react-spinners'
 import uuidv1 from 'uuid'
@@ -60,7 +61,8 @@ class StepperUpload extends Component {
       paymentOptions: []
     },
     error: false,
-    loading: false
+    loading: false,
+    saved: false
   }
 
   getSteps() {
@@ -126,9 +128,10 @@ class StepperUpload extends Component {
           }, () => {
             console.log('Post added')
             this.setState({
-              loading: false
+              loading: false,
+              saved: true
             })
-            alert('Product was successfully added')
+            // alert('Product was successfully added')
             this.handleReset()
           })
         })
@@ -183,6 +186,7 @@ class StepperUpload extends Component {
     this.setState((prevState) => {
       return {
         error: false,
+        saved: false,
         activeStep: prevState.activeStep + 1
       }
     })
@@ -278,7 +282,7 @@ class StepperUpload extends Component {
   }
 
   render() {
-    const {activeStep} = this.state
+    const { activeStep, saved } = this.state
     const steps = this.getSteps()
     return (
       <ThemeProvider theme={theme}>
@@ -317,6 +321,7 @@ class StepperUpload extends Component {
                     >
                       {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                     </Button>
+                    <SnackBar open={saved} />
                   </div>
                 </div>
               </StepContent>

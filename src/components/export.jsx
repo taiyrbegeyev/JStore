@@ -16,6 +16,7 @@ import PaymentOptionsCheckboxes from 'components/PaymentOptionsCheckboxes/Paymen
 import PriceInput from 'components/PriceInput/PriceInput'
 import RedditTextField from 'components/RedditTextField/RedditTextField'
 import SimpleSelect from 'components/Select/Select'
+import SnackBar from 'components/SnackBar/SnackBar'
 import Stepper from 'components/Stepper/Stepper'
 import TaskManager from 'components/TaskManager/TaskManager'
 import UserActivePosts from 'components/UserActivePosts/UserActivePosts'
@@ -27,6 +28,6 @@ export {
   Header, HomePageHeader, IdentityCard, ImageUploader,
   Input, Intro, ItemAction, MultilineTextField, NewUserModal,
   PaymentOptionsCheckboxes, PriceInput,
-  RedditTextField, SimpleSelect, TaskManager,
+  RedditTextField, SimpleSelect, SnackBar, TaskManager,
   UserActivePosts, UserSoldPosts, Stepper, WelcomeBack,
 }
