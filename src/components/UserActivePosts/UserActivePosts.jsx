@@ -38,6 +38,12 @@ class UserActivePosts extends Component {
     const { isForward, itemsPerPage, timeStampOfFirstPost, timeStampOfLastPost } = this.state
     let timeStampOfPost = isForward ? timeStampOfLastPost : timeStampOfFirstPost
 
+    if (this.state.numberOfPosts === 0) {
+      this.setState({
+        dbPosts: null
+      })
+    }
+
     fetchUsersPosts(itemsPerPage, timeStampOfPost, isForward, auth.currentUser.email, false, () => {
       this.setState({
         loading: false
@@ -57,7 +63,7 @@ class UserActivePosts extends Component {
       loading: true
     })
     markAsSold(postId, () => {
-
+      alert('Something went wrong. Contact t.begeyev@jacobs-university.de')
     }, () => {
       this.setState({
         timeStampOfFirstPost: new Date(),
@@ -65,7 +71,7 @@ class UserActivePosts extends Component {
         loading: false,
         marking: true,
       }, () => {
-        alert('Marked As Sold')
+        // alert('Marked As Sold')
       })
     })
   }
@@ -75,7 +81,7 @@ class UserActivePosts extends Component {
       loading: true
     })
     removePost(postId, () => {
-
+      alert('Something went wrong. Contact t.begeyev@jacobs-university.de')
     }, () => {
       this.setState({
         timeStampOfFirstPost: new Date(),
@@ -83,7 +89,7 @@ class UserActivePosts extends Component {
         loading: false,
         deleting: true,
       }, () => {
-        alert('Post Deleted')
+        // alert('Post Deleted')
       })
     })
   }
@@ -170,7 +176,6 @@ class UserActivePosts extends Component {
         />
       )
     }
-    console.log(dbPosts)
     return (
       <MuiThemeProvider theme={theme}>
         <PostsContainer>
