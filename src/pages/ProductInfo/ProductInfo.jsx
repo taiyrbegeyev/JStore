@@ -13,7 +13,7 @@ import {
 } from './styles'
 import { Avatar, Typography, Link, Chip, Fab } from '@material-ui/core'
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles'
-import { Email, WhatsApp } from '@material-ui/icons'
+import { Email, WhatsApp, Edit } from '@material-ui/icons'
 
 const theme = createMuiTheme({
   typography: {
@@ -64,7 +64,8 @@ class ProductInfo extends Component {
   state = {
     data: null,
     error: null,
-    loading: false
+    isOwner: null,
+    loading: false,
   }
   
   componentWillMount() {
@@ -73,7 +74,6 @@ class ProductInfo extends Component {
     })
     // extract id of post from url
     const postId = window.location.pathname.split('/')[2]
-    console.log(postId)
     fetchPost(postId, () => {
       this.setState({
         error: true,
@@ -82,14 +82,80 @@ class ProductInfo extends Component {
     }, (data) => {
       this.setState({
         data,
+        isOwner: auth.currentUser.email === data.ownerId,
         loading: false
       })
     })
   }
+
+  handleButtons = (isOwner) => {
+    const { classes } = this.props
+    const { data } = this.state
+    if (isOwner) {
+      return (
+        <Fab
+          variant="extended"
+          size="medium"
+          color="default"
+          aria-label="add"
+          className={classes.margin}
+          href={generateeMail(data.ownerId, auth.currentUser.displayName, data.title, window.location.href, data.imageUrl)}
+        >
+          <Edit className={classes.extendedIcon} />
+          Edit
+        </Fab>
+      )
+    }
+    else {
+      if (data.whatsApp && data.phoneNumber) {
+        return (
+          <React.Fragment>
+            <Fab
+              variant="extended"
+              size="medium"
+              color="default"
+              aria-label="add"
+              className={classes.margin}
+              href={generateeMail(data.ownerId, auth.currentUser.displayName, data.title, window.location.href, data.imageUrl)}
+            >
+              <Email className={classes.extendedIcon} />
+              Write me an email
+            </Fab>
+            <Fab
+              variant="extended"
+              size="medium"
+              color="secondary"
+              aria-label="add"
+              className={classes.margin}
+              href={generateWhatsAppLink(data.phoneNumber, auth.currentUser.displayName, data.title, window.location.href, data.imageUrl)}
+            >
+              <WhatsApp className={classes.extendedIcon} />
+              Drop me a message
+            </Fab>
+          </React.Fragment>
+        )
+      }
+      else {
+        return (
+          <Fab
+            variant="extended"
+            size="medium"
+            color="default"
+            aria-label="add"
+            className={classes.margin}
+            href={generateeMail(data.ownerId, auth.currentUser.displayName, data.title, window.location.href, data.imageUrl)}
+          >
+            <Email className={classes.extendedIcon} />
+            Write me an email
+          </Fab>
+        )
+      }
+    }
+  }
   
   render() {
     const { classes } = this.props
-    const { data, error, loading } = this.state
+    const { data, isOwner, error, loading } = this.state
 
     if (error) {
       return <Redirect to='/home' />
@@ -99,8 +165,6 @@ class ProductInfo extends Component {
       return null
     }
 
-    console.log(data.imageUrl)
-    
     return (
       <MuiThemeProvider theme={theme}>
         <HomePageHeader />
@@ -131,30 +195,8 @@ class ProductInfo extends Component {
                   </OwnerInfo>
                 </OwnerInfoContainer>
                 <BuyProduct>
-                  <Fab
-                    variant="extended"
-                    size="medium"
-                    color="default"
-                    aria-label="add"
-                    className={classes.margin}
-                    href={generateeMail(data.ownerId, auth.currentUser.displayName, data.title, window.location.href, data.imageUrl)}
-                  >
-                    <Email className={classes.extendedIcon} />
-                    Write me an email
-                  </Fab>
                   {
-                    data.whatsApp && data.phoneNumber &&
-                    <Fab
-                    variant="extended"
-                    size="medium"
-                    color="secondary"
-                    aria-label="add"
-                    className={classes.margin}
-                    href={generateWhatsAppLink(data.phoneNumber, auth.currentUser.displayName, data.title, window.location.href, data.imageUrl)}
-                  >
-                    <WhatsApp className={classes.extendedIcon} />
-                    Drop me a message
-                  </Fab>
+                    this.handleButtons(isOwner)
                   }
                 </BuyProduct>
               </TitleContainer>

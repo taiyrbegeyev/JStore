@@ -97,10 +97,18 @@ export const OwnerInfo = styled.div`
 export const BuyProduct = styled.div`
   margin: 2rem 0 0 0;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 
   @media (min-width: 960px) {
     flex-direction: column;
+  }
+
+  @media (min-width: 1280px) {
+    flex-direction: row;
   }
 `
 
