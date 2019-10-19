@@ -54,9 +54,9 @@ export const validatePhoneNumber = (phoneNumber) => {
 export const generateWhatsAppLink = (phoneNumber, fullName, itemName, link, imageUrl) => {
   const sanitized_phoneNumber = phoneNumber.replace(/\D/g,'')
   console.log(sanitized_phoneNumber)
-  return `https://api.whatsapp.com/send?phone=${sanitized_phoneNumber}&text=[JStore]%20${itemName}%0D%0A%0D%0AHey! I'm contacting you by clicking on the WhatsApp button of JStore.%0D%0AMy name is ${fullName}.%0D%0AI am interested in the following item:%0D%0A${link}`
+  return `https://api.whatsapp.com/send?phone=${sanitized_phoneNumber}&text=[JStore]%20${itemName}%0D%0A%0D%0AHi! I'm contacting you by clicking on the WhatsApp button of JStore. My name is ${fullName} and I'm interested in the following item:%0D%0A${link}`
 }
 
 export const generateeMail = (email, fullName, itemName, link, imageUrl) => {
-  return `mailto:${email}?subject=[JStore]%20${itemName}&body=Hey!%20I'm%20contacting%20you%20by%20clicking%20on%20the%20Email%20button%20of%20JStore.%0D%0A My%20name%20is%20${fullName}.%20I%20am%20interested%20in%20the%20following%20item:%0D%0A${link}%0D%0A%0D%0ASincerely,%0D%0A${fullName}`
+  return `mailto:${email}?subject=[JStore]%20${itemName}&body=Hi!%20I'm%20contacting%20you%20by%20clicking%20on%20the%20Email%20button%20of%20JStore.%20I'm%20interested%20in%20the%20following%20item:%0D%0A${link}%0D%0A%0D%0ASincerely,%0D%0A${fullName}`
 }

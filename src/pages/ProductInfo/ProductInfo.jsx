@@ -117,6 +117,7 @@ class ProductInfo extends Component {
               aria-label="add"
               className={classes.margin}
               href={generateeMail(data.ownerId, auth.currentUser.displayName, data.title, window.location.href, data.imageUrl)}
+              target="_blank"
             >
               <Email className={classes.extendedIcon} />
               Write me an email
@@ -128,6 +129,7 @@ class ProductInfo extends Component {
               aria-label="add"
               className={classes.margin}
               href={generateWhatsAppLink(data.phoneNumber, auth.currentUser.displayName, data.title, window.location.href, data.imageUrl)}
+              target="_blank"
             >
               <WhatsApp className={classes.extendedIcon} />
               Drop me a message
