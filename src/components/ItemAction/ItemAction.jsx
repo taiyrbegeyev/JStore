@@ -10,8 +10,6 @@ import {
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 const useStyles = (theme) => ({
-  root: {
-  },
   paper: {
     padding: theme.spacing(2),
     margin: 'auto',
@@ -30,6 +28,7 @@ const useStyles = (theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
+    margin: 0,
   },
   card: {
     height: '100%',
@@ -74,11 +73,11 @@ class ItemAction extends Component {
     const { classes, dbPosts } = this.props
 
     return (
-        <Container className={classes.cardGrid} maxWidth="sm">
+      <Container className={classes.cardGrid} maxWidth="md">
         <Grid container spacing={2}>
         {
           dbPosts.map(dbPost => (
-            <Grid item key={dbPost.postId} xs={12} sm={6} md={8}>
+            <Grid item key={dbPost.postId} xs={12} sm={6} md={6}>
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.cardMedia}
@@ -113,7 +112,7 @@ class ItemAction extends Component {
           ))
         }
         </Grid>
-        </Container>
+      </Container>
     )
   }
 }

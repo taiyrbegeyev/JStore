@@ -17,9 +17,7 @@ class TaskManager extends Component {
         return <UserActivePosts />
       case 'soldItems':
         return (
-          <React.Fragment>
-            <UserSoldPosts />
-          </React.Fragment>
+          <UserSoldPosts />
         )
       default:
         return null

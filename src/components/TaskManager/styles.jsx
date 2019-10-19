@@ -8,7 +8,10 @@ export const TaskManagerWrapper = styled.div`
   margin-top: 6rem;
 
   @media (min-width: 960px) {
-    margin-left: 2rem;
+    margin-left: 4rem;
+  }
+
+  @media (min-width: 1200px) {
     margin-top: 0;
   }
 

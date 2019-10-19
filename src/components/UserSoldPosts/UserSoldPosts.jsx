@@ -105,29 +105,29 @@ class UserActivePosts extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <PostsContainer>
-        <Typography variant="h5" component="h2">
-          Sold Posts
-        </Typography>
-        {
-          dbPosts ? <ItemAction dbPosts={dbPosts} />
-          :
-          <Typography variant="h7" component="h4">
-            No Sold Items
+          <Typography variant="h5" component="h2">
+            Sold Posts
           </Typography>
-        }
-        <PaginationWrapper>
-          <Pagination
-            hideFirstLastPages
-            innerClass="pagination"
-            itemClass="page-item"
-            linkClass="page-link"
-            activePage={currentPage}
-            itemsCountPerPage={itemsPerPage}
-            totalItemsCount={numberOfPosts}
-            pageRangeDisplayed={1}
-            onChange={(e) => this.handlePageChange(e)}
-          />
-        </PaginationWrapper>
+          {
+            dbPosts ? <ItemAction dbPosts={dbPosts} />
+            :
+            <Typography variant="h7" component="h4">
+              No Sold Items
+            </Typography>
+          }
+          <PaginationWrapper>
+            <Pagination
+              hideFirstLastPages
+              innerClass="pagination"
+              itemClass="page-item"
+              linkClass="page-link"
+              activePage={currentPage}
+              itemsCountPerPage={itemsPerPage}
+              totalItemsCount={numberOfPosts}
+              pageRangeDisplayed={1}
+              onChange={(e) => this.handlePageChange(e)}
+            />
+          </PaginationWrapper>
         </PostsContainer>
       </MuiThemeProvider>
     )

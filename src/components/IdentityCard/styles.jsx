@@ -37,6 +37,14 @@ export const UserName = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
 `
 
 export const ListOfTabs = styled.ul`
