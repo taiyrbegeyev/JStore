@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { PacmanLoader } from 'react-spinners'
 import { auth } from 'firebase.js'
 import { fetchUsersPosts, getUsersPostsCollectionSize } from 'firebase/display.js'
-import { markAsSold } from 'firebase/remove.js'
+import { markAsSold, removePost } from 'firebase/remove.js'
 import Pagination from "react-js-pagination"
 import { Typography } from '@material-ui/core'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
@@ -30,7 +30,8 @@ class UserActivePosts extends Component {
     timeStampOfFirstPost: new Date(),
     timeStampOfLastPost: new Date(),
     loading: true,
-    marking: false
+    marking: false,
+    deleting: false
   }
 
   getPosts = () => {
@@ -69,6 +70,24 @@ class UserActivePosts extends Component {
     })
   }
 
+  handleRemovePost = (postId) => {
+    this.setState({
+      loading: true
+    })
+    removePost(postId, () => {
+
+    }, () => {
+      this.setState({
+        timeStampOfFirstPost: new Date(),
+        timeStampOfLastPost: new Date(),
+        loading: false,
+        deleting: true,
+      }, () => {
+        alert('Post Deleted')
+      })
+    })
+  }
+
   componentWillMount() {
     this.setState({
       loading: true
@@ -100,6 +119,21 @@ class UserActivePosts extends Component {
     if (this.state.marking !== prevState.marking) {
       this.setState({
         marking: false
+      }, () => {
+        getUsersPostsCollectionSize(auth.currentUser.email, false, () => {
+          alert('Error: contact t.begeyev@jacobs-university.de')
+        }, (size) => {
+          this.setState({
+            numberOfPosts: size
+          })
+          this.getPosts()
+        })
+      })
+    }
+
+    if (this.state.deleting !== prevState.deleting) {
+      this.setState({
+        deleting: false
       }, () => {
         getUsersPostsCollectionSize(auth.currentUser.email, false, () => {
           alert('Error: contact t.begeyev@jacobs-university.de')
@@ -150,6 +184,7 @@ class UserActivePosts extends Component {
                 dbPosts={dbPosts}
                 active
                 handleMarkAsSold={this.handleMarkAsSold}
+                handleRemovePost={this.handleRemovePost}
               />
             :
             <div style={{marginTop: '4rem'}}>

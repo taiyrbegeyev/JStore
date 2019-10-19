@@ -70,7 +70,7 @@ const useStyles = (theme) => ({
 
 class ItemAction extends Component {
   render() {
-    const { classes, dbPosts, handleMarkAsSold, active } = this.props
+    const { classes, dbPosts, handleMarkAsSold, handleRemovePost, active } = this.props
 
     return (
       <Container className={classes.cardGrid} maxWidth="md">
@@ -119,7 +119,7 @@ class ItemAction extends Component {
                     <Button size="small" color="primary" onClick={() => handleMarkAsSold(dbPost.postId)}>
                       Mark as sold
                     </Button>
-                    <Button size="small" color="primary" href={`/posts/${dbPost.postId}`}>
+                    <Button size="small" color="primary" onClick={() => handleRemovePost(dbPost.postId)}>
                       Delete
                     </Button>
                   </CardActions>
