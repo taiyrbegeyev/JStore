@@ -10,7 +10,8 @@ import { InputAdornment, TextField } from '@material-ui/core'
 import { withStyles } from '@material-ui/styles'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { PacmanLoader } from 'react-spinners'
-import logo from 'assets/jstore_logo.svg'
+// import logo from 'assets/jstore_logo.svg'
+import StoreIcon from '@material-ui/icons/Store'
 
 const theme = createMuiTheme({
   typography: {
@@ -96,7 +97,8 @@ class SignUp extends Component {
       <MuiThemeProvider theme={theme}>
       <SignUpContainer>
         <Heading>
-          <LogoImage src={logo} />
+          {/* <LogoImage src={logo} /> */}
+          <StoreIcon style={{color: '#004180', fontSize: '50px'}} />
         </Heading>
         {
           this.state.emailSentSuccessfully && !this.state.loading

@@ -6,7 +6,8 @@ import {
   LoginButton
 } from './styles'
 import WelcomeBack from 'components/WelcomeBack/WelcomeBack'
-import logo from 'assets/jstore_logo.svg'
+// import logo from 'assets/jstore_logo.svg'
+import StoreIcon from '@material-ui/icons/Store'
 
 class Header extends Component {
   handleDemo = () => {
@@ -23,7 +24,8 @@ class Header extends Component {
         <NavBar>
           <Logo>
             <LogoAnchor>
-              <LogoImage src={logo} />
+              {/* <LogoImage src={logo} /> */}
+              <StoreIcon style={{color: '#004180', fontSize: '50px'}} />
             </LogoAnchor>
           </Logo>
           <MainNavBar>

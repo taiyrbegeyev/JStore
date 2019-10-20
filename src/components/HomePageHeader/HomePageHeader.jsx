@@ -17,7 +17,8 @@ import {
   LocalGroceryStore, Publish,
   AccountCircle, Settings, Dehaze
 } from '@material-ui/icons'
-import logo from 'assets/jstore_logo.svg'
+// import logo from 'assets/jstore_logo.svg'
+import StoreIcon from '@material-ui/icons/Store'
 
 class HomePageHeader extends Component {
   state = {
@@ -140,7 +141,8 @@ class HomePageHeader extends Component {
           <NavBar>
             <Logo>
               <LogoAnchor href="/home">
-                <LogoImage src={logo} />
+                {/* <LogoImage src={logo} /> */}
+                <StoreIcon style={{color: '#004180', fontSize: '50px'}} />
               </LogoAnchor>
             </Logo>
             {
