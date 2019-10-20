@@ -3,7 +3,7 @@ import { auth } from 'firebase.js'
 import { fetchPost } from 'firebase/display.js'
 import { displayDate, cutFullName, generateWhatsAppLink, generateeMail } from 'helpers.js'
 import { Redirect } from 'react-router-dom'
-import { Footer, HomePageHeader } from 'components/export'
+import { Footer, HomePageHeader, EditPost } from 'components/export'
 import {
   MainContainer, ProductDetails,
   ImageContainer, Image, TitleContainer, OwnerInfoContainer,
@@ -11,9 +11,12 @@ import {
   PreferredPaymentOptions, ProductInfo1, ProductInfo2,
   BuyProduct
 } from './styles'
-import { Avatar, Typography, Link, Chip, Fab } from '@material-ui/core'
+import {
+  Avatar, Typography, Link, Chip, Fab,
+  Dialog, AppBar, Toolbar, IconButton, Slide
+} from '@material-ui/core'
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles'
-import { Email, WhatsApp, Edit } from '@material-ui/icons'
+import { Email, WhatsApp, Edit, Close } from '@material-ui/icons'
 
 const theme = createMuiTheme({
   typography: {
@@ -58,6 +61,17 @@ const useStyles = theme => ({
   extendedIcon: {
     marginRight: theme.spacing(1),
   },
+  appBar: {
+    position: 'relative',
+  },
+  title: {
+    marginLeft: theme.spacing(2),
+    flex: 1,
+  },
+})
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />
 })
 
 class ProductInfo extends Component {
@@ -66,6 +80,8 @@ class ProductInfo extends Component {
     error: null,
     isOwner: null,
     loading: false,
+    editPost: false,
+    editedData: null
   }
   
   componentWillMount() {
@@ -88,6 +104,18 @@ class ProductInfo extends Component {
     })
   }
 
+  handleClick = () => {
+    this.setState(prevState => ({
+      editPost: !prevState.editPost
+    }))
+  }
+
+  handleClose = () => {
+    this.setState({
+      editPost: false
+    })
+  }
+
   handleButtons = (isOwner) => {
     const { classes } = this.props
     const { data } = this.state
@@ -99,7 +127,7 @@ class ProductInfo extends Component {
           color="default"
           aria-label="add"
           className={classes.margin}
-          href={generateeMail(data.ownerId, auth.currentUser.displayName, data.title, window.location.href, data.imageUrl)}
+          onClick={this.handleClick}
         >
           <Edit className={classes.extendedIcon} />
           Edit
@@ -157,10 +185,10 @@ class ProductInfo extends Component {
   
   render() {
     const { classes } = this.props
-    const { data, isOwner, error, loading } = this.state
+    const { data, isOwner, error, loading, editPost } = this.state
 
     if (error) {
-      return <Redirect to='/home' />
+      return <Redirect to='home' />
     }
 
     if (loading) {
@@ -170,6 +198,19 @@ class ProductInfo extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <HomePageHeader />
+          <Dialog fullScreen open={editPost} onClose={this.handleClose} TransitionComponent={Transition}>
+            <AppBar className={classes.appBar}>
+              <Toolbar>
+                <IconButton edge="start" color="inherit" onClick={this.handleClose} aria-label="close">
+                  <Close />
+                </IconButton>
+                <Typography variant="h6" className={classes.title}>
+                  Edit Post
+                </Typography>
+              </Toolbar>
+            </AppBar>
+            <EditPost data={data} />
+          </Dialog>
         <MainContainer>
           <ImageContainer>
             <Image src={data.imageUrl} />

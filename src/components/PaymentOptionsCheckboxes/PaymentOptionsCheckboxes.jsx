@@ -23,6 +23,18 @@ class PaymentOptionsCheckboxes extends Component {
     meal_plan: false
   }
 
+  componentDidMount() {
+    if (this.props.editPost) {
+      let paymentOptions_str = window.localStorage.getItem('paymentOptions')
+      const paymentOptions = paymentOptions_str.split(',')
+      paymentOptions.forEach(option => {
+        this.setState({
+          [option]: true
+        })
+      })
+    }
+  }
+
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.checked  

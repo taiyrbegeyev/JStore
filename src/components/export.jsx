@@ -1,6 +1,7 @@
 import AccountSettings from 'components/AccountSettings/AccountSettings'
 import Album from 'components/Album/Album'
 import {Button} from 'components/Button/Button'
+import EditPost from 'components/EditPost/EditPost'
 import EmailSent from 'components/EmailSent/EmailSent'
 import Footer from 'components/Footer/Footer'
 import Header from 'components/Header/Header'
@@ -24,7 +25,7 @@ import UserSoldPosts from 'components/UserSoldPosts/UserSoldPosts'
 import WelcomeBack from 'components/WelcomeBack/WelcomeBack'
 
 export {
-  AccountSettings, Album, Button, EmailSent, Footer,
+  AccountSettings, Album, Button, EditPost, EmailSent, Footer,
   Header, HomePageHeader, IdentityCard, ImageUploader,
   Input, Intro, ItemAction, MultilineTextField, NewUserModal,
   PaymentOptionsCheckboxes, PriceInput,
