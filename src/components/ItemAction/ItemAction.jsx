@@ -110,20 +110,22 @@ class ItemAction extends Component {
                 <CardActions className={classes.cardActions}>
                   <Chip label={dbPost.category} color="primary" className={classes.chip} />
                 </CardActions>
+                <CardActions>
                 {
                   active &&
-                  <CardActions>
+                  <React.Fragment>
                     <Button size="small" color="primary" href={`/posts/${dbPost.postId}`}>
                       Edit
                     </Button>
                     <Button size="small" color="primary" onClick={() => handleMarkAsSold(dbPost.postId)}>
                       Mark as sold
                     </Button>
-                    <Button size="small" color="primary" onClick={() => handleRemovePost(dbPost.postId)}>
-                      Delete
-                    </Button>
-                  </CardActions>
+                  </React.Fragment>
                 }
+                  <Button size="small" color="primary" onClick={() => handleRemovePost(dbPost.postId)}>
+                    Delete
+                  </Button>
+                </CardActions>
               </Card>
             </Grid>
           ))

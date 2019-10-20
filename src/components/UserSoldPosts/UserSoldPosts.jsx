@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { PacmanLoader } from 'react-spinners'
 import { auth } from 'firebase.js'
 import { fetchUsersPosts, getUsersPostsCollectionSize } from 'firebase/display.js'
+import { removePost } from 'firebase/remove.js'
 import Pagination from "react-js-pagination"
 import { Typography } from '@material-ui/core'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
@@ -28,12 +29,19 @@ class UserSoldPosts extends Component {
     dbPosts: null,
     timeStampOfFirstPost: new Date(),
     timeStampOfLastPost: new Date(),
-    loading: true
+    loading: true,
+    deleting: false
   }
 
   getPosts() {
     const { isForward, itemsPerPage, timeStampOfFirstPost, timeStampOfLastPost } = this.state
     let timeStampOfPost = isForward ? timeStampOfLastPost : timeStampOfFirstPost
+
+    if (this.state.numberOfPosts === 0) {
+      this.setState({
+        dbPosts: null
+      })
+    }
 
     fetchUsersPosts(itemsPerPage, timeStampOfPost, isForward, auth.currentUser.email, true, () => {
       this.setState({
@@ -45,6 +53,24 @@ class UserSoldPosts extends Component {
         timeStampOfFirstPost: res.timeStampOfFirstPostLocal,
         timeStampOfLastPost: res.timeStampOfLastPostLocal,
         loading: false
+      })
+    })
+  }
+
+  handleRemovePost = (postId) => {
+    this.setState({
+      loading: true
+    })
+    removePost(postId, () => {
+      alert('Something went wrong. Contact t.begeyev@jacobs-university.de')
+    }, () => {
+      this.setState({
+        timeStampOfFirstPost: new Date(),
+        timeStampOfLastPost: new Date(),
+        loading: false,
+        deleting: true,
+      }, () => {
+        // alert('Post Deleted')
       })
     })
   }
@@ -74,6 +100,21 @@ class UserSoldPosts extends Component {
         isForward
       }, () => {
         this.getPosts()
+      })
+    }
+
+    if (this.state.deleting !== prevState.deleting) {
+      this.setState({
+        deleting: false
+      }, () => {
+        getUsersPostsCollectionSize(auth.currentUser.email, false, () => {
+          alert('Error: contact t.begeyev@jacobs-university.de')
+        }, (size) => {
+          this.setState({
+            numberOfPosts: size
+          })
+          this.getPosts()
+        })
       })
     }
   }
@@ -109,7 +150,12 @@ class UserSoldPosts extends Component {
             Sold Posts
           </Typography>
           {
-            dbPosts ? <ItemAction dbPosts={dbPosts} />
+            dbPosts
+            ?
+              <ItemAction
+                dbPosts={dbPosts}
+                handleRemovePost={this.handleRemovePost}
+              />
             :
             <div style={{marginTop: '4rem'}}>
               <Typography variant="h7" component="h4">
