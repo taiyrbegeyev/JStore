@@ -42,7 +42,7 @@ class SimpleSelect extends Component {
           {label}
         </InputLabel>
         <Select
-          value={window.localStorage.getItem(this.props.data_name)}
+          value={this.props.defaultValue || window.localStorage.getItem(this.props.data_name)}
           onChange={this.handleDropDown}
           error={error}
         >

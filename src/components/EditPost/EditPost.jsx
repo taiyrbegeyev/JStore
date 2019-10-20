@@ -246,9 +246,8 @@ class EditPost extends Component {
     const steps = this.getSteps()
 
     if (redirectToPost) {
-      return <Redirect from="/" to={`posts/${data.postId}`} />
+      return <Redirect to={'/home'} />
     }
-    
     return (
       <ThemeProvider theme={theme}>
         <Stepper activeStep={activeStep} orientation="vertical">

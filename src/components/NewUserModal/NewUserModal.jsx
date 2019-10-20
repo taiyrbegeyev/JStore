@@ -95,7 +95,7 @@ class NewUserModal extends Component {
   render() {
     const { open, redirectToHome, checkedWhatsApp, error_fullName, error_phoneNumber, fullName } = this.state
     if (redirectToHome) {
-      return <Redirect to='home' />
+      return <Redirect to='/home' />
     }
 
     const limit_1 = 50 - fullName.length

@@ -47,7 +47,7 @@ class PriceInput extends Component {
             id="adornment-amount"
             fullWidth
             defaultValue={window.localStorage.getItem(data_name)}
-            value={amount}
+            value={this.props.defaultValue || amount}
             onChange={this.handleChange}
             startAdornment={<InputAdornment position="start">€</InputAdornment>}
             error={error}

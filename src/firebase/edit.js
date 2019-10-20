@@ -5,7 +5,12 @@ export const updatePost = (data, errHandler, completionHandler) => {
   delete data.postId
   console.log(data)
   db.collection('posts').doc(postId).update({
-    data
+    title: data.title,
+    category: data.category,
+    condition: data.condition,
+    description: data.description,
+    price: data.price,
+    paymentOptions: data.paymentOptions
   })
     .then(() => {
       completionHandler()

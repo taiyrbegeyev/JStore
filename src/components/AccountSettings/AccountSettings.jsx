@@ -155,7 +155,7 @@ class AccountSettings extends Component {
     } = this.state
 
     if (redirectToHome) {
-      return <Redirect to='home' />
+      return <Redirect to='/home' />
     }
 
     if (loading) {

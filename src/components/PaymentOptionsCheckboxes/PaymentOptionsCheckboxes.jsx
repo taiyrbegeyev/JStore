@@ -25,7 +25,7 @@ class PaymentOptionsCheckboxes extends Component {
 
   componentDidMount() {
     if (this.props.editPost) {
-      let paymentOptions_str = window.localStorage.getItem('paymentOptions')
+      let paymentOptions_str = this.props.defaultValue + ''
       const paymentOptions = paymentOptions_str.split(',')
       paymentOptions.forEach(option => {
         this.setState({

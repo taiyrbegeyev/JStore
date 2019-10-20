@@ -22,7 +22,7 @@ const useStyles = theme => ({
 
 class MultiLineTextField extends Component {
   state = {
-    input_value: window.localStorage.getItem(this.props.data_name) || ''
+    input_value: ''
   }
 
   handleInputBox = (e) => {
@@ -48,7 +48,7 @@ class MultiLineTextField extends Component {
           multiline
           fullWidth
           rows="4"
-          defaultValue={window.localStorage.getItem(this.props.data_name)}
+          defaultValue={this.props.defaultValue || window.localStorage.getItem(this.props.data_name)}
           className={classes.textField}
           variant="outlined"
           onChange={this.handleInputBox}

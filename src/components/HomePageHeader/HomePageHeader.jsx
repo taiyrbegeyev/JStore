@@ -263,13 +263,13 @@ class HomePageHeader extends Component {
             <Drawer variant="temporary" anchor="bottom" open={this.state.drawerOpen} onClose={this.toggleDrawer}>
               <ListContainer role="presentation">
                 <List>
-                  <ListItem button onClick={() => this.goTo('home')}>
+                  <ListItem button onClick={() => this.goTo('/home')}>
                     <DrawerItems>
                       <LocalGroceryStore />
                     </DrawerItems>
                     <ListItemText primary={'Buy'} />
                   </ListItem>
-                  <ListItem button onClick={() => this.goTo('upload')}>
+                  <ListItem button onClick={() => this.goTo('/upload')}>
                     <DrawerItems>
                       <Publish />
                     </DrawerItems>

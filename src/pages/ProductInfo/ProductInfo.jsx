@@ -188,7 +188,7 @@ class ProductInfo extends Component {
     const { data, isOwner, error, loading, editPost } = this.state
 
     if (error) {
-      return <Redirect to='home' />
+      return <Redirect to='/home' />
     }
 
     if (loading) {
