@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import {
   IntroContainer, LeftContainer, Slogan,
-  Description, RightContainer
+  Description, DeviceImageContainer,
+  DeviceImage_1, DeviceImage_2
 } from './style'
 import imageUrl from 'assets/texture_1.png'
+import deviceUrl_1 from 'assets/mac.png'
+import deviceUrl_2 from 'assets/iphone.png'
 
 class Intro extends Component {
   render () {
@@ -11,9 +14,14 @@ class Intro extends Component {
       <IntroContainer imageUrl={imageUrl}>
         <LeftContainer>
           <Slogan>Your purchases. Organized. Effortless.</Slogan>
-          <Description>Take notes anywhere. Find information faster. Share ideas with anyone. Meeting notes, web pages, projects, to-do lists—with Evernote as your note taking app, nothing falls through the cracks.</Description>
+          <Description>Buy stuff anywhere. Find stuff faster. Sell stuff to anyone.</Description>
         </LeftContainer>
-        <RightContainer />
+        {/* <RightContainer> */}
+          <DeviceImageContainer>
+            <DeviceImage_1 src={deviceUrl_1} />
+            <DeviceImage_2 src={deviceUrl_2} />
+          </DeviceImageContainer>
+        {/* </RightContainer> */}
       </IntroContainer>
     )
   }
