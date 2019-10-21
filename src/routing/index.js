@@ -38,5 +38,11 @@ export const routes = [
     path: '/profile',
     isPrivate: true,
     component: Profile
+  },
+  {
+    path: '*',
+    exact: true,
+    isPrivate: false,
+    component: Landing
   }
 ]
