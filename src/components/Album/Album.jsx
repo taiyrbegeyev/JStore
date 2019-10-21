@@ -59,7 +59,7 @@ class Album extends Component {
   state = {
     isForward: true,
     currentPage: 1,
-    itemsPerPage: 3,
+    itemsPerPage: 9,
     numberOfPosts: null,
     dbPosts: null,
     timeStampOfFirstPost: new Date(),
