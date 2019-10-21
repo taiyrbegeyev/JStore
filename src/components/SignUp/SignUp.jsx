@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
 import { getStarted } from 'firebase/auth.js'
 import {
-  SignUpContainer, Heading, LogoImage,
+  SignUpContainer, Heading,
   SignUpForm, InputContainer, ButtonContainer,
   LegalNoticeContainer, LegalNotice, LegalNoticeAnchors, LoadingContainer
 } from './styles'
-import { EmailSent, Button } from 'components/export'
-import { InputAdornment, TextField } from '@material-ui/core'
+import { EmailSent, Button as ButtonCustom } from 'components/export'
+import {
+  Button, Dialog, InputAdornment, TextField,
+  DialogActions, DialogContent, DialogContentText,
+  DialogTitle
+} from '@material-ui/core'
 import { withStyles } from '@material-ui/styles'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { PacmanLoader } from 'react-spinners'
@@ -35,7 +39,9 @@ class SignUp extends Component {
     email: '',
     emailSentSuccessfully: false,
     loading: false,
-    error: false
+    error: false,
+    terms_and_condition: false,
+    privacy_policy: false,
   }
 
   validate = (email) => {
@@ -90,9 +96,24 @@ class SignUp extends Component {
       })
     })
   }
+
+  handleDialog = (name) => {
+    this.setState({
+      [name]: true
+    })
+  }
+
+  handleCloseModal = () => {
+    this.setState({
+      terms_and_condition: false,
+      privacy_policy: false
+    })
+  }
   
   render () {    
     const { classes } = this.props
+    const { terms_and_condition, privacy_policy } = this.state
+    
     return (
       <MuiThemeProvider theme={theme}>
       <SignUpContainer>
@@ -100,6 +121,50 @@ class SignUp extends Component {
           {/* <LogoImage src={logo} /> */}
           <StoreIcon style={{color: '#004180', fontSize: '50px'}} />
         </Heading>
+        <Dialog
+          open={terms_and_condition}
+          onClose={this.handleCloseModal}
+          scroll="paper"
+          aria-labelledby="scroll-dialog-title"
+        >
+          <DialogTitle id="scroll-dialog-title">Terms and Conditions</DialogTitle>
+          <DialogContent dividers={true}>
+            <DialogContentText>
+              {[...new Array(100)]
+                .map(
+                  () => `heyeyyeyeyeyeeeeeeey`,
+                )
+              .join('\n')}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseModal} color="primary">
+              Got it!
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          open={privacy_policy}
+          onClose={this.handleCloseModal}
+          scroll="paper"
+          aria-labelledby="scroll-dialog-title"
+        >
+          <DialogTitle id="scroll-dialog-title">Privacy Policy</DialogTitle>
+          <DialogContent dividers={true}>
+            <DialogContentText>
+              {[...new Array(100)]
+                .map(
+                  () => `heyeyyeyeyeyeeeeeeey`,
+                )
+              .join('\n')}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseModal} color="primary">
+              Got it!
+            </Button>
+          </DialogActions>
+        </Dialog>
         {
           this.state.emailSentSuccessfully && !this.state.loading
           ? <EmailSent />
@@ -126,7 +191,7 @@ class SignUp extends Component {
                 />
               </InputContainer>
               <ButtonContainer>
-                <Button 
+                <ButtonCustom 
                   type="submit"
                   name="signup"
                   value="Continue"
@@ -134,7 +199,7 @@ class SignUp extends Component {
                 />
               </ButtonContainer>
               <LegalNoticeContainer>
-                <LegalNotice>By clicking Continue, you are agreeing to our <LegalNoticeAnchors>Terms of Service</LegalNoticeAnchors> and <LegalNoticeAnchors>Privacy Policy</LegalNoticeAnchors>.</LegalNotice>
+                <LegalNotice>By clicking Continue, you are agreeing to our <LegalNoticeAnchors onClick={(e) => this.handleDialog('terms_and_condition')}>Terms of Service</LegalNoticeAnchors> and <LegalNoticeAnchors onClick={(e) => this.handleDialog('privacy_policy')}>Privacy Policy</LegalNoticeAnchors>.</LegalNotice>
               </LegalNoticeContainer>
             </SignUpForm>
             {
