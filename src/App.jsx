@@ -10,7 +10,7 @@ const PrivateRoute = ({ isAuth, user, windowWidth, windowHeight, isNewUser, comp
     {...rest}
     render={props => (
       isAuth === false
-      ? <Redirect to='get-started' />
+      ? <Redirect to='/get-started' />
       : <Component
           isAuth={isAuth}
           user={user}

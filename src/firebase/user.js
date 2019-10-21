@@ -27,7 +27,7 @@ export const fetchUser = (user, errHandler, completionHandler) => {
 }
 
 export const updatePersonalInfo = (email, data, errHandler, completionHandler) => {
-  if (!data.whatsApp || data.whatsApp === false) {
+  if (data.whatsApp === false) {
     data.phoneNumber = ''
   }
 
