@@ -16,12 +16,10 @@ class Intro extends Component {
           <Slogan>Your purchases. Organized. Effortless.</Slogan>
           <Description>Buy stuff anywhere. Find stuff faster. Sell stuff to anyone.</Description>
         </LeftContainer>
-        {/* <RightContainer> */}
-          <DeviceImageContainer>
-            <DeviceImage_1 src={deviceUrl_1} />
-            <DeviceImage_2 src={deviceUrl_2} />
-          </DeviceImageContainer>
-        {/* </RightContainer> */}
+        <DeviceImageContainer>
+          <DeviceImage_1 src={deviceUrl_1} />
+          <DeviceImage_2 src={deviceUrl_2} />
+        </DeviceImageContainer>
       </IntroContainer>
     )
   }

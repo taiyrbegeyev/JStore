@@ -68,18 +68,25 @@ export const DeviceImageContainer = styled.div`
   align-items: center;
   width: 100%;
   @media (min-width: 960px) {
-    max-width: 50%;
+    max-width: 45%;
+    flex-direction: row;
+  }
+  @media (min-width: 1366px) {
+    max-width: 40%;
+    flex-direction: row;
+  }
+  @media (min-width: 1920px) {
+    max-width: 35%;
     flex-direction: row;
   }
 `
 
 export const DeviceImage_1 = styled.img`
   width: 100%;
-  margin-top: -5rem;
 
   @media (min-width: 768px) {
     width: 75%;
-    margin-top: -10rem;
+    margin-top: -5rem;
   }
   
   @media (min-width: 960px) {
