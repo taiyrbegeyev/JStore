@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import {
   LandingPageWrapper, ClassHomeWorkWrapper,
   JStoreWrapper, JStoreText, JStoreTitle,
@@ -6,6 +7,7 @@ import {
   EasyToSellContainer, Steps, Step, StepIcon, StepTitle,
   StepDescription, StepIconWrapper
 } from './styles'
+import { LoginButton } from 'components/Header/styles'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import { Footer, Header, Intro } from 'components/export'
 import yoga from 'assets/yoga.svg'
@@ -100,6 +102,26 @@ class Landing extends Component {
               </Step>
             </Steps>
           </EasyToSellContainer>
+          <JStoreWrapper>
+            <JStoreText>
+              <JStoreTitle>
+                Think you don't have anything to sell? Think again.
+              </JStoreTitle>
+            </JStoreText>
+            <JStoreText>
+              <JStoreSubTitle>
+                So many things sell great on JStore. Just give it a try.
+              </JStoreSubTitle>
+            </JStoreText>
+            <Link to={'/get-started'}>
+              <LoginButton
+                variant="outlined"
+                style={{marginTop: '4rem'}}
+              >
+                Get Started
+              </LoginButton>
+            </Link>
+          </JStoreWrapper>
           <Footer />
         </LandingPageWrapper>
       </MuiThemeProvider>
