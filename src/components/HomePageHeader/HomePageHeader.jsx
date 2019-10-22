@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { auth } from 'firebase.js'
 import {
   HeaderContainer, NavBar, Logo, LogoImage, LogoAnchor,
@@ -194,6 +194,7 @@ class HomePageHeader extends Component {
               <MenuItem id="terms_and_condition" onClick={this.handleOpenItem}>Terms and Conditions</MenuItem>
               <MenuItem id="privacy_policy" onClick={this.handleOpenItem}>Privacy Policy</MenuItem>
               <MenuItem id="impressum" onClick={this.handleOpenItem}>Impressum</MenuItem>
+              <MenuItem id="feedback"><Link style={{textDecoration: 'none', color: 'black'}} to="/feedback" target="_blank">Feedback</Link></MenuItem>
               <MenuItem id="logout" onClick={this.handleOpenItem}>Log out</MenuItem>
             </Menu>
             <Dialog

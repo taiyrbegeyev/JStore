@@ -40,6 +40,14 @@ export const routes = [
     component: Profile
   },
   {
+    path: '/feedback',
+    isPrivate: false,
+    component: () => {
+      window.location.href = 'https://forms.gle/VcLFuETwcjxTEWR56'; 
+      return null;
+    }
+  },
+  {
     path: '*',
     exact: true,
     isPrivate: false,
