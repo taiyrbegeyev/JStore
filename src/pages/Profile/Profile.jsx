@@ -38,6 +38,7 @@ class Profile extends Component {
   }
   
   render() {
+    const { user } = this.props
     const { currentItem } = this.state
     
     return (
@@ -45,6 +46,7 @@ class Profile extends Component {
         <HomePageHeader />
         <MainContainer>
           <IdentityCard
+            user={user}
             parentCallBack={this.callBackfunction}
           />
           <TaskManager

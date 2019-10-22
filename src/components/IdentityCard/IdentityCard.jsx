@@ -1,4 +1,8 @@
 import React, { Component } from 'react'
+import { auth } from 'firebase.js'
+import { fetchUser } from 'firebase/user.js'
+import { displayDate } from 'helpers.js'
+import { PacmanLoader } from 'react-spinners'
 import {
   IdentityCardWrapper, ProfilePictureInformation,
   ProfileImage, UserName
@@ -23,7 +27,23 @@ const useStyles = theme => ({
 
 class IdentityCard extends Component {
   state = {
-    selectedIndex: 0
+    selectedIndex: 0,
+    creationDate: this.props.user.metadata.creationTime,
+    loading: true
+  }
+
+  componentWillMount() {
+    this.setState({
+      loading: true
+    })
+    fetchUser(auth.currentUser.email, () => {
+      alert("Error: can't fetch data")
+    }, (data) => {
+      this.setState({
+        creationDate: data.creationDate,
+        loading: false
+      })
+    })
   }
 
   handleTabs = (e, selectedIndex) => {
@@ -35,8 +55,20 @@ class IdentityCard extends Component {
   }
   
   render() {
-    const { classes } = this.props
-    const { selectedIndex } = this.state
+    const { classes, user } = this.props
+    const { selectedIndex, creationDate, loading } = this.state
+
+    if (loading) {
+      return (
+        <PacmanLoader
+          sizeUnit={"px"}
+          size={20}
+          color={'#123abc'}
+          loading={loading}
+          css={{position: 'absolute', left: '50%', top: '50%', zIndex: '999'}}
+        />
+      )
+    }
     
     return (
       <IdentityCardWrapper>
@@ -44,10 +76,10 @@ class IdentityCard extends Component {
           <ProfileImage>TB</ProfileImage>
           <UserName>
             <Typography variant="h5" component="h2">
-              Taiyr Begeyev
+              {auth.currentUser.displayName || 'N. A'}
             </Typography>
             <Typography variant="h7" component="h5">
-              Member since 14.10.2019
+              Member since {displayDate(creationDate.toDate().toString() || user.metadata.creationTime.toString())}
             </Typography>
           </UserName>
         </ProfilePictureInformation>
