@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { getStarted } from 'firebase/auth.js'
+import { termsAndConditions, privacyPolicy } from 'helpers.js'
 import {
   SignUpContainer, Heading,
   SignUpForm, InputContainer, ButtonContainer,
@@ -130,11 +131,9 @@ class SignUp extends Component {
           <DialogTitle id="scroll-dialog-title">Terms and Conditions</DialogTitle>
           <DialogContent dividers={true}>
             <DialogContentText>
-              {[...new Array(100)]
-                .map(
-                  () => `heyeyyeyeyeyeeeeeeey`,
-                )
-              .join('\n')}
+              <LegalNoticeAnchors to='/terms_and_conditions' target="_blank">{process.env.REACT_APP_BASE_URL}/terms_and_conditions</LegalNoticeAnchors>
+              <br />
+              {termsAndConditions()}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -152,11 +151,9 @@ class SignUp extends Component {
           <DialogTitle id="scroll-dialog-title">Privacy Policy</DialogTitle>
           <DialogContent dividers={true}>
             <DialogContentText>
-              {[...new Array(100)]
-                .map(
-                  () => `heyeyyeyeyeyeeeeeeey`,
-                )
-              .join('\n')}
+              <LegalNoticeAnchors to='/privacy_policy' target="_blank">{process.env.REACT_APP_BASE_URL}/privacy_policy</LegalNoticeAnchors>
+              <br />
+              {privacyPolicy()}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -199,7 +196,7 @@ class SignUp extends Component {
                 />
               </ButtonContainer>
               <LegalNoticeContainer>
-                <LegalNotice>By clicking Continue, you are agreeing to our <LegalNoticeAnchors onClick={(e) => this.handleDialog('terms_and_condition')}>Terms of Service</LegalNoticeAnchors> and <LegalNoticeAnchors onClick={(e) => this.handleDialog('privacy_policy')}>Privacy Policy</LegalNoticeAnchors>.</LegalNotice>
+                <LegalNotice>By clicking Continue, you are agreeing to our <LegalNoticeAnchors onClick={(e) => this.handleDialog('terms_and_condition')}>Terms and Conditions</LegalNoticeAnchors> and <LegalNoticeAnchors onClick={(e) => this.handleDialog('privacy_policy')}>Privacy Policy</LegalNoticeAnchors>.</LegalNotice>
               </LegalNoticeContainer>
             </SignUpForm>
             {

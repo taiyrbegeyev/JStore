@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import { auth } from 'firebase.js'
+import { termsAndConditions, privacyPolicy, impressum } from 'helpers.js'
 import {
   HeaderContainer, NavBar, Logo, LogoImage, LogoAnchor,
   MainNavBar, MainNavBarElements, MainNavBarElementsLinks,
@@ -206,11 +207,9 @@ class HomePageHeader extends Component {
               <DialogTitle id="scroll-dialog-title">Terms and Conditions</DialogTitle>
               <DialogContent dividers={true}>
                 <DialogContentText>
-                  {[...new Array(100)]
-                    .map(
-                      () => `heyeyyeyeyeyeeeeeeey`,
-                    )
-                  .join('\n')}
+                  <Link to='/terms_and_conditions' target="_blank">{process.env.REACT_APP_BASE_URL}/terms_and_conditions</Link>
+                  <br />
+                  {termsAndConditions()}
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
@@ -228,11 +227,9 @@ class HomePageHeader extends Component {
               <DialogTitle id="scroll-dialog-title">Privacy Policy</DialogTitle>
               <DialogContent dividers={true}>
                 <DialogContentText>
-                  {[...new Array(100)]
-                    .map(
-                      () => `heyeyyeyeyeyeeeeeeey`,
-                    )
-                  .join('\n')}
+                  <Link to='/privacy_policy' target="_blank">{process.env.REACT_APP_BASE_URL}/privacy_policy</Link>
+                  <br />
+                  {privacyPolicy()}
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
@@ -250,11 +247,9 @@ class HomePageHeader extends Component {
               <DialogTitle id="scroll-dialog-title">Impressum</DialogTitle>
               <DialogContent dividers={true}>
                 <DialogContentText>
-                  {[...new Array(100)]
-                    .map(
-                      () => `heyeyyeyeyeyeeeeeeey`,
-                    )
-                  .join('\n')}
+                  <Link to='/impressum' target="_blank">{process.env.REACT_APP_BASE_URL}/Impressum</Link>
+                  <br />
+                  {impressum()}
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
