@@ -15,7 +15,7 @@ export const updatePost = (data, errHandler, completionHandler) => {
     category: data.category,
     condition: data.condition,
     description: data.description,
-    price: data.price,
+    price: parseFloat(data.price).toFixed(2),
     paymentOptions: data.paymentOptions
   })
     .then(() => {
