@@ -30,6 +30,7 @@ const useStyles = theme => ({
     flexWrap: 'wrap',
   },
   textField: {
+    flex: 1,
     flexBasis: 200,
     whiteSpace: 'nowrap'
   },

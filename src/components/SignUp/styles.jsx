@@ -35,6 +35,7 @@ export const InputContainer = styled.div`
   margin: auto;
   width: 100%;
   margin-bottom: 1rem;
+  display: flex;
 `
 
 export const ButtonContainer = styled.div`
