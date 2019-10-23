@@ -269,9 +269,12 @@ class Album extends Component {
                   </Card>
                 </Grid>
               ))
-              : <Typography variant="h7" component="h4">
-                No Posts
-              </Typography>
+              : 
+              <div style={{padding: '2rem'}}>
+                <Typography variant="h7" component="h4">
+                  No Posts
+                </Typography>
+              </div>
             }
             </Grid>
             {!isSearchBy &&
