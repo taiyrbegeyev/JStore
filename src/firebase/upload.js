@@ -34,7 +34,7 @@ export const uploadImage = (file, id, errHandler, completionHandler, returnImage
  */
 export const createPost = (postId, post, errHandler, completionHandler) => {
   post.creationDate = firebase.firestore.FieldValue.serverTimestamp()
-  post.price = parseFloat(post.price).toFixed(2)
+  post.price = parseFloat(parseFloat(post.price).toFixed(2))
   
   db.collection('posts').doc(postId).set(post)
     .then(() => {
