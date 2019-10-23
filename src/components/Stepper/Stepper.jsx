@@ -105,10 +105,8 @@ class StepperUpload extends Component {
       }, () => {
         console.log('Picture uploaded')
       }, (url) => {
-        console.log(url)
-
         fetchPhoneNumberOfUser(auth.currentUser.email, (phoneNumber) => {
-          const post = {
+          let post = {
             postId: postId,
             ownerId: auth.currentUser.email,
             ownerName: auth.currentUser.displayName,
@@ -121,7 +119,6 @@ class StepperUpload extends Component {
           }
           delete post.file
         
-          console.log(post)
           // upload post to the firestore
           createPost(postId, post, () => {
             alert('Error while creating a new post. Contact t.begeyev@jacobs-university.de')
