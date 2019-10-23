@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { fetchPosts, getSizeOfCollection } from 'firebase/display.js'
-import {searchByTitle } from 'firebase/search.js'
+import { searchByTitle } from 'firebase/search.js'
 import { cutOffString, displayDate } from 'helpers.js'
 import Pagination from "react-js-pagination"
 import SearchField from 'react-search-field'
@@ -91,14 +91,16 @@ class Album extends Component {
     let timeStampOfPost = isForward ? timeStampOfLastPost : timeStampOfFirstPost
 
     if (isSearchBy) {
-      searchByTitle(isForward, searchByText, () => {
+      searchByTitle(searchByText, () => {
         this.setState({
           loading: false,
           dbPosts: null
         })
       }, (res) => {
         this.setState({
-          dbPosts: res.posts || null,
+          dbPosts: res.posts,
+          // timeStampOfFirstPost: res.timeStampOfFirstPostLocal,
+          // timeStampOfLastPost: res.timeStampOfLastPostLocal,
           loading: false
         })
       })
@@ -111,7 +113,7 @@ class Album extends Component {
         })
       }, (res) => {
         this.setState({
-          dbPosts: res.posts || null,
+          dbPosts: res.posts,
           timeStampOfFirstPost: res.timeStampOfFirstPostLocal,
           timeStampOfLastPost: res.timeStampOfLastPostLocal,
           loading: false
@@ -158,9 +160,15 @@ class Album extends Component {
 
   onSearchClick = (value) => {
     this.setState({
+      isForward: true,
+      currentPage: 1,
+      numberOfPosts: null,
+      dbPosts: null,
+      timeStampOfFirstPost: new Date(),
+      timeStampOfLastPost: new Date(),
+      loading: true,
       isSearchBy: true,
-      searchByText: value,
-      loading: true
+      searchByText: value
     }, () => {
       this.getPosts()
     })
@@ -170,19 +178,21 @@ class Album extends Component {
     this.setState({
       isForward: true,
       currentPage: 1,
+      numberOfPosts: null,
       dbPosts: null,
-      isSearchBy: false,
-      searchByText: null,
       timeStampOfFirstPost: new Date(),
       timeStampOfLastPost: new Date(),
-      loading: true
+      loading: true,
+      isSearchBy: false,
+      searchByText: null,
     }, () => {
       getSizeOfCollection('posts', (size) => {
         this.setState({
           numberOfPosts: size
+        }, () => {
+          this.getPosts()
         })
       })
-      this.getPosts()
     })
   }
   
@@ -264,6 +274,7 @@ class Album extends Component {
               </Typography>
             }
             </Grid>
+            {!isSearchBy &&
             <PaginationWrapper>
               <Pagination
                 hideFirstLastPages
@@ -277,6 +288,7 @@ class Album extends Component {
                 onChange={(e) => this.handlePageChange(e)}
               />
             </PaginationWrapper>
+            }
           </Container>
         </main>
       </React.Fragment>
