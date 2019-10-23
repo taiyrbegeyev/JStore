@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { fetchPosts, getSizeOfCollection } from 'firebase/display.js'
+import {searchByTitle } from 'firebase/search.js'
 import { cutOffString, displayDate } from 'helpers.js'
 import Pagination from "react-js-pagination"
+import SearchField from 'react-search-field'
 import { PacmanLoader } from 'react-spinners'
 import {
   Button, Card, CardActions,
@@ -10,11 +12,11 @@ import {
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
-import { PaginationWrapper } from './styles'
+import { PaginationWrapper, SearchBar } from './styles'
 
 const useStyles = theme => ({
   cardGrid: {
-    paddingTop: theme.spacing(8),
+    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(8),
   },
   card: {
@@ -53,6 +55,17 @@ const useStyles = theme => ({
     margin: 2,
     backgroundColor: '#004180'
   },
+  searchBar: {
+    width: '100%',
+    marginBottom: theme.spacing(2)
+  },
+  searchChip: {
+    marginBottom: theme.spacing(8),
+    backgroundColor: '#004180'
+  },
+  dummy: {
+    marginBottom: theme.spacing(8),
+  }
 })
 
 class Album extends Component {
@@ -64,25 +77,47 @@ class Album extends Component {
     dbPosts: null,
     timeStampOfFirstPost: new Date(),
     timeStampOfLastPost: new Date(),
-    loading: true
+    loading: true,
+    isSearchBy: false,
+    searchByText: null
   }
 
   getPosts() {
-    const { isForward, itemsPerPage, timeStampOfFirstPost, timeStampOfLastPost } = this.state
+    const {
+      isForward, itemsPerPage,
+      timeStampOfFirstPost, timeStampOfLastPost,
+      isSearchBy, searchByText
+    } = this.state
     let timeStampOfPost = isForward ? timeStampOfLastPost : timeStampOfFirstPost
 
-    fetchPosts(itemsPerPage, timeStampOfPost, isForward, () => {
-      this.setState({
-        loading: false
+    if (isSearchBy) {
+      searchByTitle(isForward, searchByText, () => {
+        this.setState({
+          loading: false,
+          dbPosts: null
+        })
+      }, (res) => {
+        this.setState({
+          dbPosts: res.posts || null,
+          loading: false
+        })
       })
-    }, (res) => {
-      this.setState({
-        dbPosts: res.posts || null,
-        timeStampOfFirstPost: res.timeStampOfFirstPostLocal,
-        timeStampOfLastPost: res.timeStampOfLastPostLocal,
-        loading: false
+    }
+    else {
+      fetchPosts(itemsPerPage, timeStampOfPost, isForward, () => {
+        this.setState({
+          loading: false,
+          dbPosts: null
+        })
+      }, (res) => {
+        this.setState({
+          dbPosts: res.posts || null,
+          timeStampOfFirstPost: res.timeStampOfFirstPostLocal,
+          timeStampOfLastPost: res.timeStampOfLastPostLocal,
+          loading: false
+        })
       })
-    })
+    }
   }
 
   componentWillMount() {
@@ -120,10 +155,43 @@ class Album extends Component {
       window.scrollTo(0, 0)
     })
   }
+
+  onSearchClick = (value) => {
+    this.setState({
+      isSearchBy: true,
+      searchByText: value,
+      loading: true
+    }, () => {
+      this.getPosts()
+    })
+  }
+
+  deleteSearch = () => {
+    this.setState({
+      isForward: true,
+      currentPage: 1,
+      dbPosts: null,
+      isSearchBy: false,
+      searchByText: null,
+      timeStampOfFirstPost: new Date(),
+      timeStampOfLastPost: new Date(),
+      loading: true
+    }, () => {
+      getSizeOfCollection('posts', (size) => {
+        this.setState({
+          numberOfPosts: size
+        })
+      })
+      this.getPosts()
+    })
+  }
   
   render () {
     const { classes } = this.props
-    const { currentPage, itemsPerPage, dbPosts, numberOfPosts, loading } = this.state
+    const {
+      currentPage, itemsPerPage, dbPosts,
+      numberOfPosts, loading, isSearchBy, searchByText
+    } = this.state
 
     if (loading) {
       return (
@@ -142,6 +210,14 @@ class Album extends Component {
         <CssBaseline />
         <main>
           <Container className={classes.cardGrid} maxWidth="md">
+          <SearchField 
+            classNames={classes.searchBar}
+            placeholder='Search item'
+            onSearchClick={(value) => this.onSearchClick(value)}
+            onEnter={(value) => this.onSearchClick(value)}
+          />
+            {!isSearchBy && <div className={classes.dummy}></div>}
+            {isSearchBy && <Chip className={classes.searchChip} label={searchByText} onDelete={this.deleteSearch} color="primary" />}
             <Grid container spacing={4}>
               {dbPosts ? dbPosts.map(dbPost => (
                 <Grid item key={dbPost.postId} xs={12} sm={6} md={4}>
