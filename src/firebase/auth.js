@@ -1,5 +1,12 @@
 import firebase, { auth, db } from 'firebase.js'
 
+/**
+ * send an authentication link to a certain email
+ * @param {*} email 
+ * @param {*} actionCodeSettings 
+ * @param {*} errHandler 
+ * @param {*} completionHandler 
+ */
 export const getStarted = (email, actionCodeSettings, errHandler, completionHandler) => {
   auth.signOut()
   auth.sendSignInLinkToEmail(email, actionCodeSettings)
@@ -12,6 +19,11 @@ export const getStarted = (email, actionCodeSettings, errHandler, completionHand
     })
 }
 
+/**
+ * check if user exists. If not, don't allow to use private routes
+ * @param {*} email 
+ * @param {*} completionHandler 
+ */
 export const userExists = (email, completionHandler) => {
   db.collection('users').doc(email).get()
     .then((snapshot) => {
@@ -29,6 +41,11 @@ export const userExists = (email, completionHandler) => {
     })
 }
 
+/**
+ * check if user is in the DB. Full name is the least requirement we ask users
+ * @param {*} email 
+ * @param {*} completionHandler 
+ */
 export const fullNameExists = (email, completionHandler) => {
   db.collection('users').doc(email).get()
     .then((doc) => {
@@ -42,6 +59,15 @@ export const fullNameExists = (email, completionHandler) => {
     })
 }
 
+/**
+ * if user is not in DB (user is new), then add the user in there
+ * @param {*} name 
+ * @param {*} email 
+ * @param {*} whatsApp 
+ * @param {*} phoneNumber 
+ * @param {*} errHandler 
+ * @param {*} completionHandler 
+ */
 export const registerNewUser = (name, email, whatsApp, phoneNumber, errHandler, completionHandler) => {
   let data = {
     fullName: name,

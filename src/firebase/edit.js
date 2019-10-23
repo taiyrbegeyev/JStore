@@ -1,5 +1,11 @@
 import { db } from 'firebase.js'
 
+/**
+ * edit a post, only owner can do it
+ * @param {*} data 
+ * @param {*} errHandler 
+ * @param {*} completionHandler 
+ */
 export const updatePost = (data, errHandler, completionHandler) => {
   const postId = data.postId
   delete data.postId

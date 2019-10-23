@@ -1,6 +1,11 @@
 import { db } from 'firebase.js'
 import { compare_creationDate } from 'helpers.js'
 
+/**
+ * look up how many elements exist in db accroding to seach criterias
+ * @param {*} searchValue 
+ * @param {*} completionHandler 
+ */
 export const getSizeOfSearchCollection = (searchValue, completionHandler) => {
   let size
   db.collection('posts')
@@ -20,6 +25,12 @@ export const getSizeOfSearchCollection = (searchValue, completionHandler) => {
     })
 }
 
+/**
+ * implement searching
+ * @param {*} searchValue 
+ * @param {*} errHandler 
+ * @param {*} completionhandler 
+ */
 export const searchByTitle = (searchValue, errHandler, completionhandler) => {
   let query
   // if (isForward) {
