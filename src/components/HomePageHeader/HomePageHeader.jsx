@@ -261,30 +261,30 @@ class HomePageHeader extends Component {
             <Drawer variant="temporary" anchor="bottom" open={this.state.drawerOpen} onClose={this.toggleDrawer}>
               <ListContainer role="presentation">
                 <List>
-                  <ListItem button onClick={() => this.goTo('/home')}>
-                    <DrawerItems>
-                      <LocalGroceryStore />
-                    </DrawerItems>
-                    <ListItemText primary={'Buy'} />
-                  </ListItem>
-                  <ListItem button onClick={() => this.goTo('/upload')}>
-                    <DrawerItems>
-                      <Publish />
-                    </DrawerItems>
-                    <ListItemText primary={'Sell'} />
-                  </ListItem>
-                  {/* <ListItem button onClick={() => this.goTo('')}>
-                    <DrawerItems>
-                      <Notifications />
-                    </DrawerItems>
-                    <ListItemText primary={'Messages'} />
-                  </ListItem> */}
-                  <ListItem button onClick={() => this.goTo('/profile')}>
-                    <DrawerItems>
-                      <AccountCircle />
-                    </DrawerItems>
-                    <ListItemText primary={'Profile'} />
-                  </ListItem>
+                  <Link to="/home" style={{ textDecoration: 'none', color: 'black' }}>
+                    <ListItem button>
+                      <DrawerItems>
+                        <LocalGroceryStore />
+                      </DrawerItems>
+                      <ListItemText primary={'Buy'} />
+                    </ListItem>
+                  </Link>
+                  <Link to="/upload" style={{ textDecoration: 'none', color: 'black' }}>
+                    <ListItem button>
+                      <DrawerItems>
+                        <Publish />
+                      </DrawerItems>
+                      <ListItemText primary={'Sell'} />
+                    </ListItem>
+                  </Link>
+                  <Link to="/profile" style={{ textDecoration: 'none', color: 'black' }}>
+                    <ListItem button>
+                      <DrawerItems>
+                        <AccountCircle />
+                      </DrawerItems>
+                      <ListItemText primary={'Profile'} />
+                    </ListItem>
+                  </Link>
                   <ListItem button onClick={this.handleClick}>
                     <DrawerItems>
                       <Settings />
