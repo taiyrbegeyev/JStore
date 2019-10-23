@@ -122,3 +122,7 @@ export const StepDescription = styled.p`
     max-width: 30rem;
   }
 `
+
+export const GetOnGooglePlay = styled.img`
+  width: 20rem;
+`

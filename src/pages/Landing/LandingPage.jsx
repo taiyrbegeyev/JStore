@@ -5,7 +5,7 @@ import {
   JStoreWrapper, JStoreText, JStoreTitle,
   JStoreImg, JStoreSubTitle, Yoga, YogaText, Title1,
   EasyToSellContainer, Steps, Step, StepIcon, StepTitle,
-  StepDescription, StepIconWrapper
+  StepDescription, StepIconWrapper, GetOnGooglePlay
 } from './styles'
 import { LoginButton } from 'components/Header/styles'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
@@ -16,6 +16,9 @@ import key from 'assets/key.svg'
 import upload from 'assets/upload.svg'
 import search from 'assets/search.svg'
 import money from 'assets/money.svg'
+import googlePlay from 'assets/google-play-badge.svg'
+
+const androidUrl = 'https://play.google.com/store/apps/details?id=com.tillchen.jstore'
 
 const theme = createMuiTheme({
   typography: {
@@ -121,6 +124,9 @@ class Landing extends Component {
                 Get Started
               </LoginButton>
             </Link>
+            <a href={androidUrl} target="_blank">
+              <GetOnGooglePlay src={googlePlay} />
+            </a>
           </JStoreWrapper>
           <Footer />
         </LandingPageWrapper>
