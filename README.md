@@ -136,6 +136,7 @@ Some people have so enriched JStore, that they deserve special mention:
 * Tianyao Chen - for collaborating on the database and storage design, terms and conditions, privacy policy
 * Zeyar Oo - for designing the icon and finding critical bugs
 * Hamza Hayak - for finding critical bugs
+* Crystal Mele - for finding a critical bug
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
