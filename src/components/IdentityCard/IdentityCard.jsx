@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { auth } from 'firebase.js'
 import { fetchUser } from 'firebase/user.js'
-import { displayDate } from 'helpers.js'
+import { displayDate, cutFullName } from 'helpers.js'
 import { PacmanLoader } from 'react-spinners'
 import {
   IdentityCardWrapper, ProfilePictureInformation,
@@ -73,7 +73,7 @@ class IdentityCard extends Component {
     return (
       <IdentityCardWrapper>
         <ProfilePictureInformation>
-          <ProfileImage>TB</ProfileImage>
+          <ProfileImage>{auth.currentUser.displayName ? cutFullName(auth.currentUser.displayName) : 'N.A'}</ProfileImage>
           <UserName>
             <Typography variant="h5" component="h2">
               {auth.currentUser.displayName || 'N. A'}

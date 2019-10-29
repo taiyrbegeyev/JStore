@@ -265,10 +265,10 @@ class ProductInfo extends Component {
                           label = "Cash"
                           break
                         case 'bank_transfer':
-                          label = "Paypal"
+                          label = "Bank Transfer"
                           break
                         case 'paypal':
-                          label = "Bank Transfer"
+                          label = "Paypal"                          
                           break
                         case 'meal_plan':
                           label = "Meal Plan"
