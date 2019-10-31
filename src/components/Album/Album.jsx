@@ -287,7 +287,7 @@ class Album extends Component {
                 activePage={currentPage}
                 itemsCountPerPage={itemsPerPage}
                 totalItemsCount={numberOfPosts}
-                pageRangeDisplayed={1}
+                pageRangeDisplayed={2}
                 onChange={(e) => this.handlePageChange(e)}
               />
             </PaginationWrapper>
