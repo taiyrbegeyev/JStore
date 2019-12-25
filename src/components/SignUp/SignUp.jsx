@@ -79,7 +79,7 @@ class SignUp extends Component {
       'url': `${process.env.REACT_APP_BASE_URL}/home`,
       'handleCodeInApp': true,
       iOS: {
-        bundleID: 'com.tillchen.JStore'
+        bundleID: 'com.tillchen.jstore.ios'
       },
       android: {
         packageName: 'com.tillchen.jstore',
