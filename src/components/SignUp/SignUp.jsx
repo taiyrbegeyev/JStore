@@ -84,7 +84,7 @@ class SignUp extends Component {
       android: {
         packageName: 'com.tillchen.jstore',
         installApp: true,
-        minimumVersion: '19'
+        minimumVersion: null
       },
       dynamicLinkDomain: 'https://jacobsstore.page.link'
     }
