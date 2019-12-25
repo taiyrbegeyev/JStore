@@ -62,7 +62,7 @@ class SignUp extends Component {
   handleCheckEmail = (e) => {
     e.preventDefault()
     const { email, emailSentSuccessfully } = this.state
-    
+
     // validate email first
     // if user entered @jacobs-university.de (he is not supposed to do it)
     // then remove it from string
@@ -77,7 +77,16 @@ class SignUp extends Component {
   handleEmailLinkAuth = (email) => {
     const actionCodeSettings = {
       'url': `${process.env.REACT_APP_BASE_URL}/home`,
-      'handleCodeInApp': true
+      'handleCodeInApp': true,
+      iOS: {
+        bundleID: 'com.tillchen.JStore'
+      },
+      android: {
+        packageName: 'com.tillchen.jstore',
+        installApp: true,
+        minimumVersion: '19'
+      },
+      dynamicLinkDomain: 'https://jacobsstore.page.link'
     }
 
     this.setState({
@@ -111,11 +120,11 @@ class SignUp extends Component {
       privacy_policy: false
     })
   }
-  
-  render () {    
+
+  render () {
     const { classes } = this.props
     const { terms_and_condition, privacy_policy } = this.state
-    
+
     return (
       <MuiThemeProvider theme={theme}>
       <SignUpContainer>
@@ -166,7 +175,7 @@ class SignUp extends Component {
         {
           this.state.emailSentSuccessfully && !this.state.loading
           ? <EmailSent />
-          : 
+          :
           <React.Fragment>
             <SignUpForm noValidate>
               <InputContainer>
@@ -189,7 +198,7 @@ class SignUp extends Component {
                 />
               </InputContainer>
               <ButtonContainer>
-                <ButtonCustom 
+                <ButtonCustom
                   type="submit"
                   name="signup"
                   value="Continue"
